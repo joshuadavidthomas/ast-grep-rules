@@ -1,0 +1,57 @@
+id: no-hand-rolled-object-type-guard
+valid:
+  - |
+    const UserSchema = z.object({
+      id: z.string(),
+      name: z.string(),
+    });
+
+    const user = UserSchema.parse(input);
+  - |
+    const UserSchema = v.object({
+      id: v.string(),
+      name: v.string(),
+    });
+
+    const user = v.parse(UserSchema, input);
+  - |
+    if (event.kind === 'user-created') {
+      handleUserCreated(event);
+    }
+  - |
+    function isString(value: unknown): value is string {
+      return typeof value === 'string';
+    }
+invalid:
+  - |
+    function isRecord(value: unknown): value is Record<string, unknown> {
+      return value !== null && typeof value === 'object' && !Array.isArray(value);
+    }
+  - |
+    const isRecord = (value: unknown): value is Record<string, unknown> => {
+      return value !== null && typeof value === 'object' && !Array.isArray(value);
+    };
+  - |
+    const isRecord = (value: unknown): value is Record<string, unknown> =>
+      value !== null && typeof value === "object" && !Array.isArray(value);
+  - |
+    function isUnknownRecord(input: unknown): input is Record<string, unknown> {
+      return input !== null && typeof input === "object" && !Array.isArray(input);
+    }
+  - |
+    function isUser(value: unknown): value is User {
+      return (
+        value !== null &&
+        typeof value === 'object' &&
+        'id' in value &&
+        typeof value.id === 'string'
+      );
+    }
+  - |
+    function isObject(value: unknown): value is object {
+      return value !== null && typeof value === 'object';
+    }
+  - |
+    const isRecordLike = (value: unknown): value is Record<string, string> => {
+      return value !== null && typeof value === 'object' && !Array.isArray(value);
+    };

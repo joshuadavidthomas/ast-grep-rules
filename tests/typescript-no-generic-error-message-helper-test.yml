@@ -1,0 +1,47 @@
+id: no-generic-error-message-helper
+valid:
+  - |
+    try {
+      await importRecords();
+    } catch (error) {
+      throw new Error("Import failed", { cause: error });
+    }
+  - |
+    try {
+      await syncData();
+    } catch (error) {
+      logger.error({ err: error }, "Data sync failed");
+    }
+  - |
+    try {
+      await checkout();
+    } catch (error) {
+      logger.error({ err: error }, "Checkout failed");
+      return json({ message: "We could not complete checkout. Please try again." }, { status: 500 });
+    }
+  - |
+    try {
+      await runAll();
+    } catch (error) {
+      if (error instanceof AggregateError) {
+        logger.error({ errors: error.errors, err: error }, "Multiple operations failed");
+      } else {
+        logger.error({ err: error }, "Operation failed");
+      }
+    }
+invalid:
+  - |
+    function getErrorMessage(error: unknown): string {
+      return error instanceof Error ? error.message : String(error);
+    }
+  - |
+    function formatErrorMessage(cause: unknown): string {
+      return cause instanceof Error ? cause.message : String(cause)
+    }
+  - |
+    const getErrorMessage = (error: unknown): string => {
+      return error instanceof Error ? error.message : String(error);
+    };
+  - |
+    const getErrorMessage = (error: unknown): string =>
+      error instanceof Error ? error.message : String(error);

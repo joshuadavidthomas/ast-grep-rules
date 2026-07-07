@@ -1,0 +1,26 @@
+id: no-generic-error-message-helper
+language: TypeScript
+severity: error
+message: "Do not normalize unknown errors with a generic getErrorMessage helper; preserve structured error data instead."
+note: "error.message/String(error) collapses stack, name, code, cause, AggregateError.errors, and custom fields into one string, and can leak internal details to users. Log/capture the original error, wrap with new Error(message, { cause }), and use separate sanitized user-facing messages."
+rule:
+  any:
+    - pattern: |
+        function $NAME($ERROR: unknown): string {
+          return $ERROR instanceof Error ? $ERROR.message : String($ERROR);
+        }
+    - pattern: |
+        function $NAME($ERROR: unknown): string {
+          return $ERROR instanceof Error ? $ERROR.message : String($ERROR)
+        }
+    - pattern: |
+        const $NAME = ($ERROR: unknown): string => {
+          return $ERROR instanceof Error ? $ERROR.message : String($ERROR);
+        }
+    - pattern: |
+        const $NAME = ($ERROR: unknown): string => {
+          return $ERROR instanceof Error ? $ERROR.message : String($ERROR)
+        }
+    - pattern: |
+        const $NAME = ($ERROR: unknown): string =>
+          $ERROR instanceof Error ? $ERROR.message : String($ERROR)

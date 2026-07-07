@@ -1,0 +1,37 @@
+id: no-hand-rolled-object-type-guard
+language: TypeScript
+severity: error
+message: "Do not hand-roll object type guards for unknown input; parse it with a validation schema instead."
+note: "TypeScript trusts user-defined predicates, but typeof value === 'object' only proves a broad JavaScript object category. Use Zod, Valibot, io-ts, ArkType, Runtypes, Superstruct, TypeBox/Ajv, typia, or another schema validator for the expected shape."
+rule:
+  any:
+    - all:
+        - pattern: |
+            function $NAME($VALUE: unknown): $VALUE is $TYPE { $$$BODY }
+        - any:
+            - has:
+                pattern: typeof $VALUE === 'object'
+                stopBy: end
+            - has:
+                pattern: typeof $VALUE === "object"
+                stopBy: end
+    - all:
+        - pattern: |
+            const $NAME = ($VALUE: unknown): $VALUE is $TYPE => { $$$BODY }
+        - any:
+            - has:
+                pattern: typeof $VALUE === 'object'
+                stopBy: end
+            - has:
+                pattern: typeof $VALUE === "object"
+                stopBy: end
+    - all:
+        - pattern: |
+            const $NAME = ($VALUE: unknown): $VALUE is $TYPE => $BODY
+        - any:
+            - has:
+                pattern: typeof $VALUE === 'object'
+                stopBy: end
+            - has:
+                pattern: typeof $VALUE === "object"
+                stopBy: end

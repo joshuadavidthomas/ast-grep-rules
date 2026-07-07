@@ -1,0 +1,48 @@
+id: no-generic-error-message-helper
+snapshots:
+  ? |
+    const getErrorMessage = (error: unknown): string =>
+      error instanceof Error ? error.message : String(error);
+  : labels:
+    - source: |-
+        const getErrorMessage = (error: unknown): string =>
+          error instanceof Error ? error.message : String(error);
+      style: primary
+      start: 0
+      end: 109
+  ? |
+    const getErrorMessage = (error: unknown): string => {
+      return error instanceof Error ? error.message : String(error);
+    };
+  : labels:
+    - source: |-
+        const getErrorMessage = (error: unknown): string => {
+          return error instanceof Error ? error.message : String(error);
+        };
+      style: primary
+      start: 0
+      end: 121
+  ? |
+    function formatErrorMessage(cause: unknown): string {
+      return cause instanceof Error ? cause.message : String(cause)
+    }
+  : labels:
+    - source: |-
+        function formatErrorMessage(cause: unknown): string {
+          return cause instanceof Error ? cause.message : String(cause)
+        }
+      style: primary
+      start: 0
+      end: 119
+  ? |
+    function getErrorMessage(error: unknown): string {
+      return error instanceof Error ? error.message : String(error);
+    }
+  : labels:
+    - source: |-
+        function getErrorMessage(error: unknown): string {
+          return error instanceof Error ? error.message : String(error);
+        }
+      style: primary
+      start: 0
+      end: 117

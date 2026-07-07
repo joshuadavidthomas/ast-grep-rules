@@ -1,0 +1,70 @@
+id: no-trivial-whitespace-helper
+snapshots:
+  ? |
+    fn is_blank(text: &str) -> bool {
+        text.trim().is_empty()
+    }
+  : labels:
+    - source: |-
+        fn is_blank(text: &str) -> bool {
+            text.trim().is_empty()
+        }
+      style: primary
+      start: 0
+      end: 62
+  ? |
+    fn is_blank_ascii(text: &str) -> bool {
+        text.trim_ascii().is_empty()
+    }
+  : labels:
+    - source: |-
+        fn is_blank_ascii(text: &str) -> bool {
+            text.trim_ascii().is_empty()
+        }
+      style: primary
+      start: 0
+      end: 74
+  ? |
+    fn is_whitespace(source: &str, span: Span) -> bool {
+        source
+            .get(span.start_usize()..span.end_usize())
+            .is_some_and(|text| text.trim().is_empty())
+    }
+  : labels:
+    - source: |-
+        fn is_whitespace(source: &str, span: Span) -> bool {
+            source
+                .get(span.start_usize()..span.end_usize())
+                .is_some_and(|text| text.trim().is_empty())
+        }
+      style: primary
+      start: 0
+      end: 168
+  ? |
+    fn is_whitespace(text: &str) -> bool {
+        text.chars().all(char::is_whitespace)
+    }
+  : labels:
+    - source: |-
+        fn is_whitespace(text: &str) -> bool {
+            text.chars().all(char::is_whitespace)
+        }
+      style: primary
+      start: 0
+      end: 82
+  ? |
+    fn is_whitespace_ascii(source: &str, span: Span) -> bool {
+        source
+            .get(span.start_usize()..span.end_usize())
+            .is_some_and(|text| text.trim_ascii().is_empty())
+    }
+  : labels:
+    - source: |-
+        fn is_whitespace_ascii(source: &str, span: Span) -> bool {
+            source
+                .get(span.start_usize()..span.end_usize())
+                .is_some_and(|text| text.trim_ascii().is_empty())
+        }
+      style: primary
+      start: 0
+      end: 180

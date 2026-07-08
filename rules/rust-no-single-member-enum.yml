@@ -1,0 +1,26 @@
+id: no-single-member-enum
+language: Rust
+severity: warning
+message: "Consider replacing this single-variant enum with a struct, newtype, or the missing variants."
+note: "Single-variant enums are useful for intentional API or schema evolution, but otherwise add matching overhead without modeling a choice."
+rule:
+  all:
+    - kind: enum_item
+    - has:
+        kind: enum_variant
+        nthChild:
+          position: 1
+          ofRule:
+            kind: enum_variant
+        stopBy: end
+    - not:
+        has:
+          kind: enum_variant
+          nthChild:
+            position: 2
+            ofRule:
+              kind: enum_variant
+          stopBy: end
+    - not:
+        follows:
+          pattern: "#[non_exhaustive]"

@@ -1,0 +1,37 @@
+id: no-single-member-enum
+valid:
+  - |
+    enum Empty {}
+  - |
+    enum PythonPathValue {
+        Resolved(Utf8PathBuf),
+        Unresolved(String),
+    }
+  - |
+    enum Token {
+        Ident(String),
+        Number(u64),
+        Eof,
+    }
+  - |
+    struct PythonPathValue {
+        resolved: Utf8PathBuf,
+    }
+  - |
+    #[non_exhaustive]
+    pub enum Event {
+        Created(String),
+    }
+invalid:
+  - |
+    pub(crate) enum PythonPathValue {
+        Resolved(Utf8PathBuf),
+    }
+  - |
+    enum UnitOnly {
+        Only,
+    }
+  - |
+    enum StructOnly {
+        Only { value: String },
+    }

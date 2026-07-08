@@ -1,0 +1,50 @@
+id: no-single-member-enum
+snapshots:
+  ? |
+    enum StructOnly {
+        Only { value: String },
+    }
+  : labels:
+    - source: |-
+        enum StructOnly {
+            Only { value: String },
+        }
+      style: primary
+      start: 0
+      end: 47
+    - source: 'Only { value: String }'
+      style: secondary
+      start: 22
+      end: 44
+  ? |
+    enum UnitOnly {
+        Only,
+    }
+  : labels:
+    - source: |-
+        enum UnitOnly {
+            Only,
+        }
+      style: primary
+      start: 0
+      end: 27
+    - source: Only
+      style: secondary
+      start: 20
+      end: 24
+  ? |
+    pub(crate) enum PythonPathValue {
+        Resolved(Utf8PathBuf),
+    }
+  : labels:
+    - source: |-
+        pub(crate) enum PythonPathValue {
+            Resolved(Utf8PathBuf),
+        }
+      style: primary
+      start: 0
+      end: 62
+    - source: Resolved(Utf8PathBuf)
+      style: secondary
+      start: 38
+      end: 59

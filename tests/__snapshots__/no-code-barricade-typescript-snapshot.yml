@@ -1,0 +1,42 @@
+id: no-code-barricade-typescript
+snapshots:
+  ? |
+    /* ******** Parsing ******** */
+    function parse() {}
+  : labels:
+    - source: /* ******** Parsing ******** */
+      style: primary
+      start: 0
+      end: 31
+  ? |
+    // ------ Validation ------
+    function validate() {}
+  : labels:
+    - source: // ------ Validation ------
+      style: primary
+      start: 0
+      end: 27
+  ? |
+    // ///// Storage /////
+    function store() {}
+  : labels:
+    - source: // ///// Storage /////
+      style: primary
+      start: 0
+      end: 22
+  ? |
+    // //////////////// Storage ////////////////
+    function store() {}
+  : labels:
+    - source: // //////////////// Storage ////////////////
+      style: primary
+      start: 0
+      end: 44
+  ? |
+    // ====================
+    function parse() {}
+  : labels:
+    - source: // ====================
+      style: primary
+      start: 0
+      end: 23

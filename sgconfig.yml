@@ -1,4 +1,16 @@
+# The wrapper replaces these path placeholders before invoking ast-grep.
 ruleDirs:
-  - rules
+  - __RULES_DIR__
+customLanguages:
+  svelte:
+    libraryPath: __SVELTE_PARSER_LIBRARY__
+    extensions:
+      - svelte
+languageInjections:
+  - hostLanguage: svelte
+    rule:
+      pattern: |
+        <script $$$ATTRS>$CONTENT</script>
+    injected: ts
 testConfigs:
-  - testDir: tests
+  - testDir: __TESTS_DIR__

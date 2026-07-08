@@ -1,0 +1,33 @@
+id: no-visible-bool-argument
+valid:
+  - |
+    fn private_render(compact: bool) {}
+  - |
+    pub fn render(mode: RenderMode) {}
+  - |
+    pub fn is_enabled() -> bool {
+        true
+    }
+  - |
+    trait InternalService {
+        fn set_mode(&self, strict: bool);
+    }
+  - |
+    pub trait Service {
+        fn set_mode(&self, mode: Mode);
+    }
+invalid:
+  - |
+    pub fn render(compact: bool) {}
+  - |
+    pub(crate) fn open(path: &Path, create: bool) -> Result<(), Error> {
+        Ok(())
+    }
+  - |
+    impl Parser {
+        pub fn set_mode(&mut self, strict: bool) {}
+    }
+  - |
+    pub trait Service {
+        fn set_mode(&self, strict: bool);
+    }

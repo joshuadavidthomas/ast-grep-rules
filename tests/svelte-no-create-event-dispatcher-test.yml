@@ -1,0 +1,28 @@
+id: no-create-event-dispatcher
+valid:
+  - |
+    import { onMount } from 'svelte';
+
+    let { onSave }: { onSave?: () => void } = $props();
+    onSave?.();
+  - |
+    import { createEventDispatcher } from './events';
+
+    const dispatch = createEventDispatcher();
+  - |
+    function createEventDispatcher() {
+      return () => {};
+    }
+
+    const dispatch = createEventDispatcher();
+invalid:
+  - |
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
+  - |
+    import { createEventDispatcher as createDispatcher } from 'svelte';
+  - |
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher<{ save: void }>();

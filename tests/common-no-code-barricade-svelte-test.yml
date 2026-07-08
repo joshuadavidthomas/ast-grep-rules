@@ -1,0 +1,26 @@
+id: no-code-barricade-svelte
+valid:
+  - |
+    <!-- Navigation -->
+    {#if visible}
+      <nav></nav>
+    {/if}
+  - |
+    <div data-divider="================"></div>
+invalid:
+  - |
+    <!-- ==================== -->
+    <Component />
+  - |
+    {#each items as item}
+      <!-- ------ Item ------ -->
+      <p>{item.name}</p>
+    {/each}
+  - |
+    <!-- ******** Footer ******** -->
+    <footer></footer>
+  - |
+    {#if visible}
+      <!-- ───── Content ───── -->
+      <main></main>
+    {/if}

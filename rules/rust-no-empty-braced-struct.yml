@@ -1,0 +1,15 @@
+id: no-empty-braced-struct
+language: Rust
+severity: warning
+message: "Prefer a unit struct over an empty braced struct."
+note: "An empty braced struct adds named-field ceremony without fields. Use braces only when an external schema, FFI, or codegen contract requires them."
+rule:
+  all:
+    - kind: struct_item
+    - has:
+        kind: field_declaration_list
+        stopBy: end
+    - not:
+        has:
+          kind: field_declaration
+          stopBy: end

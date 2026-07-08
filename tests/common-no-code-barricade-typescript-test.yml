@@ -1,0 +1,23 @@
+id: no-code-barricade-typescript
+valid:
+  - |
+    // Parsing
+    function parse() {}
+  - |
+    /* Parsing helpers */
+    function parse() {}
+  - |
+    const divider = "================";
+invalid:
+  - |
+    // ====================
+    function parse() {}
+  - |
+    /* ******** Parsing ******** */
+    function parse() {}
+  - |
+    // ------ Validation ------
+    function validate() {}
+  - |
+    // //////////////// Storage ////////////////
+    function store() {}

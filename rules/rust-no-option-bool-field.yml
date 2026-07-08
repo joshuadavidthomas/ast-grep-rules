@@ -1,0 +1,12 @@
+id: no-option-bool-field
+language: Rust
+severity: warning
+message: "Avoid Option<bool> fields; replace the implicit three-state flag with a named enum."
+note: "Option<bool> makes callers decode None/Some(false)/Some(true) instead of naming the domain states."
+rule:
+  all:
+    - kind: generic_type
+    - regex: "^Option<bool>$"
+    - inside:
+        kind: struct_item
+        stopBy: end

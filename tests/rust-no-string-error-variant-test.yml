@@ -1,0 +1,30 @@
+id: no-string-error-variant
+valid:
+  - |
+    #[derive(thiserror::Error, Debug)]
+    enum Error {
+        #[error("parse {path}")]
+        Parse { path: Utf8PathBuf, source: ParseError },
+    }
+  - |
+    enum Event {
+        Message(String),
+    }
+  - |
+    enum Error {
+        Io(std::io::Error),
+    }
+invalid:
+  - |
+    enum Error {
+        Parse(String),
+    }
+  - |
+    pub enum ParseError {
+        Other(String),
+    }
+  - |
+    pub(crate) enum BuildError {
+        MissingTool(String),
+        Io(std::io::Error),
+    }

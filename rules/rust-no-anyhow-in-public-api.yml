@@ -1,0 +1,49 @@
+id: no-anyhow-in-public-api
+language: Rust
+severity: warning
+message: "Do not expose anyhow in public APIs; return a typed error instead."
+note: "anyhow is good for application boundaries, but public library APIs should expose structured error types callers can match and document."
+rule:
+  any:
+    - all:
+        - kind: function_item
+        - has:
+            kind: visibility_modifier
+            stopBy: end
+        - has:
+            field: return_type
+            any:
+              - kind: generic_type
+                regex: "^(anyhow::Result<|Result<.*anyhow::Error.*>)"
+              - kind: scoped_type_identifier
+                regex: "^anyhow::Error$"
+            stopBy: end
+    - all:
+        - kind: function_signature_item
+        - inside:
+            kind: trait_item
+            has:
+              kind: visibility_modifier
+              stopBy: end
+            stopBy: end
+        - has:
+            field: return_type
+            any:
+              - kind: generic_type
+                regex: "^(anyhow::Result<|Result<.*anyhow::Error.*>)"
+              - kind: scoped_type_identifier
+                regex: "^anyhow::Error$"
+            stopBy: end
+    - all:
+        - kind: type_item
+        - has:
+            kind: visibility_modifier
+            stopBy: end
+        - has:
+            field: type
+            any:
+              - kind: generic_type
+                regex: "^(anyhow::Result<|Result<.*anyhow::Error.*>)"
+              - kind: scoped_type_identifier
+                regex: "^anyhow::Error$"
+            stopBy: end

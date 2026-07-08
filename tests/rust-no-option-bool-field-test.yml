@@ -1,0 +1,27 @@
+id: no-option-bool-field
+valid:
+  - |
+    struct Settings {
+        mode: Mode,
+    }
+  - |
+    struct Settings {
+        enabled: Option<Enabled>,
+    }
+  - |
+    struct Tuple(Option<Enabled>);
+  - |
+    fn parse(value: Option<bool>) -> Mode {
+        Mode::from(value)
+    }
+invalid:
+  - |
+    struct Settings {
+        enabled: Option<bool>,
+    }
+  - |
+    pub struct Query {
+        include_archived: Option<bool>,
+    }
+  - |
+    struct Tuple(Option<bool>);

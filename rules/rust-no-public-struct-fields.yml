@@ -1,0 +1,17 @@
+id: no-public-struct-fields
+language: Rust
+severity: warning
+message: "Avoid visible fields on visible structs; keep representation private unless this is a passive data type."
+note: "Visible fields expose representation and let callers bypass validation or invariants."
+rule:
+  all:
+    - kind: field_declaration
+    - has:
+        kind: visibility_modifier
+        stopBy: end
+    - inside:
+        any:
+          - pattern: "pub struct $NAME { $$$FIELDS }"
+          - pattern: "pub(crate) struct $NAME { $$$FIELDS }"
+          - pattern: "pub(super) struct $NAME { $$$FIELDS }"
+        stopBy: end

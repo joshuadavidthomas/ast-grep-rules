@@ -1,0 +1,42 @@
+id: no-code-barricade-html
+snapshots:
+  ? |
+    <!-- ##### Content ##### -->
+    <main></main>
+  : labels:
+    - source: '<!-- ##### Content ##### -->'
+      style: primary
+      start: 0
+      end: 28
+  ? |
+    <!-- ******** Footer ******** -->
+    <footer></footer>
+  : labels:
+    - source: <!-- ******** Footer ******** -->
+      style: primary
+      start: 0
+      end: 33
+  ? |
+    <!-- ------ Navigation ------ -->
+    <nav></nav>
+  : labels:
+    - source: <!-- ------ Navigation ------ -->
+      style: primary
+      start: 0
+      end: 33
+  ? |
+    <!-- ==================== -->
+    <nav></nav>
+  : labels:
+    - source: <!-- ==================== -->
+      style: primary
+      start: 0
+      end: 29
+  ? |
+    <!-- ───── Content ───── -->
+    <main></main>
+  : labels:
+    - source: <!-- ───── Content ───── -->
+      style: primary
+      start: 0
+      end: 48

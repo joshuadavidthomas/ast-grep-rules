@@ -1,0 +1,20 @@
+id: no-public-tuple-newtype-field
+valid:
+  - |
+    pub struct UserId(String);
+  - |
+    struct InternalId(pub String);
+  - |
+    pub struct Point {
+        pub x: i32,
+        pub y: i32,
+    }
+invalid:
+  - |
+    pub struct UserId(pub String);
+  - |
+    pub(crate) struct CrateId(pub Utf8PathBuf);
+  - |
+    pub(super) struct ParentId(pub u64);
+  - |
+    pub struct Wrapper(pub(crate) String);

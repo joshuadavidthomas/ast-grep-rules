@@ -1,0 +1,26 @@
+id: no-single-field-struct
+valid:
+  - |
+    struct Backoff(Duration);
+  - |
+    pub struct User {
+        id: UserId,
+        name: UserName,
+    }
+  - |
+    struct Empty {}
+  - |
+    struct Marker;
+invalid:
+  - |
+    struct Backoff {
+        current: Duration,
+    }
+  - |
+    pub struct UserId {
+        value: String,
+    }
+  - |
+    pub(crate) struct Settings {
+        mode: Mode,
+    }

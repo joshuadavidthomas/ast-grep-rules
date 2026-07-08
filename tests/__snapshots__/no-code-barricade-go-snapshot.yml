@@ -1,0 +1,52 @@
+id: no-code-barricade-go
+snapshots:
+  ? |
+    package example
+
+    /* ******** Parsing ******** */
+    func parse() {}
+  : labels:
+    - source: /* ******** Parsing ******** */
+      style: primary
+      start: 17
+      end: 48
+  ? |
+    package example
+
+    // ------ Validation ------
+    func validate() {}
+  : labels:
+    - source: // ------ Validation ------
+      style: primary
+      start: 17
+      end: 44
+  ? |
+    package example
+
+    // //////////////// Storage ////////////////
+    func store() {}
+  : labels:
+    - source: // //////////////// Storage ////////////////
+      style: primary
+      start: 17
+      end: 61
+  ? |
+    package example
+
+    // ====================
+    func parse() {}
+  : labels:
+    - source: // ====================
+      style: primary
+      start: 17
+      end: 40
+  ? |
+    package example
+
+    // _____ Storage _____
+    func store() {}
+  : labels:
+    - source: // _____ Storage _____
+      style: primary
+      start: 17
+      end: 39

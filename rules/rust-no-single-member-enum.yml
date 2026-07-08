@@ -24,3 +24,4 @@ rule:
     - not:
         follows:
           pattern: "#[non_exhaustive]"
+          stopBy: neighbor

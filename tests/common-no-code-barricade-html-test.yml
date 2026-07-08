@@ -1,0 +1,20 @@
+id: no-code-barricade-html
+valid:
+  - |
+    <!-- Navigation -->
+    <nav></nav>
+  - |
+    <div data-divider="================"></div>
+invalid:
+  - |
+    <!-- ==================== -->
+    <nav></nav>
+  - |
+    <!-- ------ Navigation ------ -->
+    <nav></nav>
+  - |
+    <!-- ******** Footer ******** -->
+    <footer></footer>
+  - |
+    <!-- ───── Content ───── -->
+    <main></main>

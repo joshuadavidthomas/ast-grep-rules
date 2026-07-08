@@ -1,0 +1,88 @@
+id: no-string-error-variant
+snapshots:
+  ? |
+    enum Error {
+        Parse(String),
+    }
+  : labels:
+    - source: |-
+        enum Error {
+            Parse(String),
+        }
+      style: primary
+      start: 0
+      end: 33
+    - source: Error
+      style: secondary
+      start: 5
+      end: 10
+    - source: String
+      style: secondary
+      start: 23
+      end: 29
+    - source: (String)
+      style: secondary
+      start: 22
+      end: 30
+    - source: Parse(String)
+      style: secondary
+      start: 17
+      end: 30
+  ? |
+    pub enum ParseError {
+        Other(String),
+    }
+  : labels:
+    - source: |-
+        pub enum ParseError {
+            Other(String),
+        }
+      style: primary
+      start: 0
+      end: 42
+    - source: ParseError
+      style: secondary
+      start: 9
+      end: 19
+    - source: String
+      style: secondary
+      start: 32
+      end: 38
+    - source: (String)
+      style: secondary
+      start: 31
+      end: 39
+    - source: Other(String)
+      style: secondary
+      start: 26
+      end: 39
+  ? |
+    pub(crate) enum BuildError {
+        MissingTool(String),
+        Io(std::io::Error),
+    }
+  : labels:
+    - source: |-
+        pub(crate) enum BuildError {
+            MissingTool(String),
+            Io(std::io::Error),
+        }
+      style: primary
+      start: 0
+      end: 79
+    - source: BuildError
+      style: secondary
+      start: 16
+      end: 26
+    - source: String
+      style: secondary
+      start: 45
+      end: 51
+    - source: (String)
+      style: secondary
+      start: 44
+      end: 52
+    - source: MissingTool(String)
+      style: secondary
+      start: 33
+      end: 52

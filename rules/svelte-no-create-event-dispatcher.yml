@@ -1,0 +1,49 @@
+id: no-create-event-dispatcher
+language: TypeScript
+severity: warning
+message: "createEventDispatcher is deprecated in Svelte 5; declare a callback prop and call it instead."
+note: "Preserving an existing public component API during migration is the accepted exemption; use an inline ast-grep-ignore comment with the migration reason."
+rule:
+  any:
+    - all:
+        - kind: import_statement
+        - has:
+            field: source
+            kind: string
+            regex: "^['\"]svelte['\"]$"
+            stopBy: end
+        - has:
+            kind: import_specifier
+            has:
+              field: name
+              kind: identifier
+              regex: "^createEventDispatcher$"
+              stopBy: end
+            stopBy: end
+    - all:
+        - kind: call_expression
+        - has:
+            field: function
+            kind: identifier
+            regex: "^createEventDispatcher$"
+            stopBy: end
+        - inside:
+            kind: program
+            has:
+              all:
+                - kind: import_statement
+                - has:
+                    field: source
+                    kind: string
+                    regex: "^['\"]svelte['\"]$"
+                    stopBy: end
+                - has:
+                    kind: import_specifier
+                    has:
+                      field: name
+                      kind: identifier
+                      regex: "^createEventDispatcher$"
+                      stopBy: end
+                    stopBy: end
+              stopBy: end
+            stopBy: end

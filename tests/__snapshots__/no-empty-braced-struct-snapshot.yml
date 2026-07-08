@@ -1,0 +1,35 @@
+id: no-empty-braced-struct
+snapshots:
+  ? |
+    pub struct Empty {}
+  : labels:
+    - source: pub struct Empty {}
+      style: primary
+      start: 0
+      end: 19
+    - source: '{}'
+      style: secondary
+      start: 17
+      end: 19
+  ? |
+    pub(crate) struct Marker {}
+  : labels:
+    - source: pub(crate) struct Marker {}
+      style: primary
+      start: 0
+      end: 27
+    - source: '{}'
+      style: secondary
+      start: 25
+      end: 27
+  ? |
+    struct Empty {}
+  : labels:
+    - source: struct Empty {}
+      style: primary
+      start: 0
+      end: 15
+    - source: '{}'
+      style: secondary
+      start: 13
+      end: 15

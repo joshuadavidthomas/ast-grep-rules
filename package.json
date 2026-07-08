@@ -1,0 +1,27 @@
+{
+  "name": "ast-grep-rules",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/",
+    "rules/",
+    "tests/",
+    "LICENSE",
+    "README.md",
+    "sgconfig.yml"
+  ],
+  "bin": {
+    "ast-grep-rules": "bin/ast-grep-rules.mjs"
+  },
+  "scripts": {
+    "scan": "node bin/ast-grep-rules.mjs",
+    "test": "node tests/run.mjs"
+  },
+  "dependencies": {
+    "@ast-grep/cli": "0.44.0",
+    "@tree-sitter-grammars/tree-sitter-svelte": "1.0.2"
+  }
+}

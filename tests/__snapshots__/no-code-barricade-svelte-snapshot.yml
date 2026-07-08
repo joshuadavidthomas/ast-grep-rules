@@ -1,0 +1,38 @@
+id: no-code-barricade-svelte
+snapshots:
+  ? |
+    <!-- ******** Footer ******** -->
+    <footer></footer>
+  : labels:
+    - source: <!-- ******** Footer ******** -->
+      style: primary
+      start: 0
+      end: 33
+  ? |
+    <!-- ==================== -->
+    <Component />
+  : labels:
+    - source: <!-- ==================== -->
+      style: primary
+      start: 0
+      end: 29
+  ? |
+    {#each items as item}
+      <!-- ------ Item ------ -->
+      <p>{item.name}</p>
+    {/each}
+  : labels:
+    - source: <!-- ------ Item ------ -->
+      style: primary
+      start: 24
+      end: 51
+  ? |
+    {#if visible}
+      <!-- ───── Content ───── -->
+      <main></main>
+    {/if}
+  : labels:
+    - source: <!-- ───── Content ───── -->
+      style: primary
+      start: 16
+      end: 64

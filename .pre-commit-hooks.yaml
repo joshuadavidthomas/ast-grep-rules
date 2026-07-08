@@ -1,0 +1,7 @@
+- id: ast-grep-rules
+  name: ast-grep rules
+  description: Shared ast-grep checks from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules
+  language: node
+  types: [text]
+  pass_filenames: true

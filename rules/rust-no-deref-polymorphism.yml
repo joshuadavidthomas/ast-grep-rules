@@ -1,0 +1,12 @@
+id: no-deref-polymorphism
+language: Rust
+severity: warning
+message: "Avoid implementing Deref for API forwarding; expose explicit methods unless this type is a true smart pointer."
+note: "Deref is for pointer-like types. Using it as inheritance hides the real API surface."
+rule:
+  all:
+    - kind: impl_item
+    - has:
+        field: trait
+        regex: "^(std::ops::)?Deref$"
+        stopBy: end

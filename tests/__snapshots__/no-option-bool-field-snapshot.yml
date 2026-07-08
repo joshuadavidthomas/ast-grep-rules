@@ -1,0 +1,45 @@
+id: no-option-bool-field
+snapshots:
+  ? |
+    pub struct Query {
+        include_archived: Option<bool>,
+    }
+  : labels:
+    - source: Option<bool>
+      style: primary
+      start: 41
+      end: 53
+    - source: |-
+        pub struct Query {
+            include_archived: Option<bool>,
+        }
+      style: secondary
+      start: 0
+      end: 56
+  ? |
+    struct Settings {
+        enabled: Option<bool>,
+    }
+  : labels:
+    - source: Option<bool>
+      style: primary
+      start: 31
+      end: 43
+    - source: |-
+        struct Settings {
+            enabled: Option<bool>,
+        }
+      style: secondary
+      start: 0
+      end: 46
+  ? |
+    struct Tuple(Option<bool>);
+  : labels:
+    - source: Option<bool>
+      style: primary
+      start: 13
+      end: 25
+    - source: struct Tuple(Option<bool>);
+      style: secondary
+      start: 0
+      end: 27

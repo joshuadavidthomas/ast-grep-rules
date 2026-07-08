@@ -1,0 +1,50 @@
+id: no-single-field-struct
+snapshots:
+  ? |
+    pub struct UserId {
+        value: String,
+    }
+  : labels:
+    - source: |-
+        pub struct UserId {
+            value: String,
+        }
+      style: primary
+      start: 0
+      end: 40
+    - source: 'value: String'
+      style: secondary
+      start: 24
+      end: 37
+  ? |
+    pub(crate) struct Settings {
+        mode: Mode,
+    }
+  : labels:
+    - source: |-
+        pub(crate) struct Settings {
+            mode: Mode,
+        }
+      style: primary
+      start: 0
+      end: 46
+    - source: 'mode: Mode'
+      style: secondary
+      start: 33
+      end: 43
+  ? |
+    struct Backoff {
+        current: Duration,
+    }
+  : labels:
+    - source: |-
+        struct Backoff {
+            current: Duration,
+        }
+      style: primary
+      start: 0
+      end: 41
+    - source: 'current: Duration'
+      style: secondary
+      start: 21
+      end: 38

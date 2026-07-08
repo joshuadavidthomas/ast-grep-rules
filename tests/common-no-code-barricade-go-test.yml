@@ -1,0 +1,37 @@
+id: no-code-barricade-go
+valid:
+  - |
+    package example
+
+    // Parsing
+    func parse() {}
+  - |
+    package example
+
+    /* Parsing helpers */
+    func parse() {}
+  - |
+    package example
+
+    const divider = "================"
+invalid:
+  - |
+    package example
+
+    // ====================
+    func parse() {}
+  - |
+    package example
+
+    /* ******** Parsing ******** */
+    func parse() {}
+  - |
+    package example
+
+    // ------ Validation ------
+    func validate() {}
+  - |
+    package example
+
+    // //////////////// Storage ////////////////
+    func store() {}

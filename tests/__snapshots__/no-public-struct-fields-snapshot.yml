@@ -1,0 +1,66 @@
+id: no-public-struct-fields
+snapshots:
+  ? |
+    pub struct User {
+        pub id: UserId,
+        name: UserName,
+    }
+  : labels:
+    - source: 'pub id: UserId'
+      style: primary
+      start: 22
+      end: 36
+    - source: pub
+      style: secondary
+      start: 22
+      end: 25
+    - source: |-
+        pub struct User {
+            pub id: UserId,
+            name: UserName,
+        }
+      style: secondary
+      start: 0
+      end: 59
+  ? |
+    pub(crate) struct Settings {
+        pub(crate) mode: Mode,
+    }
+  : labels:
+    - source: 'pub(crate) mode: Mode'
+      style: primary
+      start: 33
+      end: 54
+    - source: pub(crate)
+      style: secondary
+      start: 33
+      end: 43
+    - source: |-
+        pub(crate) struct Settings {
+            pub(crate) mode: Mode,
+        }
+      style: secondary
+      start: 0
+      end: 57
+  ? |
+    pub(super) struct Point {
+        pub x: i32,
+        pub y: i32,
+    }
+  : labels:
+    - source: 'pub x: i32'
+      style: primary
+      start: 30
+      end: 40
+    - source: pub
+      style: secondary
+      start: 30
+      end: 33
+    - source: |-
+        pub(super) struct Point {
+            pub x: i32,
+            pub y: i32,
+        }
+      style: secondary
+      start: 0
+      end: 59

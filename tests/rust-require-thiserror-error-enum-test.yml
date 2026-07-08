@@ -1,0 +1,34 @@
+id: require-thiserror-error-enum
+valid:
+  - |
+    #[derive(thiserror::Error, Debug)]
+    pub enum ParseError {
+        #[error("invalid input")]
+        InvalidInput,
+    }
+  - |
+    use thiserror::Error;
+
+    #[derive(Debug, Error)]
+    enum Error {
+        #[error("missing field")]
+        MissingField,
+    }
+  - |
+    enum Event {
+        Created,
+        Deleted,
+    }
+invalid:
+  - |
+    enum Error {
+        Io(std::io::Error),
+    }
+  - |
+    pub enum ParseError {
+        InvalidInput,
+    }
+  - |
+    pub(crate) enum BuildError {
+        MissingTool,
+    }

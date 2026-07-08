@@ -1,0 +1,50 @@
+id: require-thiserror-error-enum
+snapshots:
+  ? |
+    enum Error {
+        Io(std::io::Error),
+    }
+  : labels:
+    - source: |-
+        enum Error {
+            Io(std::io::Error),
+        }
+      style: primary
+      start: 0
+      end: 38
+    - source: Error
+      style: secondary
+      start: 5
+      end: 10
+  ? |
+    pub enum ParseError {
+        InvalidInput,
+    }
+  : labels:
+    - source: |-
+        pub enum ParseError {
+            InvalidInput,
+        }
+      style: primary
+      start: 0
+      end: 41
+    - source: ParseError
+      style: secondary
+      start: 9
+      end: 19
+  ? |
+    pub(crate) enum BuildError {
+        MissingTool,
+    }
+  : labels:
+    - source: |-
+        pub(crate) enum BuildError {
+            MissingTool,
+        }
+      style: primary
+      start: 0
+      end: 47
+    - source: BuildError
+      style: secondary
+      start: 16
+      end: 26

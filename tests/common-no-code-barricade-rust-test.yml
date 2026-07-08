@@ -1,0 +1,23 @@
+id: no-code-barricade-rust
+valid:
+  - |
+    // Parsing
+    fn parse() {}
+  - |
+    /* Parsing helpers */
+    fn parse() {}
+  - |
+    const DIVIDER: &str = "================";
+invalid:
+  - |
+    // ====================
+    fn parse() {}
+  - |
+    /* ******** Parsing ******** */
+    fn parse() {}
+  - |
+    // ────── Validation ──────
+    fn validate() {}
+  - |
+    // //////////////// Storage ////////////////
+    fn store() {}

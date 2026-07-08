@@ -1,0 +1,81 @@
+id: no-anyhow-in-public-api
+snapshots:
+  ? |
+    pub fn build(input: &str) -> Result<Model, anyhow::Error> {
+        todo!()
+    }
+  : labels:
+    - source: |-
+        pub fn build(input: &str) -> Result<Model, anyhow::Error> {
+            todo!()
+        }
+      style: primary
+      start: 0
+      end: 73
+    - source: pub
+      style: secondary
+      start: 0
+      end: 3
+    - source: Result<Model, anyhow::Error>
+      style: secondary
+      start: 29
+      end: 57
+  ? |
+    pub fn parse(input: &str) -> anyhow::Result<Model> {
+        todo!()
+    }
+  : labels:
+    - source: |-
+        pub fn parse(input: &str) -> anyhow::Result<Model> {
+            todo!()
+        }
+      style: primary
+      start: 0
+      end: 66
+    - source: pub
+      style: secondary
+      start: 0
+      end: 3
+    - source: anyhow::Result<Model>
+      style: secondary
+      start: 29
+      end: 50
+  ? |
+    pub trait Loader {
+        fn load(&self) -> anyhow::Result<Model>;
+    }
+  : labels:
+    - source: fn load(&self) -> anyhow::Result<Model>;
+      style: primary
+      start: 23
+      end: 63
+    - source: pub
+      style: secondary
+      start: 0
+      end: 3
+    - source: |-
+        pub trait Loader {
+            fn load(&self) -> anyhow::Result<Model>;
+        }
+      style: secondary
+      start: 0
+      end: 65
+    - source: anyhow::Result<Model>
+      style: secondary
+      start: 41
+      end: 62
+  ? |
+    pub type Result<T> = anyhow::Result<T>;
+  : labels:
+    - source: pub type Result<T> = anyhow::Result<T>;
+      style: primary
+      start: 0
+      end: 39
+    - source: pub
+      style: secondary
+      start: 0
+      end: 3
+    - source: anyhow::Result<T>
+      style: secondary
+      start: 21
+      end: 38

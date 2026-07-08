@@ -1,0 +1,25 @@
+id: no-code-barricade-python
+valid:
+  - |
+    # Parsing
+    def parse():
+        pass
+  - |
+    divider = "================"
+invalid:
+  - |
+    # ====================
+    def parse():
+        pass
+  - |
+    # ------ Parsing ------
+    def parse():
+        pass
+  - |
+    # ******** Validation ********
+    def validate():
+        pass
+  - |
+    ##### Storage #####
+    def store():
+        pass

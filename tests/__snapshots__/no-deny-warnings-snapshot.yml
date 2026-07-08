@@ -1,0 +1,9 @@
+id: no-deny-warnings
+snapshots:
+  ? |
+    #![deny(warnings)]
+  : labels:
+    - source: '#![deny(warnings)]'
+      style: primary
+      start: 0
+      end: 18

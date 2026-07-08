@@ -1,0 +1,63 @@
+id: no-create-event-dispatcher
+snapshots:
+  ? |
+    import { createEventDispatcher as createDispatcher } from 'svelte';
+  : labels:
+    - source: import { createEventDispatcher as createDispatcher } from 'svelte';
+      style: primary
+      start: 0
+      end: 67
+    - source: '''svelte'''
+      style: secondary
+      start: 58
+      end: 66
+    - source: createEventDispatcher
+      style: secondary
+      start: 9
+      end: 30
+    - source: createEventDispatcher as createDispatcher
+      style: secondary
+      start: 9
+      end: 50
+  ? |
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher<{ save: void }>();
+  : labels:
+    - source: import { createEventDispatcher } from "svelte";
+      style: primary
+      start: 0
+      end: 47
+    - source: '"svelte"'
+      style: secondary
+      start: 38
+      end: 46
+    - source: createEventDispatcher
+      style: secondary
+      start: 9
+      end: 30
+    - source: createEventDispatcher
+      style: secondary
+      start: 9
+      end: 30
+  ? |
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
+  : labels:
+    - source: import { createEventDispatcher } from 'svelte';
+      style: primary
+      start: 0
+      end: 47
+    - source: '''svelte'''
+      style: secondary
+      start: 38
+      end: 46
+    - source: createEventDispatcher
+      style: secondary
+      start: 9
+      end: 30
+    - source: createEventDispatcher
+      style: secondary
+      start: 9
+      end: 30

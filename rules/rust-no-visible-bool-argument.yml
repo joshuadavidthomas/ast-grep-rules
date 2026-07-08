@@ -1,0 +1,34 @@
+id: no-visible-bool-argument
+language: Rust
+severity: warning
+message: "Avoid bool parameters in visible APIs; use a named enum or split the operation instead."
+note: "Boolean arguments hide intent at call sites and do not extend cleanly when a third state appears."
+rule:
+  any:
+    - all:
+        - kind: function_item
+        - has:
+            kind: visibility_modifier
+            stopBy: end
+        - has:
+            kind: parameter
+            has:
+              kind: primitive_type
+              regex: "^bool$"
+              stopBy: end
+            stopBy: end
+    - all:
+        - kind: function_signature_item
+        - inside:
+            kind: trait_item
+            has:
+              kind: visibility_modifier
+              stopBy: end
+            stopBy: end
+        - has:
+            kind: parameter
+            has:
+              kind: primitive_type
+              regex: "^bool$"
+              stopBy: end
+            stopBy: end

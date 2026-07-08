@@ -1,0 +1,30 @@
+id: no-public-tuple-newtype-field
+snapshots:
+  ? |
+    pub struct UserId(pub String);
+  : labels:
+    - source: pub struct UserId(pub String);
+      style: primary
+      start: 0
+      end: 30
+  ? |
+    pub struct Wrapper(pub(crate) String);
+  : labels:
+    - source: pub struct Wrapper(pub(crate) String);
+      style: primary
+      start: 0
+      end: 38
+  ? |
+    pub(crate) struct CrateId(pub Utf8PathBuf);
+  : labels:
+    - source: pub(crate) struct CrateId(pub Utf8PathBuf);
+      style: primary
+      start: 0
+      end: 43
+  ? |
+    pub(super) struct ParentId(pub u64);
+  : labels:
+    - source: pub(super) struct ParentId(pub u64);
+      style: primary
+      start: 0
+      end: 36

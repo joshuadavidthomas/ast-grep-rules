@@ -1,0 +1,12 @@
+id: no-deny-warnings
+valid:
+  - |
+    #![warn(warnings)]
+  - |
+    #![deny(unsafe_code)]
+  - |
+    #[deny(warnings)]
+    mod strict {}
+invalid:
+  - |
+    #![deny(warnings)]

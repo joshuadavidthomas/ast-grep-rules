@@ -1,0 +1,28 @@
+id: no-public-struct-fields
+valid:
+  - |
+    pub struct User {
+        id: UserId,
+        name: UserName,
+    }
+  - |
+    struct Internal {
+        pub id: UserId,
+    }
+  - |
+    pub struct UserId(pub String);
+invalid:
+  - |
+    pub struct User {
+        pub id: UserId,
+        name: UserName,
+    }
+  - |
+    pub(crate) struct Settings {
+        pub(crate) mode: Mode,
+    }
+  - |
+    pub(super) struct Point {
+        pub x: i32,
+        pub y: i32,
+    }

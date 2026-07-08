@@ -1,0 +1,19 @@
+id: no-empty-braced-struct
+valid:
+  - |
+    struct Marker;
+  - |
+    pub struct Marker;
+  - |
+    struct Backoff(Duration);
+  - |
+    struct User {
+        id: UserId,
+    }
+invalid:
+  - |
+    struct Empty {}
+  - |
+    pub struct Empty {}
+  - |
+    pub(crate) struct Marker {}

@@ -1,0 +1,33 @@
+id: no-anyhow-in-public-api
+valid:
+  - |
+    fn parse(input: &str) -> anyhow::Result<Model> {
+        todo!()
+    }
+  - |
+    pub fn parse(input: &str) -> Result<Model, ParseError> {
+        todo!()
+    }
+  - |
+    pub type Result<T> = std::result::Result<T, Error>;
+  - |
+    type Result<T> = anyhow::Result<T>;
+  - |
+    trait Loader {
+        fn load(&self) -> anyhow::Result<Model>;
+    }
+invalid:
+  - |
+    pub fn parse(input: &str) -> anyhow::Result<Model> {
+        todo!()
+    }
+  - |
+    pub fn build(input: &str) -> Result<Model, anyhow::Error> {
+        todo!()
+    }
+  - |
+    pub trait Loader {
+        fn load(&self) -> anyhow::Result<Model>;
+    }
+  - |
+    pub type Result<T> = anyhow::Result<T>;

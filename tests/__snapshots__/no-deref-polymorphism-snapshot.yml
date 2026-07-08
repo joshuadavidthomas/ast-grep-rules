@@ -1,0 +1,50 @@
+id: no-deref-polymorphism
+snapshots:
+  ? |
+    impl Deref for User {
+        type Target = Inner;
+
+        fn deref(&self) -> &Self::Target {
+            &self.inner
+        }
+    }
+  : labels:
+    - source: |-
+        impl Deref for User {
+            type Target = Inner;
+
+            fn deref(&self) -> &Self::Target {
+                &self.inner
+            }
+        }
+      style: primary
+      start: 0
+      end: 114
+    - source: Deref
+      style: secondary
+      start: 5
+      end: 10
+  ? |
+    impl std::ops::Deref for User {
+        type Target = Inner;
+
+        fn deref(&self) -> &Self::Target {
+            &self.inner
+        }
+    }
+  : labels:
+    - source: |-
+        impl std::ops::Deref for User {
+            type Target = Inner;
+
+            fn deref(&self) -> &Self::Target {
+                &self.inner
+            }
+        }
+      style: primary
+      start: 0
+      end: 124
+    - source: std::ops::Deref
+      style: secondary
+      start: 5
+      end: 20

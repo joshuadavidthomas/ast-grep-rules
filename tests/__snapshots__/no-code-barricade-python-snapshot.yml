@@ -1,0 +1,38 @@
+id: no-code-barricade-python
+snapshots:
+  ? |
+    # ******** Validation ********
+    def validate():
+        pass
+  : labels:
+    - source: '# ******** Validation ********'
+      style: primary
+      start: 0
+      end: 30
+  ? |
+    # ------ Parsing ------
+    def parse():
+        pass
+  : labels:
+    - source: '# ------ Parsing ------'
+      style: primary
+      start: 0
+      end: 23
+  ? |
+    # ====================
+    def parse():
+        pass
+  : labels:
+    - source: '# ===================='
+      style: primary
+      start: 0
+      end: 22
+  ? |
+    ##### Storage #####
+    def store():
+        pass
+  : labels:
+    - source: '##### Storage #####'
+      style: primary
+      start: 0
+      end: 19

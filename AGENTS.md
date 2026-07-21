@@ -9,6 +9,7 @@
 ## Commands
 
 ```bash
+just lint               # Audit GitHub Actions workflows with Zizmor.
 just test               # Run all ast-grep rule tests.
 just test --update-all  # Update snapshot baselines after reviewing expected rule output.
 ```

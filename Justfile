@@ -6,6 +6,10 @@ set unstable
 default:
     @just --list --list-submodules
 
+# Audit GitHub Actions workflows
+lint *ARGS:
+    uvx prek run --all-files --show-diff-on-failure --color always {{ ARGS }}
+
 # Run all tests with the pinned ast-grep and Svelte parser
 test *ARGS:
     npm test -- {{ ARGS }}

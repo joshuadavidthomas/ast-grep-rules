@@ -42,7 +42,7 @@ repos:
 
 ## Run from this repository
 
-Install Node.js 18 or newer and [just](https://just.systems/), then install the pinned ast-grep CLI and Svelte parser:
+Install Node.js 18 or newer, [just](https://just.systems/), and [uv](https://docs.astral.sh/uv/), then install the pinned ast-grep CLI and Svelte parser:
 
 ```sh
 npm install
@@ -58,6 +58,12 @@ just scan /path/to/project
 
 ```sh
 just test
+```
+
+Audit the GitHub Actions workflows with Zizmor:
+
+```sh
+just lint
 ```
 
 ## Rule reference

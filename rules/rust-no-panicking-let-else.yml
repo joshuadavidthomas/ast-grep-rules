@@ -1,0 +1,20 @@
+id: rust-no-panicking-let-else
+language: Rust
+severity: error
+message: "Do not end a let-else branch with a panic; handle the failed pattern without crashing."
+note: "A panicking Option or Result let-else is expect under another spelling. Return an error or fallback, or model the invariant so the failed pattern is impossible."
+rule:
+  any:
+    - pattern: "let $PATTERN = $VALUE else { $MACRO!($$$ARGS) };"
+    - pattern: "let $PATTERN = $VALUE else { $$$BODY; $MACRO!($$$ARGS) };"
+    - pattern: "let $PATTERN = $VALUE else { panic!($$$ARGS); };"
+    - pattern: "let $PATTERN = $VALUE else { unreachable!($$$ARGS); };"
+    - pattern: "let $PATTERN = $VALUE else { todo!($$$ARGS); };"
+    - pattern: "let $PATTERN = $VALUE else { unimplemented!($$$ARGS); };"
+    - pattern: "let $PATTERN = $VALUE else { $$$BODY; panic!($$$ARGS); };"
+    - pattern: "let $PATTERN = $VALUE else { $$$BODY; unreachable!($$$ARGS); };"
+    - pattern: "let $PATTERN = $VALUE else { $$$BODY; todo!($$$ARGS); };"
+    - pattern: "let $PATTERN = $VALUE else { $$$BODY; unimplemented!($$$ARGS); };"
+constraints:
+  MACRO:
+    regex: "^(panic|unreachable|todo|unimplemented)$"

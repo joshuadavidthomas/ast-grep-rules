@@ -1,0 +1,81 @@
+id: rust-no-panicking-let-else
+snapshots:
+  ? |
+    fn load(option: Option<Config>) -> Config {
+        let Some(config) = option else {
+            panic!("missing config")
+        };
+        config
+    }
+  : labels:
+    - source: |-
+        let Some(config) = option else {
+                panic!("missing config")
+            };
+      style: primary
+      start: 48
+      end: 120
+  ? |
+    fn load(result: Result<Config, Error>) -> Config {
+        let Ok(config) = result else {
+            log_failure();
+            unreachable!("config load should succeed")
+        };
+        config
+    }
+  : labels:
+    - source: |-
+        let Ok(config) = result else {
+                log_failure();
+                unreachable!("config load should succeed")
+            };
+      style: primary
+      start: 55
+      end: 166
+  ? |
+    fn value(pair: (Option<Value>, bool)) -> Value {
+        let (Some(value), true) = pair else {
+            unimplemented!()
+        };
+        value
+    }
+  : labels:
+    - source: |-
+        let (Some(value), true) = pair else {
+                unimplemented!()
+            };
+      style: primary
+      start: 53
+      end: 122
+  ? |
+    fn value(state: State) -> Value {
+        let State::Ready(value) = state else {
+            record_invalid_state();
+            panic!("state must be ready");
+        };
+        value
+    }
+  : labels:
+    - source: |-
+        let State::Ready(value) = state else {
+                record_invalid_state();
+                panic!("state must be ready");
+            };
+      style: primary
+      start: 38
+      end: 154
+  ? |
+    fn value(state: State) -> Value {
+        let State::Ready(value) = state else {
+            todo!("handle pending state");
+        };
+        value
+    }
+  : labels:
+    - source: |-
+        let State::Ready(value) = state else {
+                todo!("handle pending state");
+            };
+      style: primary
+      start: 38
+      end: 122

@@ -111,6 +111,7 @@ All rules link to their definitions. Most definitions include a `note` with exce
 | [`rust-no-empty-braced-struct`](rules/rust-no-empty-braced-struct.yml) | warning | Empty braced structs. Use a unit struct unless braces carry a schema, FFI, or code-generation contract. |
 | [`rust-no-option-bool-field`](rules/rust-no-option-bool-field.yml) | warning | `Option<bool>` struct fields. Name the three states with an enum. |
 | [`rust-no-panicking-fallback`](rules/rust-no-panicking-fallback.yml) | error | `unwrap_or_else` and `map_or_else` fallbacks that end in a panic or another diverging macro. Handle the failed or absent value instead. |
+| [`rust-no-panicking-let-else`](rules/rust-no-panicking-let-else.yml) | error | `let`-`else` branches that end in a panic or another diverging macro. Return, break, continue, or model the failed pattern. |
 | [`rust-no-public-struct-fields`](rules/rust-no-public-struct-fields.yml) | warning | Visible fields on visible structs. Keep representation private unless the struct is passive data. |
 | [`rust-no-public-tuple-newtype-field`](rules/rust-no-public-tuple-newtype-field.yml) | warning | Visible tuple-newtype fields. Keep the field private and expose chosen constructors or accessors. |
 | [`rust-no-single-field-struct`](rules/rust-no-single-field-struct.yml) | warning | Named-field structs with one field. Use a tuple newtype unless an external schema or FFI needs the field name. |

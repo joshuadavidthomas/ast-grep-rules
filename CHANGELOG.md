@@ -18,6 +18,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- `rust-no-panicking-let-else`, which reports `let`-`else` branches that end in `panic!`, `unreachable!`, `todo!`, or `unimplemented!` instead of handling the failed pattern.
+
 ## [0.2.0]
 
 ### Added

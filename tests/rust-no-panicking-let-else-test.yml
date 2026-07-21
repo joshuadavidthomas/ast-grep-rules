@@ -1,0 +1,78 @@
+id: rust-no-panicking-let-else
+valid:
+  - |
+    fn load(option: Option<Config>) -> Option<Config> {
+        let Some(config) = option else {
+            return None;
+        };
+        Some(config)
+    }
+  - |
+    fn load(result: Result<Config, Error>) -> Result<Config, Error> {
+        let Ok(config) = result else {
+            return result;
+        };
+        Ok(config)
+    }
+  - |
+    fn first_ready(states: Vec<State>) -> Option<Value> {
+        for state in states {
+            let State::Ready(value) = state else {
+                continue;
+            };
+            return Some(value);
+        }
+        None
+    }
+  - |
+    fn load(option: Option<Config>) -> Option<Config> {
+        let Some(config) = option else {
+            if strict_mode() {
+                panic!("strict mode requires config");
+            }
+            return None;
+        };
+        Some(config)
+    }
+  - |
+    fn fail_at_process_boundary(error: Error) -> ! {
+        panic!("startup failed: {error}")
+    }
+invalid:
+  - |
+    fn load(option: Option<Config>) -> Config {
+        let Some(config) = option else {
+            panic!("missing config")
+        };
+        config
+    }
+  - |
+    fn load(result: Result<Config, Error>) -> Config {
+        let Ok(config) = result else {
+            log_failure();
+            unreachable!("config load should succeed")
+        };
+        config
+    }
+  - |
+    fn value(state: State) -> Value {
+        let State::Ready(value) = state else {
+            todo!("handle pending state");
+        };
+        value
+    }
+  - |
+    fn value(pair: (Option<Value>, bool)) -> Value {
+        let (Some(value), true) = pair else {
+            unimplemented!()
+        };
+        value
+    }
+  - |
+    fn value(state: State) -> Value {
+        let State::Ready(value) = state else {
+            record_invalid_state();
+            panic!("state must be ready");
+        };
+        value
+    }

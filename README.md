@@ -11,7 +11,7 @@ Install [prek](https://prek.j178.dev/) (recommended for faster installs and runs
 ```yaml
 repos:
   - repo: https://github.com/joshuadavidthomas/ast-grep-rules
-    rev: v0.1.0
+    rev: v0.2.0
     hooks:
       - id: ast-grep-rules
 ```
@@ -41,7 +41,7 @@ Pass ast-grep's `--off` option once for each rule:
 ```yaml
 repos:
   - repo: https://github.com/joshuadavidthomas/ast-grep-rules
-    rev: v0.1.0
+    rev: v0.2.0
     hooks:
       - id: ast-grep-rules
         args:
@@ -54,7 +54,7 @@ repos:
 Install the tagged Git package in a project that uses Node.js 22, 24, or 26:
 
 ```sh
-npm install --save-dev "github:joshuadavidthomas/ast-grep-rules#v0.1.0"
+npm install --save-dev "github:joshuadavidthomas/ast-grep-rules#v0.2.0"
 npx ast-grep-rules .
 ```
 

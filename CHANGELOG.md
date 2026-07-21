@@ -18,15 +18,18 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+## [0.2.0]
+
 ### Added
 
-- Integration coverage for the packed npm command and the Git-sourced hook.
+- `rust-no-panicking-fallback`, which reports `unwrap_or_else` and `map_or_else` fallbacks that end in `panic!`, `unreachable!`, `todo!`, or `unimplemented!`.
+- `rust-require-reasoned-clippy-suppression`, which requires a `reason` on Clippy `allow`, `expect`, and conditional `cfg_attr` suppressions.
 
 ### Changed
 
-- Recommend prek for faster hook setup and document the first-run install, tracked-file behavior, direct Node.js use, and native parser requirements.
-- Support the maintained Node.js 22, 24, and 26 release lines and test each line in CI.
-- Report the operating system, architecture, and libc when ast-grep or the Svelte parser cannot load.
+- Document use with prek and direct Node.js installation, including first-run setup, tracked-file behavior, and native parser requirements.
+- Support the maintained Node.js 22, 24, and 26 release lines.
+- Include the operating system, architecture, and libc in errors when ast-grep or the Svelte parser cannot load.
 
 ## [0.1.0]
 
@@ -49,5 +52,6 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Josh Thomas <josh@joshthomas.dev> (maintainer)
 
-[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.2.0...HEAD
 [0.1.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.1.0
+[0.2.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.2.0

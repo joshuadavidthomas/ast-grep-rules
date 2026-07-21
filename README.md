@@ -110,6 +110,7 @@ All rules link to their definitions. Most definitions include a `note` with exce
 | [`rust-no-deref-polymorphism`](rules/rust-no-deref-polymorphism.yml) | warning | `Deref` implementations used for API forwarding. Reserve `Deref` for smart pointers and expose methods on other types. |
 | [`rust-no-empty-braced-struct`](rules/rust-no-empty-braced-struct.yml) | warning | Empty braced structs. Use a unit struct unless braces carry a schema, FFI, or code-generation contract. |
 | [`rust-no-option-bool-field`](rules/rust-no-option-bool-field.yml) | warning | `Option<bool>` struct fields. Name the three states with an enum. |
+| [`rust-no-panicking-fallback`](rules/rust-no-panicking-fallback.yml) | error | `unwrap_or_else` and `map_or_else` fallbacks that end in a panic or another diverging macro. Handle the failed or absent value instead. |
 | [`rust-no-public-struct-fields`](rules/rust-no-public-struct-fields.yml) | warning | Visible fields on visible structs. Keep representation private unless the struct is passive data. |
 | [`rust-no-public-tuple-newtype-field`](rules/rust-no-public-tuple-newtype-field.yml) | warning | Visible tuple-newtype fields. Keep the field private and expose chosen constructors or accessors. |
 | [`rust-no-single-field-struct`](rules/rust-no-single-field-struct.yml) | warning | Named-field structs with one field. Use a tuple newtype unless an external schema or FFI needs the field name. |
@@ -117,6 +118,7 @@ All rules link to their definitions. Most definitions include a `note` with exce
 | [`rust-no-string-error-variant`](rules/rust-no-string-error-variant.yml) | warning | Bare `String` payloads in variants of enums named `Error` or ending in `Error`. Keep structured fields or source errors. |
 | [`rust-no-trivial-whitespace-helper`](rules/rust-no-trivial-whitespace-helper.yml) | error | Local helpers that only wrap standard whitespace checks. Inline the check or name the domain policy it implements. |
 | [`rust-no-visible-bool-argument`](rules/rust-no-visible-bool-argument.yml) | warning | `bool` parameters in visible functions and trait methods. Use a named enum or split the operation. |
+| [`rust-require-reasoned-clippy-suppression`](rules/rust-require-reasoned-clippy-suppression.yml) | warning | Clippy `allow` and `expect` attributes without a reason. Record why the local exception should remain. |
 | [`rust-require-thiserror-error-enum`](rules/rust-require-thiserror-error-enum.yml) | warning | Error enums without a `thiserror::Error` derive. Derive it instead of hand-writing error behavior. |
 
 ### TypeScript

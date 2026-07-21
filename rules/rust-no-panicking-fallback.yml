@@ -1,0 +1,40 @@
+id: rust-no-panicking-fallback
+language: Rust
+severity: error
+message: "Do not panic in an unwrap_or_else or map_or_else fallback; handle the absent or failed value."
+note: "A diverging lazy fallback is forced extraction under another spelling. Propagate or convert the error, return a real fallback, or model the invariant in the API."
+rule:
+  any:
+    - pattern: $VALUE.unwrap_or_else($FALLBACK)
+    - pattern: $VALUE.map_or_else($FALLBACK, $SUCCESS)
+    - pattern: Option::unwrap_or_else($VALUE, $FALLBACK)
+    - pattern: Result::unwrap_or_else($VALUE, $FALLBACK)
+    - pattern: Option::map_or_else($VALUE, $FALLBACK, $SUCCESS)
+    - pattern: Result::map_or_else($VALUE, $FALLBACK, $SUCCESS)
+constraints:
+  FALLBACK:
+    any:
+      - pattern: "|$$$PARAMS| $MACRO!($$$ARGS)"
+      - pattern: "|$$$PARAMS| { $MACRO!($$$ARGS) }"
+      - pattern: "|$$$PARAMS| { $$$BODY; $MACRO!($$$ARGS) }"
+      - pattern: "move |$$$PARAMS| $MACRO!($$$ARGS)"
+      - pattern: "move |$$$PARAMS| { $MACRO!($$$ARGS) }"
+      - pattern: "move |$$$PARAMS| { $$$BODY; $MACRO!($$$ARGS) }"
+      - pattern: "|$$$PARAMS| { panic!($$$ARGS); }"
+      - pattern: "|$$$PARAMS| { unreachable!($$$ARGS); }"
+      - pattern: "|$$$PARAMS| { todo!($$$ARGS); }"
+      - pattern: "|$$$PARAMS| { unimplemented!($$$ARGS); }"
+      - pattern: "|$$$PARAMS| { $$$BODY; panic!($$$ARGS); }"
+      - pattern: "|$$$PARAMS| { $$$BODY; unreachable!($$$ARGS); }"
+      - pattern: "|$$$PARAMS| { $$$BODY; todo!($$$ARGS); }"
+      - pattern: "|$$$PARAMS| { $$$BODY; unimplemented!($$$ARGS); }"
+      - pattern: "move |$$$PARAMS| { panic!($$$ARGS); }"
+      - pattern: "move |$$$PARAMS| { unreachable!($$$ARGS); }"
+      - pattern: "move |$$$PARAMS| { todo!($$$ARGS); }"
+      - pattern: "move |$$$PARAMS| { unimplemented!($$$ARGS); }"
+      - pattern: "move |$$$PARAMS| { $$$BODY; panic!($$$ARGS); }"
+      - pattern: "move |$$$PARAMS| { $$$BODY; unreachable!($$$ARGS); }"
+      - pattern: "move |$$$PARAMS| { $$$BODY; todo!($$$ARGS); }"
+      - pattern: "move |$$$PARAMS| { $$$BODY; unimplemented!($$$ARGS); }"
+  MACRO:
+    regex: "^(panic|unreachable|todo|unimplemented)$"

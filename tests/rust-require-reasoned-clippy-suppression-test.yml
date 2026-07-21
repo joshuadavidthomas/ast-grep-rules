@@ -1,0 +1,46 @@
+id: rust-require-reasoned-clippy-suppression
+valid:
+  - |
+    #[expect(
+        clippy::too_many_lines,
+        reason = "the test describes one ordered cancellation scenario"
+    )]
+    fn cancellation_scenario() {}
+  - |
+    #[allow(
+        clippy::module_name_repetitions,
+        reason = "the public type name follows the protocol vocabulary"
+    )]
+    pub struct ProtocolMessage;
+  - |
+    #![allow(
+        clippy::missing_errors_doc,
+        reason = "error behavior is documented on the Error enum"
+    )]
+  - |
+    #[cfg_attr(
+        test,
+        allow(clippy::expect_used, reason = "tests use assertions with context")
+    )]
+    mod tests {}
+  - |
+    #[allow(dead_code)]
+    fn generated_entry_point() {}
+invalid:
+  - |
+    #[allow(clippy::too_many_lines)]
+    fn cancellation_scenario() {}
+  - |
+    #[expect(clippy::large_enum_variant)]
+    enum Message {
+        Small(u8),
+        Large([u8; 1024]),
+    }
+  - |
+    #![allow(clippy::pedantic)]
+  - |
+    #[allow(clippy::too_many_arguments, clippy::type_complexity)]
+    fn adapter(a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H) {}
+  - |
+    #[cfg_attr(test, allow(clippy::unwrap_used))]
+    mod tests {}

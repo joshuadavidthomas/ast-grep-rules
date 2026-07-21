@@ -1,0 +1,65 @@
+id: rust-no-panicking-fallback
+valid:
+  - |
+    fn load(result: Result<Config, Error>) -> Config {
+        result.unwrap_or_else(|error| recover(error))
+    }
+  - |
+    fn load(option: Option<Config>) -> Config {
+        option.unwrap_or_else(Config::default)
+    }
+  - |
+    fn load(option: Option<u32>) -> u32 {
+        option.unwrap_or_else(|| {
+            if strict_mode() {
+                panic!("strict mode requires a value");
+            }
+            0
+        })
+    }
+  - |
+    fn fail_at_process_boundary(error: Error) -> ! {
+        panic!("startup failed: {error}")
+    }
+  - |
+    fn describe(result: Result<Value, Error>) -> String {
+        result.map_or_else(|error| error.to_string(), |value| value.to_string())
+    }
+invalid:
+  - |
+    fn load(result: Result<Config, Error>) -> Config {
+        result.unwrap_or_else(|error| panic!("failed to load config: {error}"))
+    }
+  - |
+    fn load(option: Option<Config>) -> Config {
+        option.unwrap_or_else(|| {
+            log_missing_config();
+            panic!("missing config")
+        })
+    }
+  - |
+    fn load(option: Option<Config>) -> Config {
+        option.unwrap_or_else(move || unimplemented!("load config"))
+    }
+  - |
+    fn load(option: Option<()>) {
+        option.unwrap_or_else(|| {
+            unreachable!("config must be present");
+        })
+    }
+  - |
+    fn load(result: Result<Config, Error>) -> Config {
+        result.map_or_else(|error| todo!("handle {error}"), |config| config)
+    }
+  - |
+    fn load(result: Result<Config, Error>) -> Config {
+        Result::unwrap_or_else(result, |error| panic!("failed to load config: {error}"))
+    }
+  - |
+    fn load(option: Option<Config>) -> Config {
+        Option::map_or_else(
+            option,
+            || panic!("missing config"),
+            |config| config,
+        )
+    }

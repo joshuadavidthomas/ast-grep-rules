@@ -1,0 +1,86 @@
+id: rust-no-panicking-fallback
+snapshots:
+  ? |
+    fn load(option: Option<()>) {
+        option.unwrap_or_else(|| {
+            unreachable!("config must be present");
+        })
+    }
+  : labels:
+    - source: |-
+        option.unwrap_or_else(|| {
+                unreachable!("config must be present");
+            })
+      style: primary
+      start: 34
+      end: 115
+  ? |
+    fn load(option: Option<Config>) -> Config {
+        Option::map_or_else(
+            option,
+            || panic!("missing config"),
+            |config| config,
+        )
+    }
+  : labels:
+    - source: |-
+        Option::map_or_else(
+                option,
+                || panic!("missing config"),
+                |config| config,
+            )
+      style: primary
+      start: 48
+      end: 152
+  ? |
+    fn load(option: Option<Config>) -> Config {
+        option.unwrap_or_else(move || unimplemented!("load config"))
+    }
+  : labels:
+    - source: option.unwrap_or_else(move || unimplemented!("load config"))
+      style: primary
+      start: 48
+      end: 108
+  ? |
+    fn load(option: Option<Config>) -> Config {
+        option.unwrap_or_else(|| {
+            log_missing_config();
+            panic!("missing config")
+        })
+    }
+  : labels:
+    - source: |-
+        option.unwrap_or_else(|| {
+                log_missing_config();
+                panic!("missing config")
+            })
+      style: primary
+      start: 48
+      end: 144
+  ? |
+    fn load(result: Result<Config, Error>) -> Config {
+        Result::unwrap_or_else(result, |error| panic!("failed to load config: {error}"))
+    }
+  : labels:
+    - source: 'Result::unwrap_or_else(result, |error| panic!("failed to load config: {error}"))'
+      style: primary
+      start: 55
+      end: 135
+  ? |
+    fn load(result: Result<Config, Error>) -> Config {
+        result.map_or_else(|error| todo!("handle {error}"), |config| config)
+    }
+  : labels:
+    - source: result.map_or_else(|error| todo!("handle {error}"), |config| config)
+      style: primary
+      start: 55
+      end: 123
+  ? |
+    fn load(result: Result<Config, Error>) -> Config {
+        result.unwrap_or_else(|error| panic!("failed to load config: {error}"))
+    }
+  : labels:
+    - source: 'result.unwrap_or_else(|error| panic!("failed to load config: {error}"))'
+      style: primary
+      start: 55
+      end: 126

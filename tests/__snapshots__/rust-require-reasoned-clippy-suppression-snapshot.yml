@@ -1,0 +1,44 @@
+id: rust-require-reasoned-clippy-suppression
+snapshots:
+  ? |
+    #![allow(clippy::pedantic)]
+  : labels:
+    - source: '#![allow(clippy::pedantic)]'
+      style: primary
+      start: 0
+      end: 27
+  ? |
+    #[allow(clippy::too_many_arguments, clippy::type_complexity)]
+    fn adapter(a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H) {}
+  : labels:
+    - source: '#[allow(clippy::too_many_arguments, clippy::type_complexity)]'
+      style: primary
+      start: 0
+      end: 61
+  ? |
+    #[allow(clippy::too_many_lines)]
+    fn cancellation_scenario() {}
+  : labels:
+    - source: '#[allow(clippy::too_many_lines)]'
+      style: primary
+      start: 0
+      end: 32
+  ? |
+    #[cfg_attr(test, allow(clippy::unwrap_used))]
+    mod tests {}
+  : labels:
+    - source: '#[cfg_attr(test, allow(clippy::unwrap_used))]'
+      style: primary
+      start: 0
+      end: 45
+  ? |
+    #[expect(clippy::large_enum_variant)]
+    enum Message {
+        Small(u8),
+        Large([u8; 1024]),
+    }
+  : labels:
+    - source: '#[expect(clippy::large_enum_variant)]'
+      style: primary
+      start: 0
+      end: 37

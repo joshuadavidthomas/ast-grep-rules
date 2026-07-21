@@ -1,0 +1,15 @@
+id: rust-require-reasoned-clippy-suppression
+language: Rust
+severity: warning
+message: "Explain this Clippy suppression with a reason."
+note: "Add reason = \"...\". Prefer expect for a known finding so Rust reports when the lint no longer applies; use allow when the lint applies only in some builds."
+rule:
+  all:
+    - any:
+        - kind: attribute_item
+        - kind: inner_attribute_item
+    - any:
+        - regex: "^#!?\\[(allow|expect)\\([^]]*clippy::"
+        - regex: "^#!?\\[cfg_attr\\([^]]*,\\s*(allow|expect)\\([^]]*clippy::"
+    - not:
+        regex: "reason\\s*="

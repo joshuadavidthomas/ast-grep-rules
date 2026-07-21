@@ -1,4 +1,4 @@
-id: no-deref-polymorphism
+id: rust-no-deref-polymorphism
 valid:
   - |
     impl User {

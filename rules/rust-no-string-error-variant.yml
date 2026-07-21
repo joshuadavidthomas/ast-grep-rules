@@ -1,4 +1,4 @@
-id: no-string-error-variant
+id: rust-no-string-error-variant
 language: Rust
 severity: warning
 message: "Do not store bare String payloads in error variants; use structured fields or source errors."

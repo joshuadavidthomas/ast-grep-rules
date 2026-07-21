@@ -1,4 +1,4 @@
-id: no-visible-bool-argument
+id: rust-no-visible-bool-argument
 valid:
   - |
     fn private_render(compact: bool) {}

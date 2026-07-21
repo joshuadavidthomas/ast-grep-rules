@@ -1,4 +1,4 @@
-id: no-create-event-dispatcher
+id: svelte-no-create-event-dispatcher
 snapshots:
   ? |
     import { createEventDispatcher as createDispatcher } from 'svelte';

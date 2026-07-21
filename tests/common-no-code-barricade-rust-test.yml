@@ -1,4 +1,4 @@
-id: no-code-barricade-rust
+id: rust-no-code-barricade
 valid:
   - |
     // Parsing

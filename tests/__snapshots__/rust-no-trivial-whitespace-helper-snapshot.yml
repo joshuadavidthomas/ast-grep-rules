@@ -1,4 +1,4 @@
-id: no-trivial-whitespace-helper
+id: rust-no-trivial-whitespace-helper
 snapshots:
   ? |
     fn is_blank(text: &str) -> bool {

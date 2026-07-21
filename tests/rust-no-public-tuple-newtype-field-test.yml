@@ -1,4 +1,4 @@
-id: no-public-tuple-newtype-field
+id: rust-no-public-tuple-newtype-field
 valid:
   - |
     pub struct UserId(String);

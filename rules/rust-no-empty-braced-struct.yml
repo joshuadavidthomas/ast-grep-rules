@@ -1,4 +1,4 @@
-id: no-empty-braced-struct
+id: rust-no-empty-braced-struct
 language: Rust
 severity: warning
 message: "Prefer a unit struct over an empty braced struct."

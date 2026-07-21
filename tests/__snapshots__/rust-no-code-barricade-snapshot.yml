@@ -1,0 +1,42 @@
+id: rust-no-code-barricade
+snapshots:
+  ? |
+    /* ******** Parsing ******** */
+    fn parse() {}
+  : labels:
+    - source: /* ******** Parsing ******** */
+      style: primary
+      start: 0
+      end: 31
+  ? |
+    // ##### Storage #####
+    fn store() {}
+  : labels:
+    - source: '// ##### Storage #####'
+      style: primary
+      start: 0
+      end: 22
+  ? |
+    // //////////////// Storage ////////////////
+    fn store() {}
+  : labels:
+    - source: // //////////////// Storage ////////////////
+      style: primary
+      start: 0
+      end: 44
+  ? |
+    // ====================
+    fn parse() {}
+  : labels:
+    - source: // ====================
+      style: primary
+      start: 0
+      end: 23
+  ? |
+    // ────── Validation ──────
+    fn validate() {}
+  : labels:
+    - source: // ────── Validation ──────
+      style: primary
+      start: 0
+      end: 51

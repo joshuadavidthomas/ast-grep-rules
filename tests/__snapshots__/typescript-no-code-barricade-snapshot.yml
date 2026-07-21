@@ -1,24 +1,32 @@
-id: no-code-barricade-rust
+id: typescript-no-code-barricade
 snapshots:
   ? |
     /* ******** Parsing ******** */
-    fn parse() {}
+    function parse() {}
   : labels:
     - source: /* ******** Parsing ******** */
       style: primary
       start: 0
       end: 31
   ? |
-    // ##### Storage #####
-    fn store() {}
+    // ------ Validation ------
+    function validate() {}
   : labels:
-    - source: '// ##### Storage #####'
+    - source: // ------ Validation ------
+      style: primary
+      start: 0
+      end: 27
+  ? |
+    // ///// Storage /////
+    function store() {}
+  : labels:
+    - source: // ///// Storage /////
       style: primary
       start: 0
       end: 22
   ? |
     // //////////////// Storage ////////////////
-    fn store() {}
+    function store() {}
   : labels:
     - source: // //////////////// Storage ////////////////
       style: primary
@@ -26,17 +34,9 @@ snapshots:
       end: 44
   ? |
     // ====================
-    fn parse() {}
+    function parse() {}
   : labels:
     - source: // ====================
       style: primary
       start: 0
       end: 23
-  ? |
-    // ────── Validation ──────
-    fn validate() {}
-  : labels:
-    - source: // ────── Validation ──────
-      style: primary
-      start: 0
-      end: 51

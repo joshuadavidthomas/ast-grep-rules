@@ -1,4 +1,4 @@
-id: require-thiserror-error-enum
+id: rust-require-thiserror-error-enum
 snapshots:
   ? |
     enum Error {

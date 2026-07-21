@@ -1,4 +1,4 @@
-id: no-deny-warnings
+id: rust-no-deny-warnings
 valid:
   - |
     #![warn(warnings)]

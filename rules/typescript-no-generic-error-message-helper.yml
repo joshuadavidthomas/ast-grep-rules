@@ -1,4 +1,4 @@
-id: no-generic-error-message-helper
+id: typescript-no-generic-error-message-helper
 language: TypeScript
 severity: error
 message: "Do not normalize unknown errors with a generic getErrorMessage helper; preserve structured error data instead."

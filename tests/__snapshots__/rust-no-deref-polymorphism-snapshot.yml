@@ -1,4 +1,4 @@
-id: no-deref-polymorphism
+id: rust-no-deref-polymorphism
 snapshots:
   ? |
     impl Deref for User {

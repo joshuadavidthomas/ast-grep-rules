@@ -1,4 +1,4 @@
-id: no-code-barricade-rust
+id: rust-no-code-barricade
 language: Rust
 severity: warning
 message: "Replace this decorative divider with a plain section comment."
@@ -8,7 +8,7 @@ rule:
     - kind: block_comment
   regex: '(?s).*(?:={5,}|-{5,}|─{5,}|\*{5,}|/{8,}).*'
 ---
-id: no-code-barricade-typescript
+id: typescript-no-code-barricade
 language: TypeScript
 severity: warning
 message: "Replace this decorative divider with a plain section comment."
@@ -16,7 +16,7 @@ rule:
   kind: comment
   regex: '(?s).*(?:={5,}|-{5,}|─{5,}|\*{5,}|/{8,}).*'
 ---
-id: no-code-barricade-html
+id: html-no-code-barricade
 language: Html
 severity: warning
 message: "Replace this decorative divider with a plain section comment."
@@ -24,7 +24,7 @@ rule:
   kind: comment
   regex: '(?s).*(?:={5,}|-{5,}|─{5,}|\*{5,}).*'
 ---
-id: no-code-barricade-svelte
+id: svelte-no-code-barricade
 language: svelte
 severity: warning
 message: "Replace this decorative divider with a plain section comment."
@@ -32,7 +32,7 @@ rule:
   kind: comment
   regex: '(?s).*(?:={5,}|-{5,}|─{5,}|\*{5,}).*'
 ---
-id: no-code-barricade-python
+id: python-no-code-barricade
 language: Python
 severity: warning
 message: "Replace this decorative divider with a plain section comment."
@@ -40,7 +40,7 @@ rule:
   kind: comment
   regex: '(?s).*(?:={5,}|-{5,}|─{5,}|\*{5,}|#{5,}).*'
 ---
-id: no-code-barricade-go
+id: go-no-code-barricade
 language: Go
 severity: warning
 message: "Replace this decorative divider with a plain section comment."

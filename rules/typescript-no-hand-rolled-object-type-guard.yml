@@ -1,4 +1,4 @@
-id: no-hand-rolled-object-type-guard
+id: typescript-no-hand-rolled-object-type-guard
 language: TypeScript
 severity: error
 message: "Do not hand-roll object type guards for unknown input; parse it with a validation schema instead."

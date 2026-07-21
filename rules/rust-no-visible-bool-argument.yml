@@ -1,4 +1,4 @@
-id: no-visible-bool-argument
+id: rust-no-visible-bool-argument
 language: Rust
 severity: warning
 message: "Avoid bool parameters in visible APIs; use a named enum or split the operation instead."

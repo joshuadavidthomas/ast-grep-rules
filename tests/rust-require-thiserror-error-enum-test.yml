@@ -1,4 +1,4 @@
-id: require-thiserror-error-enum
+id: rust-require-thiserror-error-enum
 valid:
   - |
     #[derive(thiserror::Error, Debug)]

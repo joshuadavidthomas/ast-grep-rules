@@ -1,4 +1,4 @@
-id: no-single-member-enum
+id: rust-no-single-member-enum
 language: Rust
 severity: warning
 message: "Consider replacing this single-variant enum with a struct, newtype, or the missing variants."

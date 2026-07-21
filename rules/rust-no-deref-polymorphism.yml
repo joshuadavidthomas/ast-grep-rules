@@ -1,4 +1,4 @@
-id: no-deref-polymorphism
+id: rust-no-deref-polymorphism
 language: Rust
 severity: warning
 message: "Avoid implementing Deref for API forwarding; expose explicit methods unless this type is a true smart pointer."

@@ -1,4 +1,4 @@
-id: no-option-bool-field
+id: rust-no-option-bool-field
 language: Rust
 severity: warning
 message: "Avoid Option<bool> fields; replace the implicit three-state flag with a named enum."

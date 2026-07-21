@@ -1,4 +1,4 @@
-id: require-thiserror-error-enum
+id: rust-require-thiserror-error-enum
 language: Rust
 severity: warning
 message: "Derive thiserror::Error for error enums instead of hand-rolling error behavior."

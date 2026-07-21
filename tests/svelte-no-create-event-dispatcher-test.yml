@@ -1,4 +1,4 @@
-id: no-create-event-dispatcher
+id: svelte-no-create-event-dispatcher
 valid:
   - |
     import { onMount } from 'svelte';

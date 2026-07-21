@@ -49,7 +49,7 @@ test("the wrapper scans plain and TypeScript Svelte scripts", () => {
     assert.match(output, /plain\.svelte/);
     assert.match(output, /typescript\.svelte/);
     assert.equal(
-      output.match(/warning\[no-create-event-dispatcher\]/g)?.length,
+      output.match(/warning\[svelte-no-create-event-dispatcher\]/g)?.length,
       4,
       output,
     );

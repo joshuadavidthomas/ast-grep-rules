@@ -1,4 +1,4 @@
-id: no-code-barricade-go
+id: go-no-code-barricade
 valid:
   - |
     package example

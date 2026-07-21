@@ -1,4 +1,4 @@
-id: no-anyhow-in-public-api
+id: rust-no-anyhow-in-public-api
 language: Rust
 severity: warning
 message: "Do not expose anyhow in public APIs; return a typed error instead."

@@ -1,4 +1,4 @@
-id: no-hand-rolled-object-type-guard
+id: typescript-no-hand-rolled-object-type-guard
 snapshots:
   ? |
     const isRecord = (value: unknown): value is Record<string, unknown> =>

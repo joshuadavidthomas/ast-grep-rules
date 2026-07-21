@@ -1,4 +1,4 @@
-id: no-public-struct-fields
+id: rust-no-public-struct-fields
 language: Rust
 severity: warning
 message: "Avoid visible fields on visible structs; keep representation private unless this is a passive data type."

@@ -1,4 +1,4 @@
-id: no-anyhow-in-public-api
+id: rust-no-anyhow-in-public-api
 valid:
   - |
     fn parse(input: &str) -> anyhow::Result<Model> {

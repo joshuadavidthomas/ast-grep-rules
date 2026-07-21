@@ -1,4 +1,4 @@
-id: no-trivial-whitespace-helper
+id: rust-no-trivial-whitespace-helper
 language: Rust
 severity: error
 message: "Do not wrap std whitespace predicates in a local helper; inline trim().is_empty() or name the domain concept."

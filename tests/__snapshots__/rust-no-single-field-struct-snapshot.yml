@@ -1,4 +1,4 @@
-id: no-single-field-struct
+id: rust-no-single-field-struct
 snapshots:
   ? |
     pub struct UserId {

@@ -1,4 +1,4 @@
-id: no-hand-rolled-object-type-guard
+id: typescript-no-hand-rolled-object-type-guard
 valid:
   - |
     const UserSchema = z.object({

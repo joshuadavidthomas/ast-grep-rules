@@ -1,4 +1,4 @@
-id: no-option-bool-field
+id: rust-no-option-bool-field
 snapshots:
   ? |
     pub struct Query {

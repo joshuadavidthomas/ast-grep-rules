@@ -1,4 +1,4 @@
-id: no-public-tuple-newtype-field
+id: rust-no-public-tuple-newtype-field
 language: Rust
 severity: warning
 message: "Avoid visible tuple newtype fields; keep the field private and expose intentional constructors or accessors."

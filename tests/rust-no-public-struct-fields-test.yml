@@ -1,4 +1,4 @@
-id: no-public-struct-fields
+id: rust-no-public-struct-fields
 valid:
   - |
     pub struct User {

@@ -1,4 +1,4 @@
-id: no-generic-error-message-helper
+id: typescript-no-generic-error-message-helper
 valid:
   - |
     try {

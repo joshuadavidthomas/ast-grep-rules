@@ -1,42 +1,52 @@
-id: no-code-barricade-typescript
+id: go-no-code-barricade
 snapshots:
   ? |
+    package example
+
     /* ******** Parsing ******** */
-    function parse() {}
+    func parse() {}
   : labels:
     - source: /* ******** Parsing ******** */
       style: primary
-      start: 0
-      end: 31
+      start: 17
+      end: 48
   ? |
+    package example
+
     // ------ Validation ------
-    function validate() {}
+    func validate() {}
   : labels:
     - source: // ------ Validation ------
       style: primary
-      start: 0
-      end: 27
+      start: 17
+      end: 44
   ? |
-    // ///// Storage /////
-    function store() {}
-  : labels:
-    - source: // ///// Storage /////
-      style: primary
-      start: 0
-      end: 22
-  ? |
+    package example
+
     // //////////////// Storage ////////////////
-    function store() {}
+    func store() {}
   : labels:
     - source: // //////////////// Storage ////////////////
       style: primary
-      start: 0
-      end: 44
+      start: 17
+      end: 61
   ? |
+    package example
+
     // ====================
-    function parse() {}
+    func parse() {}
   : labels:
     - source: // ====================
       style: primary
-      start: 0
-      end: 23
+      start: 17
+      end: 40
+  ? |
+    package example
+
+    // _____ Storage _____
+    func store() {}
+  : labels:
+    - source: // _____ Storage _____
+      style: primary
+      start: 17
+      end: 39

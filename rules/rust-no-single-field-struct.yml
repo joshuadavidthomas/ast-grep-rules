@@ -1,4 +1,4 @@
-id: no-single-field-struct
+id: rust-no-single-field-struct
 language: Rust
 severity: warning
 message: "Prefer a tuple newtype over a named-field struct with only one field."

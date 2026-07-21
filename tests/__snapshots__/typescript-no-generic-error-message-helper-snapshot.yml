@@ -1,4 +1,4 @@
-id: no-generic-error-message-helper
+id: typescript-no-generic-error-message-helper
 snapshots:
   ? |
     const getErrorMessage = (error: unknown): string =>

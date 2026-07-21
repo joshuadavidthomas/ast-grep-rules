@@ -1,4 +1,4 @@
-id: no-string-error-variant
+id: rust-no-string-error-variant
 valid:
   - |
     #[derive(thiserror::Error, Debug)]

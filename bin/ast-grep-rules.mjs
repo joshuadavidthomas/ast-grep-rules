@@ -17,30 +17,58 @@ const scriptPath = realpathSync(fileURLToPath(import.meta.url));
 const packageRoot = dirname(dirname(scriptPath));
 const require = createRequire(import.meta.url);
 
-function resolveAstGrep() {
-  const packageJson = require.resolve("@ast-grep/cli/package.json");
-  const packageRequire = createRequire(packageJson);
-  const { resolveBinaryPath } = packageRequire("./postinstall.js");
-  const binaryPath = resolveBinaryPath();
+function describeRuntime() {
+  const libc =
+    process.platform === "linux"
+      ? process.report?.getReport()?.header?.glibcVersionRuntime
+        ? "glibc"
+        : "musl or unknown libc"
+      : undefined;
 
-  if (!binaryPath) {
+  return [process.platform, process.arch, libc].filter(Boolean).join("/");
+}
+
+function resolveAstGrep() {
+  try {
+    const packageJson = require.resolve("@ast-grep/cli/package.json");
+    const packageRequire = createRequire(packageJson);
+    const { resolveBinaryPath } = packageRequire("./postinstall.js");
+    const binaryPath = resolveBinaryPath();
+
+    if (!binaryPath) {
+      throw new Error("no matching optional binary package was installed");
+    }
+
+    return binaryPath;
+  } catch (error) {
     throw new Error(
-      "The @ast-grep/cli native binary is missing. Reinstall without --no-optional.",
+      `Could not load ast-grep for ${describeRuntime()}. ` +
+        "Supported targets are glibc Linux x64/arm64, macOS x64/arm64, " +
+        "and Windows x64/arm64/ia32. If this target is supported, reinstall " +
+        `without --no-optional. ${error.message}`,
     );
   }
-
-  return binaryPath;
 }
 
 function resolveSvelteParser() {
-  const packageJson = require.resolve(
-    "@tree-sitter-grammars/tree-sitter-svelte/package.json",
-  );
-  const parserRoot = dirname(packageJson);
-  const packageRequire = createRequire(packageJson);
-  const nodeGypBuild = packageRequire("node-gyp-build");
+  try {
+    const packageJson = require.resolve(
+      "@tree-sitter-grammars/tree-sitter-svelte/package.json",
+    );
+    const parserRoot = dirname(packageJson);
+    const packageRequire = createRequire(packageJson);
+    const nodeGypBuild = packageRequire("node-gyp-build");
 
-  return realpathSync(nodeGypBuild.path(parserRoot));
+    return realpathSync(nodeGypBuild.path(parserRoot));
+  } catch (error) {
+    throw new Error(
+      `Could not load the Svelte parser for ${describeRuntime()}. ` +
+        "Prebuilt parsers cover glibc Linux x64, macOS x64/arm64, and " +
+        "Windows x64. Other targets need Python and a native compiler. " +
+        "After adding those tools, reinstall the hook environment or run " +
+        `npm rebuild. ${error.message}`,
+    );
+  }
 }
 
 function renderConfig(parserPath) {

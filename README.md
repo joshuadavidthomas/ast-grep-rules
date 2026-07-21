@@ -4,9 +4,9 @@ An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, Ty
 
 The rules catch API design problems, weak error handling, deprecated Svelte patterns, and code clutter. Use the whole set or turn off rules that do not fit a project.
 
-## Use with pre-commit
+## Use with prek or pre-commit
 
-Install [pre-commit](https://pre-commit.com/#install), then add the hook to `.pre-commit-config.yaml`:
+Install [prek](https://prek.j178.dev/) (recommended for faster installs and runs) or [pre-commit](https://pre-commit.com/#install). Both use the same `.pre-commit-config.yaml`:
 
 ```yaml
 repos:
@@ -16,14 +16,23 @@ repos:
       - id: ast-grep-rules
 ```
 
-Install the hook and run it against the repository:
+With prek, install the Git hook and prepare its environment up front:
 
 ```sh
-pre-commit install
+prek install --prepare-hooks
+prek run ast-grep-rules --all-files
+```
+
+The equivalent pre-commit commands are:
+
+```sh
+pre-commit install --install-hooks
 pre-commit run ast-grep-rules --all-files
 ```
 
-The hook brings its own ast-grep install, Svelte parser, and configuration. The project using it does not need an `sgconfig.yml`.
+Preparing the hook downloads an isolated Node.js environment, ast-grep, and the Svelte parser. Later runs reuse that environment. The project does not need Node.js or an `sgconfig.yml`.
+
+Both tools scan tracked files. Add a new file to version control before expecting `--all-files` to include it. Rules with warning severity print findings without failing the hook; error rules fail it.
 
 ### Turn off rules
 
@@ -40,9 +49,20 @@ repos:
           - --off=rust-no-visible-bool-argument
 ```
 
+## Use as a Node.js command
+
+Install the tagged Git package in a project that uses Node.js 22, 24, or 26:
+
+```sh
+npm install --save-dev "github:joshuadavidthomas/ast-grep-rules#v0.1.0"
+npx ast-grep-rules .
+```
+
+The command uses its packaged rules and configuration. Pass any [`ast-grep scan`](https://ast-grep.github.io/reference/cli/scan.html) options after the command.
+
 ## Run from this repository
 
-Install Node.js 18 or newer, [just](https://just.systems/), and [uv](https://docs.astral.sh/uv/), then install the pinned ast-grep CLI and Svelte parser:
+Install a [maintained Node.js release](https://nodejs.org/en/about/previous-releases) (22, 24, or 26) and [just](https://just.systems/), then install the pinned ast-grep CLI and Svelte parser:
 
 ```sh
 npm install
@@ -60,7 +80,7 @@ just scan /path/to/project
 just test
 ```
 
-Audit the GitHub Actions workflows with Zizmor:
+Install [uv](https://docs.astral.sh/uv/) only if you need to audit the GitHub Actions workflows with Zizmor:
 
 ```sh
 just lint
@@ -114,7 +134,7 @@ All rules link to their definitions. Most definitions include a `note` with exce
 
 The wrapper registers [`tree-sitter-svelte`](https://github.com/tree-sitter-grammars/tree-sitter-svelte) as an ast-grep custom language, so Svelte rules can match component and template nodes such as `{#if}` and `{#each}` blocks. It injects every `<script>` body as TypeScript so script rules also work with plain and `lang="ts"` blocks.
 
-The parser package includes native builds for Linux x64, macOS x64 and arm64, and Windows x64. On Linux arm64 and Windows arm64 or 32-bit x86, installation builds the parser from source and needs a native compiler. The pinned ast-grep CLI does not support other targets such as musl Linux.
+The parser installs without a compiler on glibc Linux x64, macOS x64 and arm64, and Windows x64. Linux arm64 and Windows arm64 or 32-bit x86 build the parser from source and need Python plus a native compiler. The pinned ast-grep CLI does not support other targets such as musl Linux.
 
 ## Add or change a rule
 

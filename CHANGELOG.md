@@ -18,6 +18,16 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- Integration coverage for the packed npm command and the Git-sourced hook.
+
+### Changed
+
+- Recommend prek for faster hook setup and document the first-run install, tracked-file behavior, direct Node.js use, and native parser requirements.
+- Support the maintained Node.js 22, 24, and 26 release lines and test each line in CI.
+- Report the operating system, architecture, and libc when ast-grep or the Svelte parser cannot load.
+
 ## [0.1.0]
 
 ### Added

@@ -2,32 +2,57 @@
 
 An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, TypeScript, Svelte, HTML, Python, and Go projects.
 
-The rules catch API design problems, weak error handling, deprecated Svelte patterns, and code clutter. Use the whole set or turn off rules that do not fit a project.
+The rules catch API design problems, weak error handling, deprecated Svelte patterns, and code clutter. Pre-commit users can choose rules by language or run the whole set.
 
 ## Use with prek or pre-commit
 
-Install [prek](https://prek.j178.dev/) (recommended for faster installs and runs) or [pre-commit](https://pre-commit.com/#install). Both use the same `.pre-commit-config.yaml`:
+Install [prek](https://prek.j178.dev/) (recommended for faster installs and runs) or [pre-commit](https://pre-commit.com/#install). Both use the same `.pre-commit-config.yaml`.
+
+Choose `all` to run every rule:
 
 ```yaml
 repos:
   - repo: https://github.com/joshuadavidthomas/ast-grep-rules
-    rev: v0.3.0
+    rev: main
     hooks:
-      - id: ast-grep-rules
+      - id: all
 ```
+
+Set `rev` to a release tag when you want a fixed version. To select language groups instead, list only the hooks the project needs:
+
+```yaml
+repos:
+  - repo: https://github.com/joshuadavidthomas/ast-grep-rules
+    rev: main
+    hooks:
+      - id: typescript
+      - id: svelte
+```
+
+| Hook | Files checked | Rules selected |
+| --- | --- | --- |
+| `all` | All text files | Every rule |
+| `rust` | Rust | IDs starting with `rust-` |
+| `typescript` | TypeScript and Svelte script blocks | IDs starting with `typescript-` |
+| `svelte` | Svelte | IDs starting with `svelte-` |
+| `html` | HTML | IDs starting with `html-` |
+| `python` | Python | IDs starting with `python-` |
+| `go` | Go | IDs starting with `go-` |
+
+Language hooks include the shared checks for that language because shared rule IDs carry the same language prefix. For example, `rust` includes `rust-no-code-barricade`.
 
 With prek, install the Git hook and prepare its environment up front:
 
 ```sh
 prek install --prepare-hooks
-prek run ast-grep-rules --all-files
+prek run all --all-files
 ```
 
 The equivalent pre-commit commands are:
 
 ```sh
 pre-commit install --install-hooks
-pre-commit run ast-grep-rules --all-files
+pre-commit run all --all-files
 ```
 
 Preparing the hook downloads an isolated Node.js environment, ast-grep, and the Svelte parser. Later runs reuse that environment. The project does not need Node.js or an `sgconfig.yml`.
@@ -41,9 +66,9 @@ Pass ast-grep's `--off` option once for each rule:
 ```yaml
 repos:
   - repo: https://github.com/joshuadavidthomas/ast-grep-rules
-    rev: v0.3.0
+    rev: main
     hooks:
-      - id: ast-grep-rules
+      - id: rust
         args:
           - --off=rust-no-single-field-struct
           - --off=rust-no-visible-bool-argument

@@ -1,7 +1,56 @@
-- id: ast-grep-rules
-  name: ast-grep rules
-  description: Shared ast-grep checks from joshuadavidthomas/ast-grep-rules
+- id: all
+  name: ast-grep rules (all)
+  description: Run every rule from joshuadavidthomas/ast-grep-rules
   entry: ast-grep-rules
   language: node
   types: [text]
+  pass_filenames: true
+
+- id: rust
+  name: ast-grep rules (Rust)
+  description: Run the Rust rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^rust-
+  language: node
+  types: [rust]
+  pass_filenames: true
+
+- id: typescript
+  name: ast-grep rules (TypeScript)
+  description: Run the TypeScript rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^typescript-
+  language: node
+  types: [text]
+  files: \.(ts|tsx|mts|cts|svelte)$
+  pass_filenames: true
+
+- id: svelte
+  name: ast-grep rules (Svelte)
+  description: Run the Svelte rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^svelte-
+  language: node
+  types: [svelte]
+  pass_filenames: true
+
+- id: html
+  name: ast-grep rules (HTML)
+  description: Run the HTML rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^html-
+  language: node
+  types: [html]
+  pass_filenames: true
+
+- id: python
+  name: ast-grep rules (Python)
+  description: Run the Python rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^python-
+  language: node
+  types_or: [python, pyi]
+  pass_filenames: true
+
+- id: go
+  name: ast-grep rules (Go)
+  description: Run the Go rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^go-
+  language: node
+  types: [go]
   pass_filenames: true

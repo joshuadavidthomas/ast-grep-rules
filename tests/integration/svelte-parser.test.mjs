@@ -53,6 +53,34 @@ test("the wrapper scans plain and TypeScript Svelte scripts", () => {
       4,
       output,
     );
+
+    const typeScriptRuleFixture = join(fixtureDir, "typescript-rule.svelte");
+    writeFileSync(
+      typeScriptRuleFixture,
+      `<script lang="ts">
+  function getErrorMessage(error: unknown): string {
+    return error instanceof Error ? error.message : String(error);
+  }
+</script>
+`,
+    );
+
+    const typeScriptRules = spawnSync(
+      process.execPath,
+      [wrapperPath, "--filter=^typescript-", typeScriptRuleFixture],
+      {
+        cwd: fixtureDir,
+        encoding: "utf8",
+      },
+    );
+    const typeScriptOutput = `${typeScriptRules.stdout}${typeScriptRules.stderr}`;
+
+    assert.equal(typeScriptRules.status, 1, typeScriptOutput);
+    assert.match(
+      typeScriptOutput,
+      /error\[typescript-no-generic-error-message-helper\]/,
+    );
+    assert.doesNotMatch(typeScriptOutput, /svelte-no-create-event-dispatcher/);
   } finally {
     rmSync(fixtureDir, { recursive: true, force: true });
   }

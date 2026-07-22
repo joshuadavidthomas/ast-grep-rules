@@ -18,6 +18,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Changed
+
+- Replace the `ast-grep-rules` pre-commit hook with the language-scoped `rust`, `typescript`, `svelte`, `html`, `python`, and `go` hooks, plus `all` for the full rule set. Projects can now install only the rule groups they use.
+
 ## [0.3.0]
 
 ### Added

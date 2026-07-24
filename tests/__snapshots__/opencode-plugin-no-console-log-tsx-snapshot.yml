@@ -1,0 +1,62 @@
+id: opencode-plugin-no-console-log-tsx
+snapshots:
+  ? |
+    import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+
+    export default {
+      id: "example",
+      tui: async () => {
+        console.log(<text>TUI loaded</text>);
+      },
+    } satisfies TuiPluginModule;
+  : labels:
+    - source: console.log(<text>TUI loaded</text>)
+      style: primary
+      start: 124
+      end: 160
+    - source: '"@opencode-ai/plugin/tui"'
+      style: secondary
+      start: 37
+      end: 62
+    - source: import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+      style: secondary
+      start: 0
+      end: 63
+    - source: |
+        import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+
+        export default {
+          id: "example",
+          tui: async () => {
+            console.log(<text>TUI loaded</text>);
+          },
+        } satisfies TuiPluginModule;
+      style: secondary
+      start: 0
+      end: 196
+  ? |
+    import { tool } from '@opencode-ai/plugin';
+
+    export const view = <text>Loading</text>;
+    console.log("Tool view", view);
+  : labels:
+    - source: console.log("Tool view", view)
+      style: primary
+      start: 87
+      end: 117
+    - source: '''@opencode-ai/plugin'''
+      style: secondary
+      start: 21
+      end: 42
+    - source: import { tool } from '@opencode-ai/plugin';
+      style: secondary
+      start: 0
+      end: 43
+    - source: |
+        import { tool } from '@opencode-ai/plugin';
+
+        export const view = <text>Loading</text>;
+        console.log("Tool view", view);
+      style: secondary
+      start: 0
+      end: 119

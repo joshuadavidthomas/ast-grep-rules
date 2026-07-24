@@ -1,0 +1,82 @@
+id: opencode-plugin-no-console-log
+valid:
+  - |
+    console.log("ordinary CLI output");
+  - |
+    import { createOpencodeClient } from "@opencode-ai/sdk";
+
+    const client = createOpencodeClient();
+    console.log(await client.session.list());
+  - |
+    import type { Plugin } from "@opencode-ai/plugin";
+
+    export const ToastPlugin: Plugin = async ({ client }) => {
+      await client.tui.showToast({
+        body: {
+          title: "Example",
+          message: "Ready",
+          variant: "success",
+        },
+      });
+      return {};
+    };
+  - |
+    import type { Plugin } from "@opencode-ai/plugin";
+
+    export const LoggingPlugin: Plugin = async ({ client }) => {
+      await client.app.log({
+        body: {
+          service: "example",
+          level: "info",
+          message: "Plugin initialized",
+        },
+      });
+      return {};
+    };
+  - |
+    import { tool } from "@opencode-ai/plugin";
+
+    export default tool({
+      description: "Greet someone",
+      args: {},
+      async execute() {
+        return "Hello";
+      },
+    });
+  - |
+    import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+
+    export default {
+      id: "example",
+      tui: async (api) => {
+        api.ui.toast({ message: "Ready", variant: "success" });
+      },
+    } satisfies TuiPluginModule;
+invalid:
+  - |
+    import type { Plugin } from "@opencode-ai/plugin";
+
+    export const ExamplePlugin: Plugin = async () => {
+      console.log("Plugin initialized");
+      return {};
+    };
+  - |
+    import { tool } from '@opencode-ai/plugin';
+
+    export default tool({
+      description: "Inspect a value",
+      args: {},
+      async execute() {
+        console.log("Tool started", Date.now());
+        return "Done";
+      },
+    });
+  - |
+    import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+
+    export default {
+      id: "example",
+      tui: async () => {
+        console.log("TUI loaded");
+      },
+    } satisfies TuiPluginModule;

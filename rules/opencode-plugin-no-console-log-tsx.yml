@@ -1,0 +1,19 @@
+id: opencode-plugin-no-console-log-tsx
+language: Tsx
+severity: error
+message: "Send OpenCode plugin feedback through its TUI or logging APIs instead of console.log."
+note: "For a user-visible notice from a server plugin, await client.tui.showToast(...). Native TUI extensions use api.ui.toast(...). Send structured diagnostic logs to client.app.log(...), which writes to the server log rather than the TUI, and return custom tool output from execute. This TSX rule applies only to modules that import @opencode-ai/plugin or @opencode-ai/plugin/tui."
+rule:
+  all:
+    - pattern: console.log($$$ARGS)
+    - inside:
+        kind: program
+        has:
+          all:
+            - kind: import_statement
+            - has:
+                kind: string
+                regex: "^[\\\"']@opencode-ai/plugin(/tui)?[\\\"']$"
+                stopBy: end
+          stopBy: end
+        stopBy: end

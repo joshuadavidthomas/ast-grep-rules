@@ -1,0 +1,104 @@
+id: opencode-plugin-no-console-log
+snapshots:
+  ? |
+    import type { Plugin } from "@opencode-ai/plugin";
+
+    export const ExamplePlugin: Plugin = async () => {
+      console.log("Plugin initialized");
+      return {};
+    };
+  : labels:
+    - source: console.log("Plugin initialized")
+      style: primary
+      start: 105
+      end: 138
+    - source: '"@opencode-ai/plugin"'
+      style: secondary
+      start: 28
+      end: 49
+    - source: import type { Plugin } from "@opencode-ai/plugin";
+      style: secondary
+      start: 0
+      end: 50
+    - source: |
+        import type { Plugin } from "@opencode-ai/plugin";
+
+        export const ExamplePlugin: Plugin = async () => {
+          console.log("Plugin initialized");
+          return {};
+        };
+      style: secondary
+      start: 0
+      end: 156
+  ? |
+    import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+
+    export default {
+      id: "example",
+      tui: async () => {
+        console.log("TUI loaded");
+      },
+    } satisfies TuiPluginModule;
+  : labels:
+    - source: console.log("TUI loaded")
+      style: primary
+      start: 124
+      end: 149
+    - source: '"@opencode-ai/plugin/tui"'
+      style: secondary
+      start: 37
+      end: 62
+    - source: import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+      style: secondary
+      start: 0
+      end: 63
+    - source: |
+        import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+
+        export default {
+          id: "example",
+          tui: async () => {
+            console.log("TUI loaded");
+          },
+        } satisfies TuiPluginModule;
+      style: secondary
+      start: 0
+      end: 185
+  ? |
+    import { tool } from '@opencode-ai/plugin';
+
+    export default tool({
+      description: "Inspect a value",
+      args: {},
+      async execute() {
+        console.log("Tool started", Date.now());
+        return "Done";
+      },
+    });
+  : labels:
+    - source: console.log("Tool started", Date.now())
+      style: primary
+      start: 137
+      end: 176
+    - source: '''@opencode-ai/plugin'''
+      style: secondary
+      start: 21
+      end: 42
+    - source: import { tool } from '@opencode-ai/plugin';
+      style: secondary
+      start: 0
+      end: 43
+    - source: |
+        import { tool } from '@opencode-ai/plugin';
+
+        export default tool({
+          description: "Inspect a value",
+          args: {},
+          async execute() {
+            console.log("Tool started", Date.now());
+            return "Done";
+          },
+        });
+      style: secondary
+      start: 0
+      end: 206

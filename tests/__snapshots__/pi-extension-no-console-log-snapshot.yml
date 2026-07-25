@@ -1,0 +1,170 @@
+id: pi-extension-no-console-log
+snapshots:
+  ? |
+    import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+    export default async function (pi: ExtensionAPI): Promise<void> {
+      pi.on("model_select", async (event, ctx) => {
+        ctx.ui.notify(`Using ${event.model.id}`, "info");
+        console.log(`Using ${event.model.id}`);
+      });
+    }
+  : labels:
+    - source: console.log(`Using ${event.model.id}`)
+      style: primary
+      start: 242
+      end: 280
+    - source: '"@earendil-works/pi-coding-agent"'
+      style: secondary
+      start: 34
+      end: 67
+    - source: ExtensionAPI
+      style: secondary
+      start: 14
+      end: 26
+    - source: import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+      style: secondary
+      start: 0
+      end: 68
+    - source: ExtensionAPI
+      style: secondary
+      start: 105
+      end: 117
+    - source: 'pi: ExtensionAPI'
+      style: secondary
+      start: 101
+      end: 117
+    - source: |-
+        export default async function (pi: ExtensionAPI): Promise<void> {
+          pi.on("model_select", async (event, ctx) => {
+            ctx.ui.notify(`Using ${event.model.id}`, "info");
+            console.log(`Using ${event.model.id}`);
+          });
+        }
+      style: secondary
+      start: 70
+      end: 289
+    - source: |
+        import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+        export default async function (pi: ExtensionAPI): Promise<void> {
+          pi.on("model_select", async (event, ctx) => {
+            ctx.ui.notify(`Using ${event.model.id}`, "info");
+            console.log(`Using ${event.model.id}`);
+          });
+        }
+      style: secondary
+      start: 0
+      end: 290
+  ? |
+    import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+    export default function extension(pi: ExtensionAPI) {
+      pi.on("session_start", async () => {
+        console.log("Extension loaded");
+      });
+    }
+  : labels:
+    - source: console.log("Extension loaded")
+      style: primary
+      start: 167
+      end: 198
+    - source: '"@earendil-works/pi-coding-agent"'
+      style: secondary
+      start: 34
+      end: 67
+    - source: ExtensionAPI
+      style: secondary
+      start: 14
+      end: 26
+    - source: import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+      style: secondary
+      start: 0
+      end: 68
+    - source: ExtensionAPI
+      style: secondary
+      start: 108
+      end: 120
+    - source: 'pi: ExtensionAPI'
+      style: secondary
+      start: 104
+      end: 120
+    - source: |-
+        export default function extension(pi: ExtensionAPI) {
+          pi.on("session_start", async () => {
+            console.log("Extension loaded");
+          });
+        }
+      style: secondary
+      start: 70
+      end: 207
+    - source: |
+        import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+        export default function extension(pi: ExtensionAPI) {
+          pi.on("session_start", async () => {
+            console.log("Extension loaded");
+          });
+        }
+      style: secondary
+      start: 0
+      end: 208
+  ? |
+    import type { ExtensionAPI } from '@mariozechner/pi-coding-agent';
+
+    export default async (pi: ExtensionAPI) => {
+      pi.registerCommand("report", {
+        handler: async (_args, ctx) => {
+          console.log("Report ready", ctx.cwd);
+        },
+      });
+    };
+  : labels:
+    - source: console.log("Report ready", ctx.cwd)
+      style: primary
+      start: 189
+      end: 225
+    - source: '''@mariozechner/pi-coding-agent'''
+      style: secondary
+      start: 34
+      end: 65
+    - source: ExtensionAPI
+      style: secondary
+      start: 14
+      end: 26
+    - source: import type { ExtensionAPI } from '@mariozechner/pi-coding-agent';
+      style: secondary
+      start: 0
+      end: 66
+    - source: ExtensionAPI
+      style: secondary
+      start: 94
+      end: 106
+    - source: 'pi: ExtensionAPI'
+      style: secondary
+      start: 90
+      end: 106
+    - source: |-
+        export default async (pi: ExtensionAPI) => {
+          pi.registerCommand("report", {
+            handler: async (_args, ctx) => {
+              console.log("Report ready", ctx.cwd);
+            },
+          });
+        };
+      style: secondary
+      start: 68
+      end: 242
+    - source: |
+        import type { ExtensionAPI } from '@mariozechner/pi-coding-agent';
+
+        export default async (pi: ExtensionAPI) => {
+          pi.registerCommand("report", {
+            handler: async (_args, ctx) => {
+              console.log("Report ready", ctx.cwd);
+            },
+          });
+        };
+      style: secondary
+      start: 0
+      end: 243

@@ -23,6 +23,24 @@
   files: \.(ts|tsx|mts|cts|svelte)$
   pass_filenames: true
 
+- id: pi
+  name: ast-grep rules (Pi)
+  description: Run the Pi extension rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^pi-
+  language: node
+  types: [text]
+  files: \.(ts|mts|cts)$
+  pass_filenames: true
+
+- id: opencode
+  name: ast-grep rules (OpenCode)
+  description: Run the OpenCode plugin rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^opencode-
+  language: node
+  types: [text]
+  files: \.(ts|tsx|mts|cts)$
+  pass_filenames: true
+
 - id: svelte
   name: ast-grep rules (Svelte)
   description: Run the Svelte rules from joshuadavidthomas/ast-grep-rules

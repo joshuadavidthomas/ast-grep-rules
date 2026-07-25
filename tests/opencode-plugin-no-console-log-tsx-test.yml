@@ -1,0 +1,34 @@
+id: opencode-plugin-no-console-log-tsx
+valid:
+  - |
+    const view = <text>Ready</text>;
+    console.log(view);
+  - |
+    import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+
+    export default {
+      id: "example",
+      tui: async (api) => {
+        api.ui.toast({ message: "Ready", variant: "success" });
+        api.slots.register({
+          id: "example.sidebar",
+          location: "sidebar.primary",
+          render: () => <text>Ready</text>,
+        });
+      },
+    } satisfies TuiPluginModule;
+invalid:
+  - |
+    import type { TuiPluginModule } from "@opencode-ai/plugin/tui";
+
+    export default {
+      id: "example",
+      tui: async () => {
+        console.log(<text>TUI loaded</text>);
+      },
+    } satisfies TuiPluginModule;
+  - |
+    import { tool } from '@opencode-ai/plugin';
+
+    export const view = <text>Loading</text>;
+    console.log("Tool view", view);

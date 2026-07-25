@@ -1,0 +1,67 @@
+id: pi-extension-no-console-log
+valid:
+  - |
+    console.log("ordinary CLI output");
+  - |
+    import { createAgentSession } from "@earendil-works/pi-coding-agent";
+
+    const session = await createAgentSession();
+    console.log(session.sessionFile);
+  - |
+    import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+    export default function extension(pi: ExtensionAPI) {
+      pi.on("session_start", async (_event, ctx) => {
+        ctx.ui.notify("Extension loaded", "info");
+        ctx.ui.setStatus("example", "Ready");
+        ctx.ui.setWidget("example", ["Ready"]);
+      });
+    }
+  - |
+    import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+    export default function extension(pi: ExtensionAPI) {
+      pi.registerTool({
+        name: "greet",
+        async execute(_id, params) {
+          return {
+            content: [{ type: "text", text: `Hello, ${params.name}` }],
+            details: {},
+          };
+        },
+      });
+    }
+  - |
+    import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+    export function configure(pi: ExtensionAPI) {
+      console.log("library setup");
+    }
+invalid:
+  - |
+    import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+    export default function extension(pi: ExtensionAPI) {
+      pi.on("session_start", async () => {
+        console.log("Extension loaded");
+      });
+    }
+  - |
+    import type { ExtensionAPI } from '@mariozechner/pi-coding-agent';
+
+    export default async (pi: ExtensionAPI) => {
+      pi.registerCommand("report", {
+        handler: async (_args, ctx) => {
+          console.log("Report ready", ctx.cwd);
+        },
+      });
+    };
+  - |
+    import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+    export default async function (pi: ExtensionAPI): Promise<void> {
+      pi.on("model_select", async (event, ctx) => {
+        ctx.ui.notify(`Using ${event.model.id}`, "info");
+        console.log(`Using ${event.model.id}`);
+      });
+    }

@@ -18,6 +18,12 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- `pi-extension-no-console-log`, which reports direct terminal output from typed Pi extension entry points and points authors to `ctx.ui`, tool results, and renderers.
+- `opencode-plugin-no-console-log` and `opencode-plugin-no-console-log-tsx`, which direct OpenCode plugin output to TUI feedback, structured server logs, or tool results.
+- Product-scoped `pi` and `opencode` pre-commit hooks.
+
 ## [0.4.0]
 
 ### Changed

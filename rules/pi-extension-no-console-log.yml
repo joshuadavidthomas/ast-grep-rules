@@ -1,0 +1,36 @@
+id: pi-extension-no-console-log
+language: TypeScript
+severity: error
+message: "Render Pi extension output through ctx.ui or a renderer instead of console.log."
+note: "Use ctx.ui.notify for a short notice, setStatus or setWidget for persistent state, and ctx.ui.custom for interactive components. Custom tools should return content/details and report progress through onUpdate; renderCall, renderResult, message renderers, and entry renderers own richer transcript output. Write debug logs to a file. This rule recognizes typed default extension factories for both current and legacy Pi package scopes."
+rule:
+  all:
+    - pattern: console.log($$$ARGS)
+    - inside:
+        kind: program
+        all:
+          - has:
+              all:
+                - kind: import_statement
+                - has:
+                    kind: string
+                    regex: "^[\\\"']@(earendil-works|mariozechner)/pi-coding-agent[\\\"']$"
+                    stopBy: end
+                - has:
+                    kind: identifier
+                    regex: '^ExtensionAPI$'
+                    stopBy: end
+              stopBy: end
+          - has:
+              all:
+                - kind: export_statement
+                - regex: '^export\s+default\b'
+                - has:
+                    kind: required_parameter
+                    has:
+                      kind: type_identifier
+                      regex: '^ExtensionAPI$'
+                      stopBy: end
+                    stopBy: end
+              stopBy: end
+        stopBy: end

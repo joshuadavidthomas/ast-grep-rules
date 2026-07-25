@@ -1,6 +1,6 @@
 # ast-grep-rules
 
-An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, TypeScript, Svelte, HTML, Python, and Go projects.
+An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, TypeScript, Svelte, HTML, Python, Go, Pi extensions, and OpenCode plugins.
 
 The rules catch API design problems, weak error handling, deprecated Svelte patterns, and code clutter. Pre-commit users can choose rules by language or run the whole set.
 
@@ -18,15 +18,15 @@ repos:
       - id: all
 ```
 
-Set `rev` to a release tag when you want a fixed version. To select language groups instead, list only the hooks the project needs:
+Set `rev` to a release tag when you want a fixed version. To select rule groups instead, list only the hooks the project needs:
 
 ```yaml
 repos:
   - repo: https://github.com/joshuadavidthomas/ast-grep-rules
     rev: main
     hooks:
-      - id: typescript
-      - id: svelte
+      - id: pi
+      - id: opencode
 ```
 
 | Hook | Files checked | Rules selected |
@@ -34,12 +34,14 @@ repos:
 | `all` | All text files | Every rule |
 | `rust` | Rust | IDs starting with `rust-` |
 | `typescript` | TypeScript and Svelte script blocks | IDs starting with `typescript-` |
+| `pi` | TypeScript Pi extensions | IDs starting with `pi-` |
+| `opencode` | TypeScript and TSX OpenCode plugins | IDs starting with `opencode-` |
 | `svelte` | Svelte | IDs starting with `svelte-` |
 | `html` | HTML | IDs starting with `html-` |
 | `python` | Python | IDs starting with `python-` |
 | `go` | Go | IDs starting with `go-` |
 
-Language hooks include the shared checks for that language because shared rule IDs carry the same language prefix. For example, `rust` includes `rust-no-code-barricade`.
+Language hooks include the shared checks for that language because shared rule IDs carry the same language prefix. For example, `rust` includes `rust-no-code-barricade`. Pi and OpenCode use product prefixes so each plugin ecosystem can run only its own rules.
 
 With prek, install the Git hook and prepare its environment up front:
 
@@ -153,6 +155,19 @@ All rules link to their definitions. Most definitions include a `note` with exce
 | --- | --- | --- |
 | [`typescript-no-generic-error-message-helper`](rules/typescript-no-generic-error-message-helper.yml) | error | Helpers that reduce an unknown error to `error.message` or `String(error)`. Preserve the original error and write separate user-facing text. |
 | [`typescript-no-hand-rolled-object-type-guard`](rules/typescript-no-hand-rolled-object-type-guard.yml) | error | Object type predicates over unknown input that rely on `typeof value === "object"`. Parse the expected shape with a schema validator. |
+
+### Pi
+
+| Rule | Severity | Reports |
+| --- | --- | --- |
+| [`pi-extension-no-console-log`](rules/pi-extension-no-console-log.yml) | error | `console.log` in a typed Pi extension entry point. Use `ctx.ui`, tool result rendering, or a message or entry renderer. |
+
+### OpenCode
+
+| Rule | Severity | Reports |
+| --- | --- | --- |
+| [`opencode-plugin-no-console-log`](rules/opencode-plugin-no-console-log.yml) | error | `console.log` in TypeScript modules that import OpenCode's plugin API. Use TUI feedback, structured server logging, or a tool result. |
+| [`opencode-plugin-no-console-log-tsx`](rules/opencode-plugin-no-console-log-tsx.yml) | error | The same OpenCode plugin check for TSX modules. |
 
 ### Svelte
 

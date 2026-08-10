@@ -1,0 +1,42 @@
+id: typescript-no-record-string-unknown
+valid:
+  - |
+    interface UserPayload {
+      id: string;
+      name: string;
+    }
+
+    function handle(payload: UserPayload) {
+      console.log(payload.name);
+    }
+  - |
+    const counts: Record<string, number> = {};
+  - |
+    function parse(input: unknown): User {
+      return UserSchema.parse(input);
+    }
+  - |
+    type Handlers = Record<EventName, Handler>;
+invalid:
+  - |
+    function handle(payload: Record<string, unknown>) {
+      console.log(payload.name);
+    }
+  - |
+    const data: Record<string, unknown> = {};
+  - |
+    type Props = Record<string, unknown>;
+  - |
+    function load(): Record<string, unknown> {
+      return JSON.parse(raw);
+    }
+  - |
+    const items: Array<Record<string, unknown>> = [];
+  - |
+    function merge<T extends Record<string, unknown>>(a: T, b: T): T {
+      return { ...a, ...b };
+    }
+  - |
+    interface Envelope {
+      meta: Record<string, unknown>;
+    }

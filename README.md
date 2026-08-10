@@ -155,6 +155,7 @@ All rules link to their definitions. Most definitions include a `note` with exce
 | --- | --- | --- |
 | [`typescript-no-generic-error-message-helper`](rules/typescript-no-generic-error-message-helper.yml) | error | Helpers that reduce an unknown error to `error.message` or `String(error)`. Preserve the original error and write separate user-facing text. |
 | [`typescript-no-hand-rolled-object-type-guard`](rules/typescript-no-hand-rolled-object-type-guard.yml) | error | Object type predicates over unknown input that rely on `typeof value === "object"`. Parse the expected shape with a schema validator. |
+| [`typescript-no-record-string-unknown`](rules/typescript-no-record-string-unknown.yml) | error | `Record<string, unknown>` in any type position. Declare the actual object shape, or keep the value `unknown` and parse it with a schema at the boundary. |
 
 ### Pi
 

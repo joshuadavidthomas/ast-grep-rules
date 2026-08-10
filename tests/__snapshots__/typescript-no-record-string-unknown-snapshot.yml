@@ -1,0 +1,59 @@
+id: typescript-no-record-string-unknown
+snapshots:
+  ? |
+    const data: Record<string, unknown> = {};
+  : labels:
+    - source: Record<string, unknown>
+      style: primary
+      start: 12
+      end: 35
+  ? |
+    const items: Array<Record<string, unknown>> = [];
+  : labels:
+    - source: Record<string, unknown>
+      style: primary
+      start: 19
+      end: 42
+  ? |
+    function handle(payload: Record<string, unknown>) {
+      console.log(payload.name);
+    }
+  : labels:
+    - source: Record<string, unknown>
+      style: primary
+      start: 25
+      end: 48
+  ? |
+    function load(): Record<string, unknown> {
+      return JSON.parse(raw);
+    }
+  : labels:
+    - source: Record<string, unknown>
+      style: primary
+      start: 17
+      end: 40
+  ? |
+    function merge<T extends Record<string, unknown>>(a: T, b: T): T {
+      return { ...a, ...b };
+    }
+  : labels:
+    - source: Record<string, unknown>
+      style: primary
+      start: 25
+      end: 48
+  ? |
+    interface Envelope {
+      meta: Record<string, unknown>;
+    }
+  : labels:
+    - source: Record<string, unknown>
+      style: primary
+      start: 29
+      end: 52
+  ? |
+    type Props = Record<string, unknown>;
+  : labels:
+    - source: Record<string, unknown>
+      style: primary
+      start: 13
+      end: 36

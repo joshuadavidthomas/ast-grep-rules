@@ -18,6 +18,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- `typescript-no-record-string-unknown`, which reports `Record<string, unknown>` in any type position and directs authors to declare the actual object shape or parse `unknown` input with a schema.
+
 ## [0.5.0]
 
 ### Added

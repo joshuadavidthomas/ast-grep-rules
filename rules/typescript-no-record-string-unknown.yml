@@ -1,0 +1,9 @@
+id: typescript-no-record-string-unknown
+language: TypeScript
+severity: error
+message: "Do not type values as Record<string, unknown>; model the actual object shape instead."
+note: "Record<string, unknown> says 'this is an object' while erasing every field the code depends on. Declare an interface or type alias for the fields you actually use, or keep the value as unknown and parse it with a validation schema at the boundary."
+rule:
+  pattern:
+    context: "type T = Record<string, unknown>"
+    selector: generic_type

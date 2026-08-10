@@ -18,6 +18,8 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+## [0.6.0]
+
 ### Added
 
 - `typescript-no-record-string-unknown`, which reports `Record<string, unknown>` in any type position and directs authors to declare the actual object shape or parse `unknown` input with a schema.
@@ -76,9 +78,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Josh Thomas <josh@joshthomas.dev> (maintainer)
 
-[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.5.0...HEAD
+[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.6.0...HEAD
 [0.1.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.1.0
 [0.2.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.2.0
 [0.3.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.3.0
 [0.4.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.4.0
 [0.5.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.5.0
+[0.6.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.6.0

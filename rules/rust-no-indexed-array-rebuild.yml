@@ -1,0 +1,14 @@
+id: rust-no-indexed-array-rebuild
+language: Rust
+severity: warning
+message: "Do not rebuild a fixed-size array by indexing the same slice element by element; take the chunk as an array."
+note: "[bytes[0], bytes[1], bytes[2], bytes[3]] hides a length check behind four separate bounds checks and panics on a short slice. Use split_first_chunk or split_at with a [u8; N] pattern, or slice[..N].try_into(), so the length failure has one place and one error. The rule matches an array literal whose first two elements index the same expression with integer literals."
+rule:
+  any:
+    - pattern: "[$SLICE[$FIRST], $SLICE[$SECOND]]"
+    - pattern: "[$SLICE[$FIRST], $SLICE[$SECOND], $$$REST]"
+constraints:
+  FIRST:
+    kind: integer_literal
+  SECOND:
+    kind: integer_literal

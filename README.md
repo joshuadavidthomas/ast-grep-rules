@@ -136,6 +136,7 @@ All rules link to their definitions. Most definitions include a `note` with exce
 | [`rust-no-deny-warnings`](rules/rust-no-deny-warnings.yml) | warning | `#![deny(warnings)]`, which can break a build when a compiler or dependency adds a warning. Set explicit lint levels instead. |
 | [`rust-no-deref-polymorphism`](rules/rust-no-deref-polymorphism.yml) | warning | `Deref` implementations used for API forwarding. Reserve `Deref` for smart pointers and expose methods on other types. |
 | [`rust-no-empty-braced-struct`](rules/rust-no-empty-braced-struct.yml) | warning | Empty braced structs. Use a unit struct unless braces carry a schema, FFI, or code-generation contract. |
+| [`rust-no-indexed-array-rebuild`](rules/rust-no-indexed-array-rebuild.yml) | warning | `[bytes[0], bytes[1], ...]` array literals that index the same slice element by element. Take the chunk with `split_first_chunk` or `try_into` instead. |
 | [`rust-no-option-bool-field`](rules/rust-no-option-bool-field.yml) | warning | `Option<bool>` struct fields. Name the three states with an enum. |
 | [`rust-no-panicking-fallback`](rules/rust-no-panicking-fallback.yml) | error | `unwrap_or_else` and `map_or_else` fallbacks that end in a panic or another diverging macro. Handle the failed or absent value instead. |
 | [`rust-no-panicking-let-else`](rules/rust-no-panicking-let-else.yml) | error | `let`-`else` branches that end in a panic or another diverging macro. Return, break, continue, or model the failed pattern. |

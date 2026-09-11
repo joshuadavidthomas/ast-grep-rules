@@ -1,0 +1,62 @@
+id: rust-no-indexed-array-rebuild
+snapshots:
+  ? |
+    fn copy(values: &[u8]) -> [u8; 3] {
+        let out = [values[0], values[1], values[2]];
+        out
+    }
+  : labels:
+    - source: '[values[0], values[1], values[2]]'
+      style: primary
+      start: 50
+      end: 83
+  ? |
+    fn header(frame: &Frame) -> [u8; 2] {
+        [frame.bytes[0], frame.bytes[1]]
+    }
+  : labels:
+    - source: '[frame.bytes[0], frame.bytes[1]]'
+      style: primary
+      start: 42
+      end: 74
+  ? |
+    fn le16(bytes: &[u8]) -> u16 {
+        u16::from_le_bytes([bytes[0], bytes[1]])
+    }
+  : labels:
+    - source: '[bytes[0], bytes[1]]'
+      style: primary
+      start: 54
+      end: 74
+  ? |
+    fn le32(bytes: &[u8]) -> u32 {
+        u32::from_le_bytes([bytes[0], bytes[1], bytes[2], bytes[3]])
+    }
+  : labels:
+    - source: '[bytes[0], bytes[1], bytes[2], bytes[3]]'
+      style: primary
+      start: 54
+      end: 94
+  ? |
+    fn le64(bytes: &[u8]) -> u64 {
+        u64::from_le_bytes([
+            bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7],
+        ])
+    }
+  : labels:
+    - source: |-
+        [
+                bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7],
+            ]
+      style: primary
+      start: 54
+      end: 149
+  ? |
+    fn second_word(bytes: &[u8]) -> u32 {
+        u32::from_le_bytes([bytes[4], bytes[5], bytes[6], bytes[7]])
+    }
+  : labels:
+    - source: '[bytes[4], bytes[5], bytes[6], bytes[7]]'
+      style: primary
+      start: 61
+      end: 101

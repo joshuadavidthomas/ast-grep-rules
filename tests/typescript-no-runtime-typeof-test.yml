@@ -1,0 +1,27 @@
+id: typescript-no-runtime-typeof
+valid:
+  - |
+    type Kind = typeof value;
+  - |
+    const handler = {
+      kind: "click" as const,
+    };
+  - |
+    import { UserSchema } from "./user";
+
+    function parseUser(input: unknown) {
+      return UserSchema.parse(input);
+    }
+invalid:
+  - |
+    const kind = typeof value;
+  - |
+    if (typeof value === "string") {
+      return value;
+    }
+  - |
+    function isNumber(value: unknown) {
+      return typeof value === "number";
+    }
+  - |
+    const tag = typeof window === "undefined" ? "server" : "client";

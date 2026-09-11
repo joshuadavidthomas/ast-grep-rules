@@ -1,0 +1,29 @@
+id: typescript-no-shape-in-symbol-names
+language: TypeScript
+severity: warning
+message: "Do not put the word shape in a symbol name."
+note: "shape names the TypeScript view of a value, not the thing the program owns. Name the owner type or the parsed domain value instead."
+rule:
+  any:
+    - kind: identifier
+    - kind: type_identifier
+    - kind: property_identifier
+    - kind: private_property_identifier
+    - kind: shorthand_property_identifier
+    - kind: shorthand_property_identifier_pattern
+  regex: "(?i)shape"
+---
+id: typescript-no-shape-in-symbol-names-tsx
+language: Tsx
+severity: warning
+message: "Do not put the word shape in a symbol name."
+note: "shape names the TypeScript view of a value, not the thing the program owns. Name the owner type or the parsed domain value instead."
+rule:
+  any:
+    - kind: identifier
+    - kind: type_identifier
+    - kind: property_identifier
+    - kind: private_property_identifier
+    - kind: shorthand_property_identifier
+    - kind: shorthand_property_identifier_pattern
+  regex: "(?i)shape"

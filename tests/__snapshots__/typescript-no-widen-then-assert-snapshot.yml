@@ -1,0 +1,196 @@
+id: typescript-no-widen-then-assert
+snapshots:
+  ? |
+    const value = { id: "1" } as unknown;
+    const user = value as User;
+  : labels:
+    - source: value as User
+      style: primary
+      start: 51
+      end: 64
+    - source: value
+      style: secondary
+      start: 6
+      end: 11
+    - source: '{ id: "1" } as unknown'
+      style: secondary
+      start: 14
+      end: 36
+    - source: '{ id: "1" }'
+      style: secondary
+      start: 14
+      end: 25
+    - source: '{ id: "1" }'
+      style: secondary
+      start: 14
+      end: 25
+    - source: unknown
+      style: secondary
+      start: 29
+      end: 36
+    - source: unknown
+      style: secondary
+      start: 29
+      end: 36
+    - source: 'value = { id: "1" } as unknown'
+      style: secondary
+      start: 6
+      end: 36
+    - source: |
+        const value = { id: "1" } as unknown;
+        const user = value as User;
+      style: secondary
+      start: 0
+      end: 66
+  ? |
+    const value: Record<string, unknown> = { id: "1" };
+    const user = value as User;
+  : labels:
+    - source: value as User
+      style: primary
+      start: 65
+      end: 78
+    - source: value
+      style: secondary
+      start: 6
+      end: 11
+    - source: Record
+      style: secondary
+      start: 13
+      end: 19
+    - source: unknown
+      style: secondary
+      start: 28
+      end: 35
+    - source: unknown
+      style: secondary
+      start: 28
+      end: 35
+    - source: Record<string, unknown>
+      style: secondary
+      start: 13
+      end: 36
+    - source: Record<string, unknown>
+      style: secondary
+      start: 13
+      end: 36
+    - source: '{ id: "1" }'
+      style: secondary
+      start: 39
+      end: 50
+    - source: 'value: Record<string, unknown> = { id: "1" }'
+      style: secondary
+      start: 6
+      end: 50
+    - source: |
+        const value: Record<string, unknown> = { id: "1" };
+        const user = value as User;
+      style: secondary
+      start: 0
+      end: 80
+  ? |
+    const value: object = { id: "1" };
+    const user = value as User;
+  : labels:
+    - source: value as User
+      style: primary
+      start: 48
+      end: 61
+    - source: value
+      style: secondary
+      start: 6
+      end: 11
+    - source: object
+      style: secondary
+      start: 13
+      end: 19
+    - source: object
+      style: secondary
+      start: 13
+      end: 19
+    - source: '{ id: "1" }'
+      style: secondary
+      start: 22
+      end: 33
+    - source: 'value: object = { id: "1" }'
+      style: secondary
+      start: 6
+      end: 33
+    - source: |
+        const value: object = { id: "1" };
+        const user = value as User;
+      style: secondary
+      start: 0
+      end: 63
+  ? |
+    const value: unknown = { id: "1" };
+    const user = value as User;
+  : labels:
+    - source: value as User
+      style: primary
+      start: 49
+      end: 62
+    - source: value
+      style: secondary
+      start: 6
+      end: 11
+    - source: unknown
+      style: secondary
+      start: 13
+      end: 20
+    - source: unknown
+      style: secondary
+      start: 13
+      end: 20
+    - source: '{ id: "1" }'
+      style: secondary
+      start: 23
+      end: 34
+    - source: 'value: unknown = { id: "1" }'
+      style: secondary
+      start: 6
+      end: 34
+    - source: |
+        const value: unknown = { id: "1" };
+        const user = value as User;
+      style: secondary
+      start: 0
+      end: 64
+  ? |
+    function read() {
+      const value: unknown = { id: "1" };
+      return value as User;
+    }
+  : labels:
+    - source: value as User
+      style: primary
+      start: 65
+      end: 78
+    - source: value
+      style: secondary
+      start: 26
+      end: 31
+    - source: unknown
+      style: secondary
+      start: 33
+      end: 40
+    - source: unknown
+      style: secondary
+      start: 33
+      end: 40
+    - source: '{ id: "1" }'
+      style: secondary
+      start: 43
+      end: 54
+    - source: 'value: unknown = { id: "1" }'
+      style: secondary
+      start: 26
+      end: 54
+    - source: |-
+        function read() {
+          const value: unknown = { id: "1" };
+          return value as User;
+        }
+      style: secondary
+      start: 0
+      end: 81

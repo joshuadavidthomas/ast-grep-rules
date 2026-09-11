@@ -1,0 +1,50 @@
+id: typescript-no-runtime-typeof
+snapshots:
+  ? |
+    const kind = typeof value;
+  : labels:
+    - source: typeof value
+      style: primary
+      start: 13
+      end: 25
+    - source: typeof
+      style: secondary
+      start: 13
+      end: 19
+  ? |
+    const tag = typeof window === "undefined" ? "server" : "client";
+  : labels:
+    - source: typeof window
+      style: primary
+      start: 12
+      end: 25
+    - source: typeof
+      style: secondary
+      start: 12
+      end: 18
+  ? |
+    function isNumber(value: unknown) {
+      return typeof value === "number";
+    }
+  : labels:
+    - source: typeof value
+      style: primary
+      start: 45
+      end: 57
+    - source: typeof
+      style: secondary
+      start: 45
+      end: 51
+  ? |
+    if (typeof value === "string") {
+      return value;
+    }
+  : labels:
+    - source: typeof value
+      style: primary
+      start: 4
+      end: 16
+    - source: typeof
+      style: secondary
+      start: 4
+      end: 10

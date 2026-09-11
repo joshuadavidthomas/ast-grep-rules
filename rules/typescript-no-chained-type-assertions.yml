@@ -1,0 +1,58 @@
+id: typescript-no-chained-type-assertions
+language: TypeScript
+severity: error
+message: "Do not chain type assertions; keep the original type or parse unknown input at its boundary."
+note: "A second as or angle-bracket assertion throws away the type already in hand and invents the next one. Chains made only of as const or <const> are allowed."
+utils:
+  typed-assertion-target:
+    any:
+      - kind: predefined_type
+      - kind: type_identifier
+      - kind: nested_type_identifier
+      - kind: generic_type
+      - kind: object_type
+      - kind: array_type
+      - kind: tuple_type
+      - kind: union_type
+      - kind: intersection_type
+      - kind: literal_type
+      - kind: parenthesized_type
+      - kind: function_type
+      - kind: constructor_type
+      - kind: lookup_type
+      - kind: type_query
+      - kind: index_type_query
+      - kind: readonly_type
+      - kind: template_literal_type
+      - kind: conditional_type
+      - kind: this_type
+  assertion-chain:
+    any:
+      - kind: as_expression
+        has:
+          kind: as_expression
+          stopBy: end
+      - kind: type_assertion
+        has:
+          kind: type_assertion
+          stopBy: end
+      - all:
+          - kind: as_expression
+          - has:
+              kind: type_assertion
+              stopBy: end
+      - all:
+          - kind: type_assertion
+          - has:
+              kind: as_expression
+              stopBy: end
+rule:
+  all:
+    - matches: assertion-chain
+    - has:
+        matches: typed-assertion-target
+        stopBy: end
+    - not:
+        inside:
+          matches: assertion-chain
+          stopBy: end

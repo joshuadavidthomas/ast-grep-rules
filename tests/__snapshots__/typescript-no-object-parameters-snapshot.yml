@@ -1,0 +1,134 @@
+id: typescript-no-object-parameters
+snapshots:
+  ? |
+    class Registry {
+      constructor(private value: object) {}
+    }
+  : labels:
+    - source: 'private value: object'
+      style: primary
+      start: 31
+      end: 52
+    - source: object
+      style: secondary
+      start: 46
+      end: 52
+    - source: object
+      style: secondary
+      start: 46
+      end: 52
+  ? |
+    const load = (value: object) => value;
+  : labels:
+    - source: 'value: object'
+      style: primary
+      start: 14
+      end: 27
+    - source: object
+      style: secondary
+      start: 21
+      end: 27
+    - source: object
+      style: secondary
+      start: 21
+      end: 27
+  ? |
+    function load(value: (object)) {}
+  : labels:
+    - source: 'value: (object)'
+      style: primary
+      start: 14
+      end: 29
+    - source: object
+      style: secondary
+      start: 22
+      end: 28
+    - source: (object)
+      style: secondary
+      start: 21
+      end: 29
+    - source: (object)
+      style: secondary
+      start: 21
+      end: 29
+  ? |
+    function load(value: object | string) {}
+  : labels:
+    - source: 'value: object | string'
+      style: primary
+      start: 14
+      end: 36
+    - source: object
+      style: secondary
+      start: 21
+      end: 27
+    - source: object | string
+      style: secondary
+      start: 21
+      end: 36
+    - source: object | string
+      style: secondary
+      start: 21
+      end: 36
+  ? |
+    function load(value: object) {}
+  : labels:
+    - source: 'value: object'
+      style: primary
+      start: 14
+      end: 27
+    - source: object
+      style: secondary
+      start: 21
+      end: 27
+    - source: object
+      style: secondary
+      start: 21
+      end: 27
+  ? |
+    function load(value?: object) {}
+  : labels:
+    - source: 'value?: object'
+      style: primary
+      start: 14
+      end: 28
+    - source: object
+      style: secondary
+      start: 22
+      end: 28
+    - source: object
+      style: secondary
+      start: 22
+      end: 28
+  ? |
+    interface Loader {
+      load(value: object): void;
+    }
+  : labels:
+    - source: 'value: object'
+      style: primary
+      start: 26
+      end: 39
+    - source: object
+      style: secondary
+      start: 33
+      end: 39
+    - source: object
+      style: secondary
+      start: 33
+      end: 39
+  ? |
+    type Loader = (value: object) => void;
+  : labels:
+    - source: 'value: object'
+      style: primary
+      start: 15
+      end: 28
+    - source: object
+      style: secondary
+      start: 22
+      end: 28
+    - source: object
+      style: secondary
+      start: 22
+      end: 28

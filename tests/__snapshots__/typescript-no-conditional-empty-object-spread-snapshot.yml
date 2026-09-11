@@ -1,0 +1,102 @@
+id: typescript-no-conditional-empty-object-spread
+snapshots:
+  ? |
+    const payload = {
+      ...(condition ? { name: value } : {}),
+    };
+  : labels:
+    - source: '...(condition ? { name: value } : {})'
+      style: primary
+      start: 20
+      end: 57
+    - source: |-
+        {
+          ...(condition ? { name: value } : {}),
+        }
+      style: secondary
+      start: 16
+      end: 60
+    - source: '{}'
+      style: secondary
+      start: 54
+      end: 56
+    - source: 'condition ? { name: value } : {}'
+      style: secondary
+      start: 24
+      end: 56
+  ? |
+    const payload = {
+      ...(value !== undefined ? { value } : {}),
+    };
+  : labels:
+    - source: '...(value !== undefined ? { value } : {})'
+      style: primary
+      start: 20
+      end: 61
+    - source: |-
+        {
+          ...(value !== undefined ? { value } : {}),
+        }
+      style: secondary
+      start: 16
+      end: 64
+    - source: '{}'
+      style: secondary
+      start: 58
+      end: 60
+    - source: 'value !== undefined ? { value } : {}'
+      style: secondary
+      start: 24
+      end: 60
+  ? |
+    const payload = {
+      id,
+      ...(condition ? { name } : {}),
+    };
+  : labels:
+    - source: '...(condition ? { name } : {})'
+      style: primary
+      start: 26
+      end: 56
+    - source: |-
+        {
+          id,
+          ...(condition ? { name } : {}),
+        }
+      style: secondary
+      start: 16
+      end: 59
+    - source: '{}'
+      style: secondary
+      start: 53
+      end: 55
+    - source: 'condition ? { name } : {}'
+      style: secondary
+      start: 30
+      end: 55
+  ? |
+    const payload = {
+      id,
+      ...(condition ? {} : { name }),
+    };
+  : labels:
+    - source: '...(condition ? {} : { name })'
+      style: primary
+      start: 26
+      end: 56
+    - source: |-
+        {
+          id,
+          ...(condition ? {} : { name }),
+        }
+      style: secondary
+      start: 16
+      end: 59
+    - source: '{}'
+      style: secondary
+      start: 42
+      end: 44
+    - source: 'condition ? {} : { name }'
+      style: secondary
+      start: 30
+      end: 55

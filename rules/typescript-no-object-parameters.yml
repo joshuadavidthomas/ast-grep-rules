@@ -1,0 +1,24 @@
+id: typescript-no-object-parameters
+language: TypeScript
+severity: error
+message: "Do not type a parameter as object; use the owner type or parse the input at its boundary."
+note: "object only says the value is not a primitive. Name the type the function actually reads, or decode external input at the boundary."
+utils:
+  object-type:
+    any:
+      - kind: predefined_type
+        regex: "^object$"
+      - kind: parenthesized_type
+        has:
+          matches: object-type
+      - kind: union_type
+        has:
+          matches: object-type
+rule:
+  any:
+    - kind: required_parameter
+    - kind: optional_parameter
+  has:
+    field: type
+    has:
+      matches: object-type

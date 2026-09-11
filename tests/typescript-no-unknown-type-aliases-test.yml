@@ -1,0 +1,23 @@
+id: typescript-no-unknown-type-aliases
+valid:
+  - |
+    type User = {
+      readonly id: string;
+    };
+  - |
+    type MaybeUser = User | undefined;
+  - |
+    type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+  - |
+    type Box<T> = unknown;
+  - |
+    function wrap(message: string, cause: unknown) {
+      return new Error(message, { cause });
+    }
+invalid:
+  - |
+    type Payload = unknown;
+  - |
+    type Payload = (unknown);
+  - |
+    export type Input = unknown;

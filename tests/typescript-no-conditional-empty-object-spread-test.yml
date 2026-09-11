@@ -1,0 +1,39 @@
+id: typescript-no-conditional-empty-object-spread
+valid:
+  - |
+    const payload = {
+      id,
+      ...(extra ?? {}),
+    };
+  - |
+    const payload = {
+      ...defaults,
+      name,
+    };
+  - |
+    const items = [...(ready ? values : [])];
+  - |
+    const payload = condition ? { id, name } : { id };
+  - |
+    const payload = {
+      ...(condition ? extras : defaults),
+    };
+invalid:
+  - |
+    const payload = {
+      id,
+      ...(condition ? { name } : {}),
+    };
+  - |
+    const payload = {
+      id,
+      ...(condition ? {} : { name }),
+    };
+  - |
+    const payload = {
+      ...(value !== undefined ? { value } : {}),
+    };
+  - |
+    const payload = {
+      ...(condition ? { name: value } : {}),
+    };

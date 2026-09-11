@@ -1,0 +1,106 @@
+id: typescript-no-widen-then-assert
+language: TypeScript
+severity: warning
+message: "Do not widen a known value and later assert the binding back to a narrower type; keep the precise type, or parse unknown input once at the boundary."
+note: "A local const annotated or asserted as unknown, any, object, or Record<..., unknown|any> already threw away a known initializer. A later `as` or angle-bracket assertion pretends that evidence is back. This rule only sees a const and a later assertion in the same function or module; it does not reconstruct Oxlint's scope walk."
+utils:
+  broad-type:
+    any:
+      - kind: predefined_type
+        regex: "^(unknown|any|object)$"
+      - kind: parenthesized_type
+        has:
+          matches: broad-type
+      - all:
+          - kind: generic_type
+          - has:
+              field: name
+              kind: type_identifier
+              regex: "^Record$"
+          - has:
+              field: type_arguments
+              has:
+                nthChild: 2
+                kind: predefined_type
+                regex: "^(unknown|any)$"
+  known-value:
+    any:
+      - kind: object
+      - kind: array
+      - kind: arrow_function
+      - kind: function_expression
+      - kind: class
+      - kind: new_expression
+      - kind: number
+      - kind: string
+      - kind: "true"
+      - kind: "false"
+      - kind: "null"
+      - kind: undefined
+      - kind: template_string
+      - kind: regex
+      - kind: unary_expression
+      - kind: parenthesized_expression
+        has:
+          matches: known-value
+  function-owner:
+    any:
+      - kind: function_declaration
+      - kind: function_expression
+      - kind: arrow_function
+      - kind: method_definition
+      - kind: program
+  widened-const:
+    kind: variable_declarator
+    all:
+      - has:
+          field: name
+          pattern: $NAME
+      - any:
+          - all:
+              - has:
+                  field: type
+                  has:
+                    matches: broad-type
+              - has:
+                  field: value
+                  matches: known-value
+          - all:
+              - has:
+                  field: value
+                  kind: as_expression
+              - has:
+                  field: value
+                  has:
+                    matches: known-value
+              - has:
+                  field: value
+                  has:
+                    matches: broad-type
+          - all:
+              - has:
+                  field: value
+                  kind: type_assertion
+              - has:
+                  field: value
+                  has:
+                    matches: known-value
+              - has:
+                  field: value
+                  has:
+                    matches: broad-type
+rule:
+  all:
+    - any:
+        - pattern: $NAME as $NARROW
+        - pattern: <$NARROW>$NAME
+    - not:
+        has:
+          matches: broad-type
+    - inside:
+        matches: function-owner
+        has:
+          matches: widened-const
+          stopBy: end
+        stopBy:
+          matches: function-owner

@@ -1,0 +1,138 @@
+id: typescript-no-unknown-parameters
+snapshots:
+  ? |
+    class Registry {
+      constructor(private value: unknown) {}
+    }
+  : labels:
+    - source: 'private value: unknown'
+      style: primary
+      start: 31
+      end: 53
+    - source: unknown
+      style: secondary
+      start: 46
+      end: 53
+    - source: unknown
+      style: secondary
+      start: 46
+      end: 53
+  ? |
+    const load = (value: unknown) => value;
+  : labels:
+    - source: 'value: unknown'
+      style: primary
+      start: 14
+      end: 28
+    - source: unknown
+      style: secondary
+      start: 21
+      end: 28
+    - source: unknown
+      style: secondary
+      start: 21
+      end: 28
+  ? |
+    function load(value: (unknown)) {
+      return value;
+    }
+  : labels:
+    - source: 'value: (unknown)'
+      style: primary
+      start: 14
+      end: 30
+    - source: unknown
+      style: secondary
+      start: 22
+      end: 29
+    - source: (unknown)
+      style: secondary
+      start: 21
+      end: 30
+    - source: (unknown)
+      style: secondary
+      start: 21
+      end: 30
+  ? |
+    function load(value: unknown = null) {
+      return value;
+    }
+  : labels:
+    - source: 'value: unknown = null'
+      style: primary
+      start: 14
+      end: 35
+    - source: unknown
+      style: secondary
+      start: 21
+      end: 28
+    - source: unknown
+      style: secondary
+      start: 21
+      end: 28
+  ? |
+    function load(value: unknown) {
+      return value;
+    }
+  : labels:
+    - source: 'value: unknown'
+      style: primary
+      start: 14
+      end: 28
+    - source: unknown
+      style: secondary
+      start: 21
+      end: 28
+    - source: unknown
+      style: secondary
+      start: 21
+      end: 28
+  ? |
+    function load(value?: unknown) {
+      return value;
+    }
+  : labels:
+    - source: 'value?: unknown'
+      style: primary
+      start: 14
+      end: 29
+    - source: unknown
+      style: secondary
+      start: 22
+      end: 29
+    - source: unknown
+      style: secondary
+      start: 22
+      end: 29
+  ? |
+    interface Loader {
+      load(value: unknown): void;
+    }
+  : labels:
+    - source: 'value: unknown'
+      style: primary
+      start: 26
+      end: 40
+    - source: unknown
+      style: secondary
+      start: 33
+      end: 40
+    - source: unknown
+      style: secondary
+      start: 33
+      end: 40
+  ? |
+    type Loader = (value: unknown) => void;
+  : labels:
+    - source: 'value: unknown'
+      style: primary
+      start: 15
+      end: 29
+    - source: unknown
+      style: secondary
+      start: 22
+      end: 29
+    - source: unknown
+      style: secondary
+      start: 22
+      end: 29

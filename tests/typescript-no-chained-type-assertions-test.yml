@@ -1,0 +1,29 @@
+id: typescript-no-chained-type-assertions
+valid:
+  - |
+    const user = value as User;
+  - |
+    const user = <User>value;
+  - |
+    const flags = { debug: true } as const;
+  - |
+    const flags = <const>{ debug: true };
+  - |
+    const flags = { debug: true } as const as const;
+  - |
+    const flags = (<const>{ debug: true }) as const;
+  - |
+    const name = (value as User).name;
+invalid:
+  - |
+    const user = value as unknown as User;
+  - |
+    const user = (value as unknown) as User;
+  - |
+    const user = <User><unknown>value;
+  - |
+    const user = value as const as User;
+  - |
+    const user = value as User as const;
+  - |
+    const user = <User>(value as unknown);

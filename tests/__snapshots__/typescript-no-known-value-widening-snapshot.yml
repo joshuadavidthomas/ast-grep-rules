@@ -1,0 +1,305 @@
+id: typescript-no-known-value-widening
+snapshots:
+  ? |
+    const create = (): unknown => ({});
+  : labels:
+    - source: '(): unknown => ({})'
+      style: primary
+      start: 15
+      end: 34
+    - source: unknown
+      style: secondary
+      start: 19
+      end: 26
+    - source: unknown
+      style: secondary
+      start: 19
+      end: 26
+    - source: '{}'
+      style: secondary
+      start: 31
+      end: 33
+    - source: ({})
+      style: secondary
+      start: 30
+      end: 34
+  ? |
+    const value = {} as unknown;
+  : labels:
+    - source: '{} as unknown'
+      style: primary
+      start: 14
+      end: 27
+    - source: '{}'
+      style: secondary
+      start: 14
+      end: 16
+    - source: unknown
+      style: secondary
+      start: 20
+      end: 27
+  ? |
+    const value: object = [];
+  : labels:
+    - source: 'value: object = []'
+      style: primary
+      start: 6
+      end: 24
+    - source: '[]'
+      style: secondary
+      start: 22
+      end: 24
+    - source: object
+      style: secondary
+      start: 13
+      end: 19
+    - source: object
+      style: secondary
+      start: 13
+      end: 19
+  ? |
+    const value: object = {};
+  : labels:
+    - source: 'value: object = {}'
+      style: primary
+      start: 6
+      end: 24
+    - source: '{}'
+      style: secondary
+      start: 22
+      end: 24
+    - source: object
+      style: secondary
+      start: 13
+      end: 19
+    - source: object
+      style: secondary
+      start: 13
+      end: 19
+  ? |
+    const value: unknown = 1;
+  : labels:
+    - source: 'value: unknown = 1'
+      style: primary
+      start: 6
+      end: 24
+    - source: '1'
+      style: secondary
+      start: 23
+      end: 24
+    - source: unknown
+      style: secondary
+      start: 13
+      end: 20
+    - source: unknown
+      style: secondary
+      start: 13
+      end: 20
+  ? |
+    const value: unknown = {};
+  : labels:
+    - source: 'value: unknown = {}'
+      style: primary
+      start: 6
+      end: 25
+    - source: '{}'
+      style: secondary
+      start: 23
+      end: 25
+    - source: unknown
+      style: secondary
+      start: 13
+      end: 20
+    - source: unknown
+      style: secondary
+      start: 13
+      end: 20
+  ? |
+    function create(): unknown {
+      return {};
+    }
+  : labels:
+    - source: return {};
+      style: primary
+      start: 31
+      end: 41
+    - source: '{}'
+      style: secondary
+      start: 38
+      end: 40
+    - source: '{}'
+      style: secondary
+      start: 38
+      end: 40
+    - source: unknown
+      style: secondary
+      start: 19
+      end: 26
+    - source: unknown
+      style: secondary
+      start: 19
+      end: 26
+    - source: |-
+        function create(): unknown {
+          return {};
+        }
+      style: secondary
+      start: 0
+      end: 43
+  ? |
+    type Command = () => void;
+    const startCommand = () => {};
+    class Registry {
+      commands: Record<string, Command> = { start: startCommand };
+    }
+  : labels:
+    - source: 'commands: Record<string, Command> = { start: startCommand }'
+      style: primary
+      start: 77
+      end: 136
+    - source: '{ start: startCommand }'
+      style: secondary
+      start: 113
+      end: 136
+    - source: Record
+      style: secondary
+      start: 87
+      end: 93
+    - source: Record<string, Command>
+      style: secondary
+      start: 87
+      end: 110
+    - source: Record<string, Command>
+      style: secondary
+      start: 87
+      end: 110
+  ? |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands = { start: startCommand } as Record<string, Command>;
+  : labels:
+    - source: '{ start: startCommand } as Record<string, Command>'
+      style: primary
+      start: 75
+      end: 125
+    - source: '{ start: startCommand }'
+      style: secondary
+      start: 75
+      end: 98
+    - source: Record
+      style: secondary
+      start: 102
+      end: 108
+    - source: Record<string, Command>
+      style: secondary
+      start: 102
+      end: 125
+  ? |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands: Record<string, Command> = { start: startCommand };
+  : labels:
+    - source: 'commands: Record<string, Command> = { start: startCommand }'
+      style: primary
+      start: 64
+      end: 123
+    - source: '{ start: startCommand }'
+      style: secondary
+      start: 100
+      end: 123
+    - source: Record
+      style: secondary
+      start: 74
+      end: 80
+    - source: Record<string, Command>
+      style: secondary
+      start: 74
+      end: 97
+    - source: Record<string, Command>
+      style: secondary
+      start: 74
+      end: 97
+  ? |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands: { [key: string]: Command } = { start: startCommand };
+  : labels:
+    - source: 'commands: { [key: string]: Command } = { start: startCommand }'
+      style: primary
+      start: 64
+      end: 126
+    - source: '{ start: startCommand }'
+      style: secondary
+      start: 103
+      end: 126
+    - source: '[key: string]: Command'
+      style: secondary
+      start: 76
+      end: 98
+    - source: '{ [key: string]: Command }'
+      style: secondary
+      start: 74
+      end: 100
+    - source: '{ [key: string]: Command }'
+      style: secondary
+      start: 74
+      end: 100
+  ? |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands: { start: Command } = { start: startCommand };
+  : labels:
+    - source: 'commands: { start: Command } = { start: startCommand }'
+      style: primary
+      start: 64
+      end: 118
+    - source: '{ start: startCommand }'
+      style: secondary
+      start: 95
+      end: 118
+    - source: 'start: Command'
+      style: secondary
+      start: 76
+      end: 90
+    - source: '{ start: Command }'
+      style: secondary
+      start: 74
+      end: 92
+    - source: '{ start: Command }'
+      style: secondary
+      start: 74
+      end: 92
+  ? |
+    type Command = () => void;
+    const startCommand = () => {};
+    function create(): Record<string, Command> {
+      return { start: startCommand };
+    }
+  : labels:
+    - source: 'return { start: startCommand };'
+      style: primary
+      start: 105
+      end: 136
+    - source: '{ start: startCommand }'
+      style: secondary
+      start: 112
+      end: 135
+    - source: Record
+      style: secondary
+      start: 77
+      end: 83
+    - source: Record<string, Command>
+      style: secondary
+      start: 77
+      end: 100
+    - source: Record<string, Command>
+      style: secondary
+      start: 77
+      end: 100
+    - source: |-
+        function create(): Record<string, Command> {
+          return { start: startCommand };
+        }
+      style: secondary
+      start: 58
+      end: 138

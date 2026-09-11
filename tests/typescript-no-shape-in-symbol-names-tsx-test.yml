@@ -1,0 +1,15 @@
+id: typescript-no-shape-in-symbol-names-tsx
+valid:
+  - |
+    const view = <UserCard name="Ada" />;
+  - |
+    function Panel() {
+      return <section>Ready</section>;
+    }
+invalid:
+  - |
+    const view = <Shape />;
+  - |
+    function ShapeView() {
+      return <div>Ready</div>;
+    }

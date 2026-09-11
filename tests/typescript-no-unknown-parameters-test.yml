@@ -1,0 +1,55 @@
+id: typescript-no-unknown-parameters
+valid:
+  - |
+    interface Owner {
+      readonly id: string;
+    }
+
+    function load(value: Owner) {
+      return value.id;
+    }
+  - |
+    function wrap(message: string, cause: unknown) {
+      return new Error(message, { cause });
+    }
+  - |
+    const wrapError = (message: string, cause: unknown) => {
+      return new Error(message, { cause });
+    };
+  - |
+    function collect(...args: unknown[]) {
+      return args;
+    }
+  - |
+    function parse(input: string | undefined) {
+      return input;
+    }
+invalid:
+  - |
+    function load(value: unknown) {
+      return value;
+    }
+  - |
+    const load = (value: unknown) => value;
+  - |
+    function load(value?: unknown) {
+      return value;
+    }
+  - |
+    function load(value: unknown = null) {
+      return value;
+    }
+  - |
+    interface Loader {
+      load(value: unknown): void;
+    }
+  - |
+    type Loader = (value: unknown) => void;
+  - |
+    class Registry {
+      constructor(private value: unknown) {}
+    }
+  - |
+    function load(value: (unknown)) {
+      return value;
+    }

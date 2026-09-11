@@ -1,0 +1,38 @@
+id: typescript-no-shape-in-symbol-names
+valid:
+  - |
+    type User = {
+      id: string;
+      name: string;
+    };
+
+    function parseUser(input: unknown): User {
+      return UserSchema.parse(input);
+    }
+  - |
+    const payload = { id: "1", name: "Ada" };
+  - |
+    class Registry {
+      #users = new Map();
+    }
+  - |
+    import { readFile } from "./shipyard";
+invalid:
+  - |
+    type UserShape = {
+      id: string;
+    };
+  - |
+    function parseShape(input: unknown) {
+      return input;
+    }
+  - |
+    const shape = {};
+  - |
+    class Parser {
+      #shape = null;
+    }
+  - |
+    const payload = { shape: true };
+  - |
+    const { shape } = payload;

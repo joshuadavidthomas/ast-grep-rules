@@ -1,0 +1,35 @@
+id: typescript-no-widen-then-assert
+valid:
+  - |
+    const user = { id: "1" } as const;
+  - |
+    const value: unknown = load();
+    const user = UserSchema.parse(value);
+  - |
+    const value: User = { id: "1" };
+    const copy = value as User;
+  - |
+    function parse(value: unknown) {
+      return value as User;
+    }
+  - |
+    const value: unknown = { id: "1" };
+    const copy = value as unknown;
+invalid:
+  - |
+    const value: unknown = { id: "1" };
+    const user = value as User;
+  - |
+    const value = { id: "1" } as unknown;
+    const user = value as User;
+  - |
+    const value: object = { id: "1" };
+    const user = value as User;
+  - |
+    const value: Record<string, unknown> = { id: "1" };
+    const user = value as User;
+  - |
+    function read() {
+      const value: unknown = { id: "1" };
+      return value as User;
+    }

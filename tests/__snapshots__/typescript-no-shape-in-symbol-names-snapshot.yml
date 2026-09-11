@@ -1,0 +1,50 @@
+id: typescript-no-shape-in-symbol-names
+snapshots:
+  ? |
+    class Parser {
+      #shape = null;
+    }
+  : labels:
+    - source: '#shape'
+      style: primary
+      start: 17
+      end: 23
+  ? |
+    const payload = { shape: true };
+  : labels:
+    - source: shape
+      style: primary
+      start: 18
+      end: 23
+  ? |
+    const shape = {};
+  : labels:
+    - source: shape
+      style: primary
+      start: 6
+      end: 11
+  ? |
+    const { shape } = payload;
+  : labels:
+    - source: shape
+      style: primary
+      start: 8
+      end: 13
+  ? |
+    function parseShape(input: unknown) {
+      return input;
+    }
+  : labels:
+    - source: parseShape
+      style: primary
+      start: 9
+      end: 19
+  ? |
+    type UserShape = {
+      id: string;
+    };
+  : labels:
+    - source: UserShape
+      style: primary
+      start: 5
+      end: 14

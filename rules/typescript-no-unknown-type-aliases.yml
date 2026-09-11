@@ -1,0 +1,22 @@
+id: typescript-no-unknown-type-aliases
+language: TypeScript
+severity: error
+message: "Do not alias unknown; keep unknown on an allowed cause field or replace it with the parsed owner type."
+note: "A type alias that only renames unknown hides the top type. Leave unknown visible at the boundary, or name the type produced by parsing."
+utils:
+  unknown-type:
+    any:
+      - kind: predefined_type
+        regex: "^unknown$"
+      - kind: parenthesized_type
+        has:
+          matches: unknown-type
+rule:
+  kind: type_alias_declaration
+  has:
+    field: value
+    matches: unknown-type
+  not:
+    has:
+      field: type_parameters
+      kind: type_parameters

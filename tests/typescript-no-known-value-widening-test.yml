@@ -1,0 +1,79 @@
+id: typescript-no-known-value-widening
+valid:
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands: Record<string, Command> = {};
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands = { start: startCommand };
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands = { start: startCommand } as const;
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands = { start: startCommand } satisfies Record<string, Command>;
+  - |
+    interface Commands {
+      readonly start: Command;
+    }
+    const startCommand = () => {};
+    const commands: Commands = { start: startCommand };
+  - |
+    function create() {
+      return { start: startCommand };
+    }
+  - |
+    declare function make(): Record<string, Command>;
+    const commands: Record<string, Command> = make();
+  - |
+    const source = { start: startCommand };
+    const commands: Record<string, Command> = source;
+invalid:
+  - |
+    const value: unknown = {};
+  - |
+    const value: object = {};
+  - |
+    const value: unknown = 1;
+  - |
+    const value: object = [];
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands: Record<string, Command> = { start: startCommand };
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands: { [key: string]: Command } = { start: startCommand };
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands: { start: Command } = { start: startCommand };
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    const commands = { start: startCommand } as Record<string, Command>;
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    class Registry {
+      commands: Record<string, Command> = { start: startCommand };
+    }
+  - |
+    function create(): unknown {
+      return {};
+    }
+  - |
+    type Command = () => void;
+    const startCommand = () => {};
+    function create(): Record<string, Command> {
+      return { start: startCommand };
+    }
+  - |
+    const value = {} as unknown;
+  - |
+    const create = (): unknown => ({});

@@ -1,0 +1,31 @@
+id: typescript-no-conditional-empty-object-spread
+language: TypeScript
+severity: error
+message: "Do not spread a conditional empty object; write the property or build the object in separate statements."
+note: "`...(cond ? { key: value } : {})` uses an empty object as a no-op. Put the property on the object, or assign it in a later statement when the condition holds."
+utils:
+  empty-object:
+    kind: object
+    not:
+      has:
+        any:
+          - kind: pair
+          - kind: spread_element
+          - kind: method_definition
+          - kind: shorthand_property_identifier
+        stopBy: end
+rule:
+  kind: spread_element
+  inside:
+    kind: object
+    stopBy: neighbor
+  has:
+    kind: ternary_expression
+    any:
+      - has:
+          field: consequence
+          matches: empty-object
+      - has:
+          field: alternative
+          matches: empty-object
+    stopBy: end

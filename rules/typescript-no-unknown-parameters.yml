@@ -1,0 +1,28 @@
+id: typescript-no-unknown-parameters
+language: TypeScript
+severity: error
+message: "Do not type a parameter as unknown; give it a named contract or parse it at the I/O boundary."
+note: "unknown on an input hides the expected schema. Decode the value where it entered the program. A parameter named cause may stay unknown so error wrapping can keep the original failure."
+utils:
+  unknown-type:
+    any:
+      - kind: predefined_type
+        regex: "^unknown$"
+      - kind: parenthesized_type
+        has:
+          matches: unknown-type
+rule:
+  any:
+    - kind: required_parameter
+    - kind: optional_parameter
+  has:
+    field: type
+    has:
+      matches: unknown-type
+  not:
+    has:
+      any:
+        - kind: identifier
+        - kind: property_identifier
+      regex: "^cause$"
+      stopBy: end

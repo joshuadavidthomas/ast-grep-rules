@@ -1,0 +1,35 @@
+id: typescript-no-object-parameters
+valid:
+  - |
+    interface Owner {
+      readonly id: string;
+    }
+
+    function load(value: Owner) {}
+  - |
+    function load<Value>(value: Value) {}
+  - |
+    function load<Value extends object>(value: Value) {}
+  - |
+    function load(value: Record<string, number>) {}
+invalid:
+  - |
+    function load(value: object) {}
+  - |
+    const load = (value: object) => value;
+  - |
+    function load(value?: object) {}
+  - |
+    function load(value: (object)) {}
+  - |
+    function load(value: object | string) {}
+  - |
+    interface Loader {
+      load(value: object): void;
+    }
+  - |
+    type Loader = (value: object) => void;
+  - |
+    class Registry {
+      constructor(private value: object) {}
+    }

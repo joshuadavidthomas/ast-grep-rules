@@ -1,0 +1,10 @@
+id: typescript-no-runtime-typeof
+language: TypeScript
+severity: error
+message: "Do not use runtime typeof checks; parse the value into a domain type at the I/O boundary."
+note: "typeof only sorts a value into a JavaScript category. It does not prove the expected contract. Decode external data with a schema at the boundary where it entered the program."
+rule:
+  kind: unary_expression
+  has:
+    field: operator
+    regex: "^typeof$"

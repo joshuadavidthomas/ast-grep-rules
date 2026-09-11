@@ -1,0 +1,18 @@
+id: typescript-no-shape-in-symbol-names-tsx
+snapshots:
+  ? |
+    const view = <Shape />;
+  : labels:
+    - source: Shape
+      style: primary
+      start: 14
+      end: 19
+  ? |
+    function ShapeView() {
+      return <div>Ready</div>;
+    }
+  : labels:
+    - source: ShapeView
+      style: primary
+      start: 9
+      end: 18

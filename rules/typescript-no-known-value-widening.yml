@@ -1,0 +1,191 @@
+id: typescript-no-known-value-widening
+language: TypeScript
+severity: warning
+message: "Do not give a known value an explicit unknown, object, Record, or anonymous object type; keep inference, use satisfies, or name the owner type."
+note: "A literal, array, object, function, or constructor already has a precise type. Annotating or asserting it as unknown, object, Record, or an inline object type throws that evidence away. An empty object used as a dictionary accumulator may stay annotated as Record or an index signature. This rule does not follow bindings or type aliases."
+utils:
+  known-value:
+    any:
+      - kind: object
+      - kind: array
+      - kind: arrow_function
+      - kind: function_expression
+      - kind: class
+      - kind: new_expression
+      - kind: number
+      - kind: string
+      - kind: "true"
+      - kind: "false"
+      - kind: "null"
+      - kind: undefined
+      - kind: template_string
+      - kind: regex
+      - kind: unary_expression
+      - kind: parenthesized_expression
+        has:
+          matches: known-value
+  empty-object:
+    kind: object
+    not:
+      has:
+        any:
+          - kind: pair
+          - kind: spread_element
+          - kind: method_definition
+          - kind: shorthand_property_identifier
+        stopBy: end
+  top-type:
+    any:
+      - kind: predefined_type
+        regex: "^(unknown|object)$"
+      - kind: parenthesized_type
+        has:
+          matches: top-type
+  open-dictionary:
+    any:
+      - all:
+          - kind: generic_type
+          - has:
+              field: name
+              kind: type_identifier
+              regex: "^Record$"
+      - kind: object_type
+        has:
+          kind: index_signature
+          stopBy: end
+      - kind: parenthesized_type
+        has:
+          matches: open-dictionary
+  anonymous-object:
+    kind: object_type
+    has:
+      any:
+        - kind: property_signature
+        - kind: method_signature
+      stopBy: end
+    not:
+      has:
+        kind: index_signature
+        stopBy: end
+  function-owner:
+    any:
+      - kind: function_declaration
+      - kind: function_expression
+      - kind: arrow_function
+      - kind: method_definition
+  assertion:
+    any:
+      - kind: as_expression
+      - kind: type_assertion
+  annotated-known:
+    all:
+      - any:
+          - kind: variable_declarator
+          - kind: public_field_definition
+      - has:
+          field: value
+          matches: known-value
+  returned-known:
+    kind: return_statement
+    has:
+      matches: known-value
+      stopBy: end
+rule:
+  any:
+    - all:
+        - matches: annotated-known
+        - has:
+            field: type
+            has:
+              matches: top-type
+    - all:
+        - matches: annotated-known
+        - has:
+            field: type
+            has:
+              any:
+                - matches: open-dictionary
+                - matches: anonymous-object
+        - not:
+            has:
+              field: value
+              matches: empty-object
+    - all:
+        - matches: assertion
+        - has:
+            matches: known-value
+        - has:
+            matches: top-type
+        - not:
+            inside:
+              matches: assertion
+              stopBy: end
+    - all:
+        - matches: assertion
+        - has:
+            matches: known-value
+        - has:
+            any:
+              - matches: open-dictionary
+              - matches: anonymous-object
+        - not:
+            has:
+              matches: empty-object
+        - not:
+            inside:
+              matches: assertion
+              stopBy: end
+    - all:
+        - matches: returned-known
+        - not:
+            has:
+              matches: empty-object
+              stopBy: end
+        - inside:
+            matches: function-owner
+            has:
+              field: return_type
+              has:
+                any:
+                  - matches: top-type
+                  - matches: open-dictionary
+                  - matches: anonymous-object
+            stopBy:
+              matches: function-owner
+    - all:
+        - matches: returned-known
+        - has:
+            matches: empty-object
+            stopBy: end
+        - inside:
+            matches: function-owner
+            has:
+              field: return_type
+              has:
+                matches: top-type
+            stopBy:
+              matches: function-owner
+    - all:
+        - kind: arrow_function
+        - has:
+            field: return_type
+            has:
+              matches: top-type
+        - has:
+            field: body
+            matches: known-value
+    - all:
+        - kind: arrow_function
+        - has:
+            field: return_type
+            has:
+              any:
+                - matches: open-dictionary
+                - matches: anonymous-object
+        - has:
+            field: body
+            matches: known-value
+        - not:
+            has:
+              field: body
+              matches: empty-object

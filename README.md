@@ -153,9 +153,19 @@ All rules link to their definitions. Most definitions include a `note` with exce
 
 | Rule | Severity | Reports |
 | --- | --- | --- |
+| [`typescript-no-chained-type-assertions`](rules/typescript-no-chained-type-assertions.yml) | error | Nested `as` or angle-bracket assertions, except chains made only of `const`. Keep the original type or parse unknown input at its boundary. |
+| [`typescript-no-conditional-empty-object-spread`](rules/typescript-no-conditional-empty-object-spread.yml) | error | Object spreads that use `{}` on one side of a ternary to omit a field. Write the property or build the object in later statements. |
 | [`typescript-no-generic-error-message-helper`](rules/typescript-no-generic-error-message-helper.yml) | error | Helpers that reduce an unknown error to `error.message` or `String(error)`. Preserve the original error and write separate user-facing text. |
 | [`typescript-no-hand-rolled-object-type-guard`](rules/typescript-no-hand-rolled-object-type-guard.yml) | error | Object type predicates over unknown input that rely on `typeof value === "object"`. Parse the expected shape with a schema validator. |
+| [`typescript-no-known-value-widening`](rules/typescript-no-known-value-widening.yml) | warning | A written literal, array, object, or function given an explicit `unknown`, `object`, `Record`, or anonymous object type. Keep inference, use `satisfies`, or name the owner type. |
+| [`typescript-no-object-parameters`](rules/typescript-no-object-parameters.yml) | error | Function parameters typed as `object`. Use the owner type or parse the input at its boundary. |
 | [`typescript-no-record-string-unknown`](rules/typescript-no-record-string-unknown.yml) | error | `Record<string, unknown>` in any type position. Declare the actual object shape, or keep the value `unknown` and parse it with a schema at the boundary. |
+| [`typescript-no-runtime-typeof`](rules/typescript-no-runtime-typeof.yml) | error | Runtime `typeof` checks. Parse the value into a domain type at the I/O boundary. |
+| [`typescript-no-shape-in-symbol-names`](rules/typescript-no-shape-in-symbol-names.yml) | warning | The word `shape` in a TypeScript identifier. Name the owner type or the parsed domain value. |
+| [`typescript-no-shape-in-symbol-names-tsx`](rules/typescript-no-shape-in-symbol-names.yml) | warning | The same `shape` name check for TSX identifiers. |
+| [`typescript-no-unknown-parameters`](rules/typescript-no-unknown-parameters.yml) | error | Parameters typed as `unknown`, except a parameter named `cause`. Give the input a named contract or parse it at the I/O boundary. |
+| [`typescript-no-unknown-type-aliases`](rules/typescript-no-unknown-type-aliases.yml) | error | Type aliases that only rename `unknown`. Keep `unknown` visible or replace it with the parsed owner type. |
+| [`typescript-no-widen-then-assert`](rules/typescript-no-widen-then-assert.yml) | warning | A local `const` widened to `unknown`, `any`, `object`, or `Record<..., unknown>` and later asserted to a narrower type. Keep the precise type, or parse unknown input once at the boundary. |
 
 ### Pi
 

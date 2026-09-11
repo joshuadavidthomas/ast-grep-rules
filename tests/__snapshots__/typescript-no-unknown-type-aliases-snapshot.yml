@@ -1,0 +1,39 @@
+id: typescript-no-unknown-type-aliases
+snapshots:
+  ? |
+    export type Input = unknown;
+  : labels:
+    - source: type Input = unknown;
+      style: primary
+      start: 7
+      end: 28
+    - source: unknown
+      style: secondary
+      start: 20
+      end: 27
+  ? |
+    type Payload = (unknown);
+  : labels:
+    - source: type Payload = (unknown);
+      style: primary
+      start: 0
+      end: 25
+    - source: unknown
+      style: secondary
+      start: 16
+      end: 23
+    - source: (unknown)
+      style: secondary
+      start: 15
+      end: 24
+  ? |
+    type Payload = unknown;
+  : labels:
+    - source: type Payload = unknown;
+      style: primary
+      start: 0
+      end: 23
+    - source: unknown
+      style: secondary
+      start: 15
+      end: 22

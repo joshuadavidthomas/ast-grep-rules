@@ -1,0 +1,92 @@
+id: typescript-no-chained-type-assertions
+snapshots:
+  ? |
+    const user = (value as unknown) as User;
+  : labels:
+    - source: (value as unknown) as User
+      style: primary
+      start: 13
+      end: 39
+    - source: value as unknown
+      style: secondary
+      start: 14
+      end: 30
+    - source: unknown
+      style: secondary
+      start: 23
+      end: 30
+  ? |
+    const user = <User>(value as unknown);
+  : labels:
+    - source: <User>(value as unknown)
+      style: primary
+      start: 13
+      end: 37
+    - source: value as unknown
+      style: secondary
+      start: 20
+      end: 36
+    - source: User
+      style: secondary
+      start: 14
+      end: 18
+  ? |
+    const user = <User><unknown>value;
+  : labels:
+    - source: <User><unknown>value
+      style: primary
+      start: 13
+      end: 33
+    - source: <unknown>value
+      style: secondary
+      start: 19
+      end: 33
+    - source: User
+      style: secondary
+      start: 14
+      end: 18
+  ? |
+    const user = value as User as const;
+  : labels:
+    - source: value as User as const
+      style: primary
+      start: 13
+      end: 35
+    - source: value as User
+      style: secondary
+      start: 13
+      end: 26
+    - source: User
+      style: secondary
+      start: 22
+      end: 26
+  ? |
+    const user = value as const as User;
+  : labels:
+    - source: value as const as User
+      style: primary
+      start: 13
+      end: 35
+    - source: value as const
+      style: secondary
+      start: 13
+      end: 27
+    - source: User
+      style: secondary
+      start: 31
+      end: 35
+  ? |
+    const user = value as unknown as User;
+  : labels:
+    - source: value as unknown as User
+      style: primary
+      start: 13
+      end: 37
+    - source: value as unknown
+      style: secondary
+      start: 13
+      end: 29
+    - source: unknown
+      style: secondary
+      start: 22
+      end: 29

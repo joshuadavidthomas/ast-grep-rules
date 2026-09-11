@@ -22,5 +22,6 @@ run([
   "--test",
   resolve(testsDir, "integration", "package-install.test.mjs"),
   resolve(testsDir, "integration", "rule-groups.test.mjs"),
+  resolve(testsDir, "integration", "rust-test-globs.test.mjs"),
   resolve(testsDir, "integration", "svelte-parser.test.mjs"),
 ]);

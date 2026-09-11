@@ -1,6 +1,18 @@
 id: rust-no-panicking-fallback
 snapshots:
   ? |
+    #[cfg(test)]
+    mod tests {}
+
+    fn load(result: Result<Config, Error>) -> Config {
+        result.unwrap_or_else(|error| panic!("failed to load config: {error}"))
+    }
+  : labels:
+    - source: 'result.unwrap_or_else(|error| panic!("failed to load config: {error}"))'
+      style: primary
+      start: 82
+      end: 153
+  ? |
     fn load(option: Option<()>) {
         option.unwrap_or_else(|| {
             unreachable!("config must be present");

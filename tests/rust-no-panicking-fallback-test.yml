@@ -25,6 +25,18 @@ valid:
     fn describe(result: Result<Value, Error>) -> String {
         result.map_or_else(|error| error.to_string(), |value| value.to_string())
     }
+  - |
+    #[test]
+    fn load_panics_in_test(result: Result<Config, Error>) -> Config {
+        result.unwrap_or_else(|error| panic!("failed to load config: {error}"))
+    }
+  - |
+    #[cfg(test)]
+    mod tests {
+        fn helper(result: Result<Config, Error>) -> Config {
+            result.unwrap_or_else(|error| panic!("failed to load config: {error}"))
+        }
+    }
 invalid:
   - |
     fn load(result: Result<Config, Error>) -> Config {
@@ -62,4 +74,11 @@ invalid:
             || panic!("missing config"),
             |config| config,
         )
+    }
+  - |
+    #[cfg(test)]
+    mod tests {}
+
+    fn load(result: Result<Config, Error>) -> Config {
+        result.unwrap_or_else(|error| panic!("failed to load config: {error}"))
     }

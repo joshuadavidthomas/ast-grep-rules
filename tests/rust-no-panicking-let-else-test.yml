@@ -38,6 +38,24 @@ valid:
     fn fail_at_process_boundary(error: Error) -> ! {
         panic!("startup failed: {error}")
     }
+  - |
+    #[test]
+    fn load_panics_in_test(option: Option<Config>) -> Config {
+        let Some(config) = option else {
+            panic!("missing config")
+        };
+        config
+    }
+  - |
+    #[cfg(test)]
+    mod tests {
+        fn helper(option: Option<Config>) -> Config {
+            let Some(config) = option else {
+                panic!("missing config")
+            };
+            config
+        }
+    }
 invalid:
   - |
     fn load(option: Option<Config>) -> Config {
@@ -75,4 +93,14 @@ invalid:
             panic!("state must be ready");
         };
         value
+    }
+  - |
+    #[cfg(test)]
+    mod tests {}
+
+    fn load(option: Option<Config>) -> Config {
+        let Some(config) = option else {
+            panic!("missing config")
+        };
+        config
     }

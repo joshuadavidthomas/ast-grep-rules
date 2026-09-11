@@ -2,15 +2,42 @@ id: rust-no-panicking-fallback
 language: Rust
 severity: error
 message: "Do not panic in an unwrap_or_else or map_or_else fallback; handle the absent or failed value."
-note: "A diverging lazy fallback is forced extraction under another spelling. Propagate or convert the error, return a real fallback, or model the invariant in the API."
+note: "A diverging lazy fallback is forced extraction under another spelling. Propagate or convert the error, return a real fallback, or model the invariant in the API. Test files and items under #[cfg(test)] or a test attribute are skipped."
+ignores:
+  - "**/tests.rs"
+  - "**/tests/**"
+  - "**/*_test.rs"
+  - "**/*_tests.rs"
+utils:
+  test-attribute:
+    kind: attribute_item
+    regex: "^#\\[(cfg\\(test\\)|(\\w+::)*test(_case)?\\b|rstest\\b)"
+  test-item:
+    any:
+      - kind: function_item
+      - kind: mod_item
+      - kind: impl_item
+    follows:
+      matches: test-attribute
+      stopBy:
+        not:
+          any:
+            - kind: attribute_item
+            - kind: line_comment
+            - kind: block_comment
 rule:
-  any:
-    - pattern: $VALUE.unwrap_or_else($FALLBACK)
-    - pattern: $VALUE.map_or_else($FALLBACK, $SUCCESS)
-    - pattern: Option::unwrap_or_else($VALUE, $FALLBACK)
-    - pattern: Result::unwrap_or_else($VALUE, $FALLBACK)
-    - pattern: Option::map_or_else($VALUE, $FALLBACK, $SUCCESS)
-    - pattern: Result::map_or_else($VALUE, $FALLBACK, $SUCCESS)
+  all:
+    - any:
+        - pattern: $VALUE.unwrap_or_else($FALLBACK)
+        - pattern: $VALUE.map_or_else($FALLBACK, $SUCCESS)
+        - pattern: Option::unwrap_or_else($VALUE, $FALLBACK)
+        - pattern: Result::unwrap_or_else($VALUE, $FALLBACK)
+        - pattern: Option::map_or_else($VALUE, $FALLBACK, $SUCCESS)
+        - pattern: Result::map_or_else($VALUE, $FALLBACK, $SUCCESS)
+    - not:
+        inside:
+          matches: test-item
+          stopBy: end
 constraints:
   FALLBACK:
     any:

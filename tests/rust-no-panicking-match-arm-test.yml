@@ -1,0 +1,175 @@
+id: rust-no-panicking-match-arm
+valid:
+  - |
+    fn status(result: Result<u32, Error>) -> u32 {
+        match result {
+            Ok(value) => value,
+            Err(_) => 0,
+        }
+    }
+  - |
+    fn load(result: Result<Config, Error>) -> Result<Config, Error> {
+        match result {
+            Ok(config) => Ok(config),
+            Err(error) => return Err(error),
+        }
+    }
+  - |
+    fn values(option: Option<u32>) -> Vec<u32> {
+        match option {
+            Some(x) => vec![x],
+            None => format!("none").into_bytes(),
+        }
+    }
+  - |
+    fn load(result: Result<u32, Error>, strict: bool) -> u32 {
+        match result {
+            Ok(value) => value,
+            Err(_) => {
+                if strict {
+                    panic!("strict");
+                }
+                0
+            }
+        }
+    }
+  - |
+    fn lock<'a, T>(mutex: &'a Mutex<T>) -> MutexGuard<'a, T> {
+        mutex.lock().unwrap_or_else(PoisonError::into_inner)
+    }
+  - |
+    const CLIENT_ID: ClientId = match ClientId::try_new(7) {
+        Ok(client_id) => client_id,
+        Err(error) => panic!("invalid client ID: {error}"),
+    };
+  - |
+    static CLIENT_ID: ClientId = match ClientId::try_new(7) {
+        Ok(client_id) => client_id,
+        Err(error) => panic!("invalid client ID: {error}"),
+    };
+  - |
+    fn fail_at_process_boundary(error: Error) -> ! {
+        panic!("startup failed: {error}")
+    }
+  - |
+    #[test]
+    fn parses_error() {
+        match parse() {
+            Ok(value) => assert_eq!(value, 1),
+            Err(error) => panic!("failed: {error}"),
+        }
+    }
+  - |
+    #[tokio::test(flavor = "multi_thread")]
+    async fn parses_error() {
+        match parse().await {
+            Ok(value) => assert_eq!(value, 1),
+            Err(error) => panic!("failed: {error}"),
+        }
+    }
+  - |
+    #[rstest]
+    #[case(1)]
+    fn rejects_bad_input(#[case] n: u32) {
+        match n {
+            1 => (),
+            _ => panic!("bad"),
+        }
+    }
+  - |
+    #[cfg(test)]
+    /// module tests
+    mod tests {
+        fn helper(result: Result<u32, Error>) -> u32 {
+            match result {
+                Ok(value) => value,
+                Err(error) => panic!("failed: {error}"),
+            }
+        }
+    }
+  - |
+    #[cfg(test)]
+    #[allow(dead_code)]
+    mod tests {
+        fn helper(option: Option<u32>) -> u32 {
+            match option {
+                Some(value) => value,
+                None => unreachable!(),
+            }
+        }
+    }
+invalid:
+  - |
+    fn client_id() -> ClientId {
+        match ClientId::try_new(7) {
+            Ok(client_id) => client_id,
+            Err(error) => panic!("invalid client ID: {error}"),
+        }
+    }
+  - |
+    fn lock<'a, T>(mutex: &'a Mutex<T>, purpose: &str) -> MutexGuard<'a, T> {
+        match mutex.lock() {
+            Ok(guard) => guard,
+            Err(error) => panic!("{purpose} mutex poisoned: {error}"),
+        }
+    }
+  - |
+    fn load(result: Result<Config, Error>) -> Config {
+        match result {
+            Ok(config) => config,
+            Err(_) => {
+                log_failure();
+                unreachable!("config load should succeed")
+            }
+        }
+    }
+  - |
+    fn load(result: Result<Config, Error>) -> Config {
+        match result {
+            Ok(config) => config,
+            Err(_) => {
+                todo!();
+            }
+        }
+    }
+  - |
+    fn render(result: Result<Frame, Error>) -> Frame {
+        match result {
+            Ok(frame) => frame,
+            Err(error) => {
+                panic!("video frame failed: {error}")
+            }
+        }
+    }
+  - |
+    fn load(result: Result<u32, Error>, strict: bool) -> u32 {
+        match result {
+            Ok(value) => value,
+            Err(_) if strict => unimplemented!(),
+            Err(_) => 0,
+        }
+    }
+  - |
+    fn config(option: Option<Config>) -> Config {
+        match option {
+            Some(config) => config,
+            None => panic!("missing config"),
+        }
+    }
+  - |
+    fn parse(nal_type: u8) -> Nal {
+        match nal_type {
+            1 => Nal::Slice,
+            _ => unreachable!("unsupported nal type {nal_type}"),
+        }
+    }
+  - |
+    #[cfg(test)]
+    mod tests {}
+
+    fn load(result: Result<Config, Error>) -> Config {
+        match result {
+            Ok(config) => config,
+            Err(error) => panic!("failed to load config: {error}"),
+        }
+    }

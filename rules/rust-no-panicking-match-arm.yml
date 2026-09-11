@@ -1,0 +1,59 @@
+id: rust-no-panicking-match-arm
+language: Rust
+severity: error
+message: "Do not end a match arm with a panic; handle the failed pattern without crashing."
+note: "A match whose Err, None, or wildcard arm panics is expect under another spelling, and wrapping the match in a helper only relabels it. Return or propagate an error, give the arm a real value, or model the invariant so the arm is impossible. Test files and items under #[cfg(test)] or a test attribute are skipped. A deliberate process-boundary abort needs an ast-grep-ignore comment with the reason."
+ignores:
+  - "**/tests.rs"
+  - "**/tests/**"
+  - "**/*_test.rs"
+  - "**/*_tests.rs"
+utils:
+  test-attribute:
+    kind: attribute_item
+    regex: "^#\\[(cfg\\(test\\)|(\\w+::)*test(_case)?\\b|rstest\\b)"
+  test-item:
+    any:
+      - kind: function_item
+      - kind: mod_item
+      - kind: impl_item
+    follows:
+      matches: test-attribute
+      stopBy:
+        not:
+          any:
+            - kind: attribute_item
+            - kind: line_comment
+            - kind: block_comment
+  panicking-arm:
+    kind: match_arm
+    has:
+      field: value
+      any:
+        - pattern: $MACRO!($$$ARGS)
+        - pattern: "{ $MACRO!($$$ARGS) }"
+        - pattern: "{ $$$BODY; $MACRO!($$$ARGS) }"
+        - pattern: "{ panic!($$$ARGS); }"
+        - pattern: "{ unreachable!($$$ARGS); }"
+        - pattern: "{ todo!($$$ARGS); }"
+        - pattern: "{ unimplemented!($$$ARGS); }"
+        - pattern: "{ $$$BODY; panic!($$$ARGS); }"
+        - pattern: "{ $$$BODY; unreachable!($$$ARGS); }"
+        - pattern: "{ $$$BODY; todo!($$$ARGS); }"
+        - pattern: "{ $$$BODY; unimplemented!($$$ARGS); }"
+rule:
+  all:
+    - matches: panicking-arm
+    - not:
+        inside:
+          matches: test-item
+          stopBy: end
+    - not:
+        inside:
+          any:
+            - kind: const_item
+            - kind: static_item
+          stopBy: end
+constraints:
+  MACRO:
+    regex: "^(panic|unreachable|todo|unimplemented)$"

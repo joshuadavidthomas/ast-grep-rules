@@ -7,6 +7,18 @@ snapshots:
       style: primary
       start: 12
       end: 35
+    - source: Record
+      style: secondary
+      start: 12
+      end: 18
+    - source: unknown
+      style: secondary
+      start: 27
+      end: 34
+    - source: unknown
+      style: secondary
+      start: 27
+      end: 34
   ? |
     const items: Array<Record<string, unknown>> = [];
   : labels:
@@ -14,6 +26,18 @@ snapshots:
       style: primary
       start: 19
       end: 42
+    - source: Record
+      style: secondary
+      start: 19
+      end: 25
+    - source: unknown
+      style: secondary
+      start: 34
+      end: 41
+    - source: unknown
+      style: secondary
+      start: 34
+      end: 41
   ? |
     function handle(payload: Record<string, unknown>) {
       console.log(payload.name);
@@ -23,6 +47,18 @@ snapshots:
       style: primary
       start: 25
       end: 48
+    - source: Record
+      style: secondary
+      start: 25
+      end: 31
+    - source: unknown
+      style: secondary
+      start: 40
+      end: 47
+    - source: unknown
+      style: secondary
+      start: 40
+      end: 47
   ? |
     function load(): Record<string, unknown> {
       return JSON.parse(raw);
@@ -32,6 +68,18 @@ snapshots:
       style: primary
       start: 17
       end: 40
+    - source: Record
+      style: secondary
+      start: 17
+      end: 23
+    - source: unknown
+      style: secondary
+      start: 32
+      end: 39
+    - source: unknown
+      style: secondary
+      start: 32
+      end: 39
   ? |
     function merge<T extends Record<string, unknown>>(a: T, b: T): T {
       return { ...a, ...b };
@@ -41,6 +89,35 @@ snapshots:
       style: primary
       start: 25
       end: 48
+    - source: Record
+      style: secondary
+      start: 25
+      end: 31
+    - source: unknown
+      style: secondary
+      start: 40
+      end: 47
+    - source: unknown
+      style: secondary
+      start: 40
+      end: 47
+  ? |
+    interface Dictionary {
+      [key: string]: unknown;
+    }
+  : labels:
+    - source: '[key: string]: unknown'
+      style: primary
+      start: 25
+      end: 47
+    - source: unknown
+      style: secondary
+      start: 40
+      end: 47
+    - source: unknown
+      style: secondary
+      start: 40
+      end: 47
   ? |
     interface Envelope {
       meta: Record<string, unknown>;
@@ -50,6 +127,147 @@ snapshots:
       style: primary
       start: 29
       end: 52
+    - source: Record
+      style: secondary
+      start: 29
+      end: 35
+    - source: unknown
+      style: secondary
+      start: 44
+      end: 51
+    - source: unknown
+      style: secondary
+      start: 44
+      end: 51
+  ? |
+    type Bag = Record<string, object>;
+  : labels:
+    - source: Record<string, object>
+      style: primary
+      start: 11
+      end: 33
+    - source: Record
+      style: secondary
+      start: 11
+      end: 17
+    - source: object
+      style: secondary
+      start: 26
+      end: 32
+    - source: object
+      style: secondary
+      start: 26
+      end: 32
+  ? |
+    type Empty = Record<string, {}>;
+  : labels:
+    - source: Record<string, {}>
+      style: primary
+      start: 13
+      end: 31
+    - source: Record
+      style: secondary
+      start: 13
+      end: 19
+    - source: '{}'
+      style: secondary
+      start: 28
+      end: 30
+    - source: '{}'
+      style: secondary
+      start: 28
+      end: 30
+  ? |
+    type IndexedUnknown = { [key: string]: unknown };
+  : labels:
+    - source: '[key: string]: unknown'
+      style: primary
+      start: 24
+      end: 46
+    - source: unknown
+      style: secondary
+      start: 39
+      end: 46
+    - source: unknown
+      style: secondary
+      start: 39
+      end: 46
+  ? |
+    type Loose = Record<string, any>;
+  : labels:
+    - source: Record<string, any>
+      style: primary
+      start: 13
+      end: 32
+    - source: Record
+      style: secondary
+      start: 13
+      end: 19
+    - source: any
+      style: secondary
+      start: 28
+      end: 31
+    - source: any
+      style: secondary
+      start: 28
+      end: 31
+  ? |
+    type MappedObject = { [K in PropertyKey]: object };
+  : labels:
+    - source: '[K in PropertyKey]: object'
+      style: primary
+      start: 22
+      end: 48
+    - source: object
+      style: secondary
+      start: 42
+      end: 48
+    - source: object
+      style: secondary
+      start: 42
+      end: 48
+  ? |
+    type Mixed = Record<string, string | unknown>;
+  : labels:
+    - source: Record<string, string | unknown>
+      style: primary
+      start: 13
+      end: 45
+    - source: Record
+      style: secondary
+      start: 13
+      end: 19
+    - source: unknown
+      style: secondary
+      start: 37
+      end: 44
+    - source: string | unknown
+      style: secondary
+      start: 28
+      end: 44
+    - source: string | unknown
+      style: secondary
+      start: 28
+      end: 44
+  ? |
+    type Nested = Readonly<Record<string, unknown>>;
+  : labels:
+    - source: Record<string, unknown>
+      style: primary
+      start: 23
+      end: 46
+    - source: Record
+      style: secondary
+      start: 23
+      end: 29
+    - source: unknown
+      style: secondary
+      start: 38
+      end: 45
+    - source: unknown
+      style: secondary
+      start: 38
+      end: 45
   ? |
     type Props = Record<string, unknown>;
   : labels:
@@ -57,3 +275,46 @@ snapshots:
       style: primary
       start: 13
       end: 36
+    - source: Record
+      style: secondary
+      start: 13
+      end: 19
+    - source: unknown
+      style: secondary
+      start: 28
+      end: 35
+    - source: unknown
+      style: secondary
+      start: 28
+      end: 35
+  ? |
+    type Wrapped = Record<string, NonNullable<unknown>>;
+  : labels:
+    - source: Record<string, NonNullable<unknown>>
+      style: primary
+      start: 15
+      end: 51
+    - source: Record
+      style: secondary
+      start: 15
+      end: 21
+    - source: NonNullable
+      style: secondary
+      start: 30
+      end: 41
+    - source: unknown
+      style: secondary
+      start: 42
+      end: 49
+    - source: unknown
+      style: secondary
+      start: 42
+      end: 49
+    - source: NonNullable<unknown>
+      style: secondary
+      start: 30
+      end: 50
+    - source: NonNullable<unknown>
+      style: secondary
+      start: 30
+      end: 50

@@ -17,6 +17,14 @@ valid:
     }
   - |
     type Handlers = Record<EventName, Handler>;
+  - |
+    type Allowed = Record<string, { payload: unknown }>;
+  - |
+    type AlsoAllowed = Record<string, Result<Data, unknown>>;
+  - |
+    type Indexed = { [key: string]: Command };
+  - |
+    type Exhaustive = { [K in Permission]: number };
 invalid:
   - |
     function handle(payload: Record<string, unknown>) {
@@ -39,4 +47,24 @@ invalid:
   - |
     interface Envelope {
       meta: Record<string, unknown>;
+    }
+  - |
+    type Loose = Record<string, any>;
+  - |
+    type Bag = Record<string, object>;
+  - |
+    type Empty = Record<string, {}>;
+  - |
+    type Mixed = Record<string, string | unknown>;
+  - |
+    type Wrapped = Record<string, NonNullable<unknown>>;
+  - |
+    type Nested = Readonly<Record<string, unknown>>;
+  - |
+    type IndexedUnknown = { [key: string]: unknown };
+  - |
+    type MappedObject = { [K in PropertyKey]: object };
+  - |
+    interface Dictionary {
+      [key: string]: unknown;
     }

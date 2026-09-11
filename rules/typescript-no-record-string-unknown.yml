@@ -1,9 +1,57 @@
 id: typescript-no-record-string-unknown
 language: TypeScript
 severity: error
-message: "Do not type values as Record<string, unknown>; model the actual object shape instead."
-note: "Record<string, unknown> says 'this is an object' while erasing every field the code depends on. Declare an interface or type alias for the fields you actually use, or keep the value as unknown and parse it with a validation schema at the boundary."
+message: "Do not type a dictionary value as unknown, any, object, or {}; model the actual value type instead."
+note: "Record<K, unknown>, an index signature of unknown, and the same hole behind Readonly, Partial, Required, or NonNullable erase every field the code depends on. Declare the owner type for the values, or keep the input unknown and parse it with a schema at the boundary. This rule matches the local spelling; it does not follow type aliases."
+utils:
+  hole-type:
+    any:
+      - kind: predefined_type
+        regex: "^(unknown|any|object)$"
+      - kind: object_type
+        not:
+          has:
+            any:
+              - kind: property_signature
+              - kind: index_signature
+              - kind: method_signature
+              - kind: call_signature
+              - kind: construct_signature
+              - kind: mapped_type_clause
+            stopBy: end
+      - kind: parenthesized_type
+        has:
+          matches: hole-type
+      - kind: union_type
+        has:
+          matches: hole-type
+      - all:
+          - kind: generic_type
+          - has:
+              field: name
+              kind: type_identifier
+              regex: "^(Readonly|Partial|Required|NonNullable)$"
+          - has:
+              field: type_arguments
+              has:
+                matches: hole-type
+  record-with-hole:
+    all:
+      - kind: generic_type
+      - has:
+          field: name
+          kind: type_identifier
+          regex: "^Record$"
+      - has:
+          field: type_arguments
+          has:
+            nthChild: 2
+            matches: hole-type
 rule:
-  pattern:
-    context: "type T = Record<string, unknown>"
-    selector: generic_type
+  any:
+    - matches: record-with-hole
+    - kind: index_signature
+      has:
+        field: type
+        has:
+          matches: hole-type

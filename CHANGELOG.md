@@ -22,6 +22,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - TypeScript ports of the [anti-slop](https://github.com/dmmulroy/anti-slop) Oxlint rules: chained type assertions, conditional empty-object spreads, known-value widening, `object` parameters, runtime `typeof`, `shape` in symbol names, `unknown` parameters, `unknown` type aliases, and widen-then-assert.
 
+### Changed
+
+- `typescript-no-record-string-unknown` now reports dictionary value holes spelled as `unknown`, `any`, `object`, or `{}`, including index signatures and `Readonly`/`NonNullable` wrappers.
+
 ## [0.6.0]
 
 ### Added

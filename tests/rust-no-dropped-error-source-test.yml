@@ -1,0 +1,79 @@
+id: rust-no-dropped-error-source
+valid:
+  - |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse().map_err(ConfigError::InvalidPort)
+    }
+  - |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse()
+            .map_err(|source| ConfigError::InvalidPort { source })
+    }
+  - |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse()
+            .map_err(|err| ConfigError::InvalidPort(raw.to_owned(), err))
+    }
+  - |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        let port = raw.parse()?;
+        Ok(port)
+    }
+  - |
+    fn lookup(map: &HashMap<String, u16>, key: &str) -> Result<u16, ConfigError> {
+        map.get(key).copied().ok_or(ConfigError::Missing)
+    }
+  - |
+    fn lookup(map: &HashMap<String, u16>, key: &str) -> Result<u16, ConfigError> {
+        map.get(key)
+            .copied()
+            .ok_or_else(|| ConfigError::Missing(key.to_owned()))
+    }
+  - |
+    fn value(&self) -> Option<u16> {
+        self.raw.parse().ok()
+    }
+  - |
+    fn guard(lock: &Mutex<State>) -> Result<MutexGuard<'_, State>, StateError> {
+        lock.lock().map_err(|poisoned| StateError::Poisoned {
+            recovered: poisoned.into_inner().snapshot(),
+        })
+    }
+invalid:
+  - |
+    fn field<T>(result: Result<T, InvalidValue>, invalid: ProtocolError) -> Result<T, ProtocolError> {
+        result.map_err(|_invalid_value| invalid)
+    }
+  - |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse().map_err(|_| ConfigError::InvalidPort)
+    }
+  - |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse()
+            .map_err(|_: ParseIntError| ConfigError::InvalidPort)
+    }
+  - |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse()
+            .map_err(|_err: ParseIntError| ConfigError::InvalidPort)
+    }
+  - |
+    fn read_config(path: &Path) -> Result<String, ConfigError> {
+        let text = fs::read_to_string(path).map_err(|_| ConfigError::Unreadable)?;
+        Ok(text)
+    }
+  - |
+    fn guard(lock: &Mutex<State>) -> Result<MutexGuard<'_, State>, StateError> {
+        lock.lock().map_err(|_| StateError::Poisoned)
+    }
+  - |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse().ok().ok_or(ConfigError::InvalidPort)
+    }
+  - |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse()
+            .ok()
+            .ok_or_else(|| ConfigError::InvalidPort(raw.to_owned()))
+    }

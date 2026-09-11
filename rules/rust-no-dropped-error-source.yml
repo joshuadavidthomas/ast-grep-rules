@@ -1,0 +1,37 @@
+id: rust-no-dropped-error-source
+language: Rust
+severity: warning
+message: "Do not replace an error with a fixed value while discarding the original; carry the source error in the new one."
+note: "map_err(|_| Error::Variant) and .ok().ok_or(Error::Variant) throw away the cause and keep only a label, so callers and logs cannot tell why the operation failed. Wrap the source instead: map_err(Error::Variant), map_err(|source| Error::Variant { source }), or a #[from] conversion with ?. A helper that exists only to do this swap hides the same loss at every call site. Dropping a PoisonError or another sourceless error is fine; say so with a named parameter or a comment rather than an underscore."
+utils:
+  ignored-closure-parameter:
+    any:
+      - kind: identifier
+        regex: "^_"
+      - kind: parameter
+        has:
+          field: pattern
+          kind: identifier
+          regex: "^_"
+rule:
+  any:
+    - pattern: "$RESULT.map_err(|_| $ERROR)"
+    - pattern: "$RESULT.map_err(|_: $TYPE| $ERROR)"
+    - all:
+        - kind: call_expression
+        - has:
+            field: function
+            kind: field_expression
+            has:
+              field: field
+              regex: "^map_err$"
+        - has:
+            field: arguments
+            has:
+              kind: closure_expression
+              has:
+                field: parameters
+                has:
+                  matches: ignored-closure-parameter
+    - pattern: "$RESULT.ok().ok_or($ERROR)"
+    - pattern: "$RESULT.ok().ok_or_else($ERROR)"

@@ -20,6 +20,7 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ### Added
 
+- `rust-no-dropped-error-source`, which reports `map_err` closures that ignore the source error and `.ok().ok_or(...)` chains, and directs authors to carry the source in the new error.
 - `rust-no-indexed-array-rebuild`, which reports array literals that rebuild a fixed-size chunk by indexing the same slice element by element, and directs authors to `split_first_chunk` or `try_into`.
 - TypeScript ports of the [anti-slop](https://github.com/dmmulroy/anti-slop) Oxlint rules: chained type assertions, conditional empty-object spreads, known-value widening, `object` parameters, runtime `typeof`, `shape` in symbol names, `unknown` parameters, `unknown` type aliases, and widen-then-assert.
 

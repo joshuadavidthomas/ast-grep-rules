@@ -1,0 +1,140 @@
+id: rust-no-dropped-error-source
+snapshots:
+  ? |
+    fn field<T>(result: Result<T, InvalidValue>, invalid: ProtocolError) -> Result<T, ProtocolError> {
+        result.map_err(|_invalid_value| invalid)
+    }
+  : labels:
+    - source: result.map_err(|_invalid_value| invalid)
+      style: primary
+      start: 103
+      end: 143
+    - source: map_err
+      style: secondary
+      start: 110
+      end: 117
+    - source: result.map_err
+      style: secondary
+      start: 103
+      end: 117
+    - source: _invalid_value
+      style: secondary
+      start: 119
+      end: 133
+    - source: _invalid_value
+      style: secondary
+      start: 119
+      end: 133
+    - source: '|_invalid_value| invalid'
+      style: secondary
+      start: 118
+      end: 142
+    - source: '|_invalid_value| invalid'
+      style: secondary
+      start: 118
+      end: 142
+  ? |
+    fn guard(lock: &Mutex<State>) -> Result<MutexGuard<'_, State>, StateError> {
+        lock.lock().map_err(|_| StateError::Poisoned)
+    }
+  : labels:
+    - source: lock.lock().map_err(|_| StateError::Poisoned)
+      style: primary
+      start: 81
+      end: 126
+  ? |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse()
+            .map_err(|_: ParseIntError| ConfigError::InvalidPort)
+    }
+  : labels:
+    - source: |-
+        raw.parse()
+                .map_err(|_: ParseIntError| ConfigError::InvalidPort)
+      style: primary
+      start: 59
+      end: 132
+  ? |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse()
+            .map_err(|_err: ParseIntError| ConfigError::InvalidPort)
+    }
+  : labels:
+    - source: |-
+        raw.parse()
+                .map_err(|_err: ParseIntError| ConfigError::InvalidPort)
+      style: primary
+      start: 59
+      end: 135
+    - source: map_err
+      style: secondary
+      start: 80
+      end: 87
+    - source: |-
+        raw.parse()
+                .map_err
+      style: secondary
+      start: 59
+      end: 87
+    - source: _err
+      style: secondary
+      start: 89
+      end: 93
+    - source: '_err: ParseIntError'
+      style: secondary
+      start: 89
+      end: 108
+    - source: '_err: ParseIntError'
+      style: secondary
+      start: 89
+      end: 108
+    - source: '|_err: ParseIntError| ConfigError::InvalidPort'
+      style: secondary
+      start: 88
+      end: 134
+    - source: '|_err: ParseIntError| ConfigError::InvalidPort'
+      style: secondary
+      start: 88
+      end: 134
+  ? |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse()
+            .ok()
+            .ok_or_else(|| ConfigError::InvalidPort(raw.to_owned()))
+    }
+  : labels:
+    - source: |-
+        raw.parse()
+                .ok()
+                .ok_or_else(|| ConfigError::InvalidPort(raw.to_owned()))
+      style: primary
+      start: 59
+      end: 149
+  ? |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse().map_err(|_| ConfigError::InvalidPort)
+    }
+  : labels:
+    - source: raw.parse().map_err(|_| ConfigError::InvalidPort)
+      style: primary
+      start: 59
+      end: 108
+  ? |
+    fn parse_port(raw: &str) -> Result<u16, ConfigError> {
+        raw.parse().ok().ok_or(ConfigError::InvalidPort)
+    }
+  : labels:
+    - source: raw.parse().ok().ok_or(ConfigError::InvalidPort)
+      style: primary
+      start: 59
+      end: 107
+  ? |
+    fn read_config(path: &Path) -> Result<String, ConfigError> {
+        let text = fs::read_to_string(path).map_err(|_| ConfigError::Unreadable)?;
+        Ok(text)
+    }
+  : labels:
+    - source: fs::read_to_string(path).map_err(|_| ConfigError::Unreadable)
+      style: primary
+      start: 76
+      end: 137

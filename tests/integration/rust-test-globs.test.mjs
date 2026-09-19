@@ -55,7 +55,8 @@ function outputOf(result) {
 }
 
 function pathLine(path) {
-  return new RegExp(`(?:^|\\n).*\\/${path.replaceAll("/", "\\/")}\\b`);
+  const escapedPath = path.replaceAll("/", "[\\\\/]");
+  return new RegExp(`(?:^|\\n).*[\\\\/]${escapedPath}\\b`);
 }
 
 test("Rust panicking rules skip test path globs", () => {
@@ -83,4 +84,14 @@ test("Rust panicking rules skip test path globs", () => {
   } finally {
     rmSync(fixtureDir, { recursive: true, force: true });
   }
+});
+
+test("path assertions accept Windows and POSIX separators", () => {
+  const windowsLine = "C:\\Users\\runner\\Temp\\ast-grep\\src\\lib.rs:3:5";
+  const windowsTestLine =
+    "C:\\Users\\runner\\Temp\\ast-grep\\src\\tests.rs:3:5";
+
+  assert.match(windowsLine, pathLine("src/lib.rs"));
+  assert.match("/tmp/ast-grep/src/lib.rs:3:5", pathLine("src/lib.rs"));
+  assert.doesNotMatch(windowsTestLine, pathLine("src/lib.rs"));
 });

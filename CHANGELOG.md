@@ -20,6 +20,7 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ### Added
 
+- `rust-no-deferred-mutable-init`, which reports `let mut` bindings declared without an initializer and assigned by an immediately following `if`/`else` or `match`, and directs authors to initialize at the declaration or use a branch expression.
 - `rust-no-panicking-match-arm`, which reports match arms that end in `panic!`, `unreachable!`, `todo!`, or `unimplemented!` instead of handling the failed pattern, and skips test files and items under `#[cfg(test)]` or a test attribute.
 - `rust-no-dropped-error-source`, which reports `map_err` closures that ignore the source error and `.ok().ok_or(...)` chains, and directs authors to carry the source in the new error.
 - `rust-no-indexed-array-rebuild`, which reports array literals that rebuild a fixed-size chunk by indexing the same slice element by element, and directs authors to `split_first_chunk` or `try_into`.

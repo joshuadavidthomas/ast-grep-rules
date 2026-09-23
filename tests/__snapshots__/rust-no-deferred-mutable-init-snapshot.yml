@@ -1,0 +1,312 @@
+id: rust-no-deferred-mutable-init
+snapshots:
+  ? |
+    fn base(other: &Instance) -> u8 {
+        let mut base: u8;
+        if cfg!(not(USB_PROTOCOL_NEW_ARCH)) {
+            base = other.base;
+        } else {
+            base = 42u8;
+        }
+        base
+    }
+  : labels:
+    - source: 'let mut base: u8;'
+      style: primary
+      start: 38
+      end: 55
+    - source: |-
+        else {
+                base = 42u8;
+            }
+      style: secondary
+      start: 131
+      end: 164
+    - source: base = other.base;
+      style: secondary
+      start: 106
+      end: 124
+    - source: |-
+        if cfg!(not(USB_PROTOCOL_NEW_ARCH)) {
+                base = other.base;
+            } else {
+                base = 42u8;
+            }
+      style: secondary
+      start: 60
+      end: 164
+    - source: |-
+        if cfg!(not(USB_PROTOCOL_NEW_ARCH)) {
+                base = other.base;
+            } else {
+                base = 42u8;
+            }
+      style: secondary
+      start: 60
+      end: 164
+  ? |
+    fn buffer(flag: bool) -> Vec<u8> {
+        let mut buf;
+        if flag {
+            buf = Vec::new();
+        } else {
+            buf = Vec::with_capacity(8);
+        }
+        buf
+    }
+  : labels:
+    - source: let mut buf;
+      style: primary
+      start: 39
+      end: 51
+    - source: |-
+        else {
+                buf = Vec::with_capacity(8);
+            }
+      style: secondary
+      start: 98
+      end: 147
+    - source: buf = Vec::new();
+      style: secondary
+      start: 74
+      end: 91
+    - source: |-
+        if flag {
+                buf = Vec::new();
+            } else {
+                buf = Vec::with_capacity(8);
+            }
+      style: secondary
+      start: 56
+      end: 147
+    - source: |-
+        if flag {
+                buf = Vec::new();
+            } else {
+                buf = Vec::with_capacity(8);
+            }
+      style: secondary
+      start: 56
+      end: 147
+  ? |
+    fn decode(kind: Kind) -> u32 {
+        let mut value;
+        match kind {
+            Kind::Le => value = 1,
+            Kind::Be => value = 2,
+        }
+        value
+    }
+  : labels:
+    - source: let mut value;
+      style: primary
+      start: 35
+      end: 49
+    - source: value = 1
+      style: secondary
+      start: 87
+      end: 96
+    - source: |-
+        match kind {
+                Kind::Le => value = 1,
+                Kind::Be => value = 2,
+            }
+      style: secondary
+      start: 54
+      end: 134
+    - source: |-
+        match kind {
+                Kind::Le => value = 1,
+                Kind::Be => value = 2,
+            }
+      style: secondary
+      start: 54
+      end: 134
+  ? |
+    fn grade(score: u8) -> &'static str {
+        let mut grade;
+        if score >= 90 {
+            grade = "a";
+        } else if score >= 80 {
+            grade = "b";
+        } else {
+            grade = "c";
+        }
+        grade
+    }
+  : labels:
+    - source: let mut grade;
+      style: primary
+      start: 42
+      end: 56
+    - source: |-
+        else if score >= 80 {
+                grade = "b";
+            } else {
+                grade = "c";
+            }
+      style: secondary
+      start: 105
+      end: 187
+    - source: grade = "a";
+      style: secondary
+      start: 86
+      end: 98
+    - source: |-
+        if score >= 90 {
+                grade = "a";
+            } else if score >= 80 {
+                grade = "b";
+            } else {
+                grade = "c";
+            }
+      style: secondary
+      start: 61
+      end: 187
+    - source: |-
+        if score >= 90 {
+                grade = "a";
+            } else if score >= 80 {
+                grade = "b";
+            } else {
+                grade = "c";
+            }
+      style: secondary
+      start: 61
+      end: 187
+  ? |
+    fn lookup(input: Option<u8>) -> u8 {
+        let mut value;
+        if let Some(byte) = input {
+            value = byte;
+        } else {
+            value = 0;
+        }
+        value
+    }
+  : labels:
+    - source: let mut value;
+      style: primary
+      start: 41
+      end: 55
+    - source: |-
+        else {
+                value = 0;
+            }
+      style: secondary
+      start: 116
+      end: 147
+    - source: value = byte;
+      style: secondary
+      start: 96
+      end: 109
+    - source: |-
+        if let Some(byte) = input {
+                value = byte;
+            } else {
+                value = 0;
+            }
+      style: secondary
+      start: 60
+      end: 147
+    - source: |-
+        if let Some(byte) = input {
+                value = byte;
+            } else {
+                value = 0;
+            }
+      style: secondary
+      start: 60
+      end: 147
+  ? |
+    fn scaled(value: i64) -> i64 {
+        let mut scale;
+        if value > 0 {
+            let headroom = i64::MAX / value;
+            scale = headroom.max(1);
+        } else {
+            scale = 1;
+        }
+        value * scale
+    }
+  : labels:
+    - source: let mut scale;
+      style: primary
+      start: 35
+      end: 49
+    - source: |-
+        else {
+                scale = 1;
+            }
+      style: secondary
+      start: 149
+      end: 180
+    - source: scale = headroom.max(1);
+      style: secondary
+      start: 118
+      end: 142
+    - source: |-
+        if value > 0 {
+                let headroom = i64::MAX / value;
+                scale = headroom.max(1);
+            } else {
+                scale = 1;
+            }
+      style: secondary
+      start: 54
+      end: 180
+    - source: |-
+        if value > 0 {
+                let headroom = i64::MAX / value;
+                scale = headroom.max(1);
+            } else {
+                scale = 1;
+            }
+      style: secondary
+      start: 54
+      end: 180
+  ? |
+    fn styled(flag: bool) -> String {
+        let mut text;
+        // keep the two branches symmetric
+        if flag {
+            text = String::from("yes");
+        } else {
+            text = String::from("no");
+        }
+        text
+    }
+  : labels:
+    - source: let mut text;
+      style: primary
+      start: 38
+      end: 51
+    - source: |-
+        else {
+                text = String::from("no");
+            }
+      style: secondary
+      start: 147
+      end: 194
+    - source: text = String::from("yes");
+      style: secondary
+      start: 113
+      end: 140
+    - source: |-
+        if flag {
+                text = String::from("yes");
+            } else {
+                text = String::from("no");
+            }
+      style: secondary
+      start: 95
+      end: 194
+    - source: |-
+        if flag {
+                text = String::from("yes");
+            } else {
+                text = String::from("no");
+            }
+      style: secondary
+      start: 95
+      end: 194

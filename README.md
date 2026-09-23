@@ -133,6 +133,7 @@ All rules link to their definitions. Most definitions include a `note` with exce
 | Rule | Severity | Reports |
 | --- | --- | --- |
 | [`rust-no-anyhow-in-public-api`](rules/rust-no-anyhow-in-public-api.yml) | warning | Visible functions, trait methods, and type aliases that expose `anyhow`. Return an error type callers can inspect. |
+| [`rust-no-deferred-mutable-init`](rules/rust-no-deferred-mutable-init.yml) | warning | `let mut` bindings with no initializer that an immediately following `if`/`else` or `match` assigns. Initialize at the declaration or use a branch expression. |
 | [`rust-no-deny-warnings`](rules/rust-no-deny-warnings.yml) | warning | `#![deny(warnings)]`, which can break a build when a compiler or dependency adds a warning. Set explicit lint levels instead. |
 | [`rust-no-deref-polymorphism`](rules/rust-no-deref-polymorphism.yml) | warning | `Deref` implementations used for API forwarding. Reserve `Deref` for smart pointers and expose methods on other types. |
 | [`rust-no-dropped-error-source`](rules/rust-no-dropped-error-source.yml) | warning | `map_err(\|_\| Error::Variant)` and `.ok().ok_or(...)` that discard the original error. Carry the source in the new error instead. |

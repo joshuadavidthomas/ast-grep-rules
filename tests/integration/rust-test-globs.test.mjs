@@ -55,7 +55,8 @@ function outputOf(result) {
 }
 
 function pathLine(path) {
-  return new RegExp(`(?:^|\\n).*\\/${path.replaceAll("/", "\\/")}\\b`);
+  const pattern = path.replaceAll(".", "\\.").replaceAll("/", "[\\\\/]");
+  return new RegExp(`(?:^|\\n).*[\\\\/]${pattern}\\b`);
 }
 
 test("Rust panicking rules skip test path globs", () => {

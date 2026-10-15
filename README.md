@@ -81,7 +81,7 @@ repos:
 Install the tagged Git package in a project that uses Node.js 22, 24, or 26:
 
 ```sh
-npm install --save-dev "github:joshuadavidthomas/ast-grep-rules#v0.6.0"
+npm install --save-dev "github:joshuadavidthomas/ast-grep-rules#v0.7.0"
 npx ast-grep-rules .
 ```
 

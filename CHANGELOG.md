@@ -18,6 +18,12 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Fixed
+
+- `typescript-no-shape-in-symbol-names-tsx` no longer reports JSX attribute names such as `<Button shape="square" />`, which belong to the rendered component's API rather than the code being scanned.
+
+## [0.7.0]
+
 ### Added
 
 - `rust-no-panicking-match-arm`, which reports match arms that end in `panic!`, `unreachable!`, `todo!`, or `unimplemented!` instead of handling the failed pattern, and skips test files and items under `#[cfg(test)]` or a test attribute.
@@ -29,10 +35,6 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - `rust-no-panicking-fallback` and `rust-no-panicking-let-else` now skip test files (`tests.rs`, `tests/`, `*_test.rs`, `*_tests.rs`) and items under `#[cfg(test)]` or a test attribute.
 - `typescript-no-record-string-unknown` now reports dictionary value holes spelled as `unknown`, `any`, `object`, or `{}`, including index signatures and `Readonly`/`NonNullable` wrappers.
-
-### Fixed
-
-- `typescript-no-shape-in-symbol-names-tsx` no longer reports JSX attribute names such as `<Button shape="square" />`, which belong to the rendered component's API rather than the code being scanned.
 
 ## [0.6.0]
 
@@ -94,10 +96,11 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Josh Thomas <josh@joshthomas.dev> (maintainer)
 
-[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.6.0...HEAD
+[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.7.0...HEAD
 [0.1.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.1.0
 [0.2.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.2.0
 [0.3.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.3.0
 [0.4.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.4.0
 [0.5.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.5.0
 [0.6.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.6.0
+[0.7.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.7.0

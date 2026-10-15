@@ -30,6 +30,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 - `rust-no-panicking-fallback` and `rust-no-panicking-let-else` now skip test files (`tests.rs`, `tests/`, `*_test.rs`, `*_tests.rs`) and items under `#[cfg(test)]` or a test attribute.
 - `typescript-no-record-string-unknown` now reports dictionary value holes spelled as `unknown`, `any`, `object`, or `{}`, including index signatures and `Readonly`/`NonNullable` wrappers.
 
+### Fixed
+
+- `typescript-no-shape-in-symbol-names-tsx` no longer reports JSX attribute names such as `<Button shape="square" />`, which belong to the rendered component's API rather than the code being scanned.
+
 ## [0.6.0]
 
 ### Added

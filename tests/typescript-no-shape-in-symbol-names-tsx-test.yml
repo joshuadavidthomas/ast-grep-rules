@@ -6,10 +6,19 @@ valid:
     function Panel() {
       return <section>Ready</section>;
     }
+  - |
+    const view = <Button shape="square" variant="ghost" />;
 invalid:
   - |
     const view = <Shape />;
   - |
     function ShapeView() {
       return <div>Ready</div>;
+    }
+  - |
+    const JWT_SHAPE = "header.payload.signature";
+    const view = <Button shape="square" title={JWT_SHAPE} />;
+  - |
+    interface UserShape {
+      id: string;
     }

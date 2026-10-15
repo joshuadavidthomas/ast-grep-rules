@@ -27,3 +27,8 @@ rule:
     - kind: shorthand_property_identifier
     - kind: shorthand_property_identifier_pattern
   regex: "(?i)shape"
+  not:
+    # JSX attribute names belong to the rendered component's API, not this code.
+    kind: property_identifier
+    inside:
+      kind: jsx_attribute

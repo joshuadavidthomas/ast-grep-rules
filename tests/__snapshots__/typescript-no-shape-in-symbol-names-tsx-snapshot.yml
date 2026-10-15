@@ -1,6 +1,14 @@
 id: typescript-no-shape-in-symbol-names-tsx
 snapshots:
   ? |
+    const JWT_SHAPE = "header.payload.signature";
+    const view = <Button shape="square" title={JWT_SHAPE} />;
+  : labels:
+    - source: JWT_SHAPE
+      style: primary
+      start: 6
+      end: 15
+  ? |
     const view = <Shape />;
   : labels:
     - source: Shape
@@ -16,3 +24,12 @@ snapshots:
       style: primary
       start: 9
       end: 18
+  ? |
+    interface UserShape {
+      id: string;
+    }
+  : labels:
+    - source: UserShape
+      style: primary
+      start: 10
+      end: 19

@@ -1,0 +1,169 @@
+id: rust-no-deferred-mutable-init
+valid:
+  - |
+    fn base(other: &Instance) -> u8 {
+        let base: u8 = if cfg!(not(USB_PROTOCOL_NEW_ARCH)) {
+            other.base
+        } else {
+            42u8
+        };
+        base
+    }
+  - |
+    fn label(code: u8) -> &'static str {
+        let name;
+        if code == 0 {
+            name = "zero";
+        } else {
+            name = "other";
+        }
+        name
+    }
+  - |
+    fn retries(fallback: bool) -> u32 {
+        let mut attempts = 1;
+        if fallback {
+            attempts = 3;
+        } else {
+            attempts = 5;
+        }
+        attempts
+    }
+  - |
+    fn checksum(bytes: &[u8]) -> u32 {
+        let mut sum;
+        sum = compute(bytes);
+        sum
+    }
+  - |
+    fn drain(queue: &mut Vec<Task>) {
+        let mut task;
+        while let Some(next) = queue.pop() {
+            task = next;
+            task.run();
+        }
+    }
+  - |
+    fn guarded(flag: bool) -> u8 {
+        let mut value;
+        if flag {
+            value = 1;
+            return value;
+        }
+        0
+    }
+  - |
+    fn select(flag: bool) -> u8 {
+        let mut value;
+        value = if flag { 1 } else { 2 };
+        value
+    }
+  - |
+    fn write_report(stream: Stream) {
+        let mut stdout;
+        let mut stderr;
+        let writer: &mut dyn Write = match stream {
+            Stream::Stderr => {
+                stderr = AutoStream::new(std::io::stderr().lock());
+                &mut stderr
+            }
+            Stream::Stdout => {
+                stdout = AutoStream::new(std::io::stdout().lock());
+                &mut stdout
+            }
+        };
+        let _ = writeln!(writer, "report");
+    }
+  - |
+    fn read_rndr() -> u64 {
+        let mut value: u64;
+        unsafe {
+            asm!("mrs {value}, RNDR", value = out(reg) value);
+        }
+        value
+    }
+  - |
+    fn trace(flag: bool) -> u8 {
+        let mut value;
+        log::trace!("picking a value");
+        if flag {
+            value = 1;
+        } else {
+            value = 2;
+        }
+        value
+    }
+invalid:
+  - |
+    fn base(other: &Instance) -> u8 {
+        let mut base: u8;
+        if cfg!(not(USB_PROTOCOL_NEW_ARCH)) {
+            base = other.base;
+        } else {
+            base = 42u8;
+        }
+        base
+    }
+  - |
+    fn buffer(flag: bool) -> Vec<u8> {
+        let mut buf;
+        if flag {
+            buf = Vec::new();
+        } else {
+            buf = Vec::with_capacity(8);
+        }
+        buf
+    }
+  - |
+    fn decode(kind: Kind) -> u32 {
+        let mut value;
+        match kind {
+            Kind::Le => value = 1,
+            Kind::Be => value = 2,
+        }
+        value
+    }
+  - |
+    fn lookup(input: Option<u8>) -> u8 {
+        let mut value;
+        if let Some(byte) = input {
+            value = byte;
+        } else {
+            value = 0;
+        }
+        value
+    }
+  - |
+    fn styled(flag: bool) -> String {
+        let mut text;
+        // keep the two branches symmetric
+        if flag {
+            text = String::from("yes");
+        } else {
+            text = String::from("no");
+        }
+        text
+    }
+  - |
+    fn grade(score: u8) -> &'static str {
+        let mut grade;
+        if score >= 90 {
+            grade = "a";
+        } else if score >= 80 {
+            grade = "b";
+        } else {
+            grade = "c";
+        }
+        grade
+    }
+  - |
+    fn scaled(value: i64) -> i64 {
+        let mut scale;
+        if value > 0 {
+            let headroom = i64::MAX / value;
+            scale = headroom.max(1);
+        } else {
+            scale = 1;
+        }
+        value * scale
+    }

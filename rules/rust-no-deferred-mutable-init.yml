@@ -1,0 +1,32 @@
+id: rust-no-deferred-mutable-init
+language: Rust
+severity: warning
+message: "Do not declare a mutable binding without a value and assign it in a later branch; initialize it at the declaration."
+note: "A bare `let mut` defers the value and type decision to later statements and forces mutation. Initialize at the declaration, or turn the branch into an expression such as `let name = if cond { a } else { b };`. The rule matches a `let mut` declaration with no initializer that is immediately followed by an `if` with an `else` branch, or by a `match`, that assigns the same name. Deferred initialization inside loops, `asm!` out-parameters, and mutable-borrow storage are out of scope."
+rule:
+  all:
+    - any:
+        - pattern: let mut $NAME;
+        - pattern: "let mut $NAME: $TYPE;"
+    - precedes:
+        kind: expression_statement
+        has:
+          all:
+            - any:
+                - all:
+                    - kind: if_expression
+                    - has:
+                        kind: else_clause
+                        stopBy: neighbor
+                - kind: match_expression
+            - has:
+                any:
+                  - pattern: $NAME = $VALUE;
+                  - pattern: $NAME = $VALUE
+                stopBy: end
+          stopBy: neighbor
+        stopBy:
+          not:
+            any:
+              - kind: line_comment
+              - kind: block_comment

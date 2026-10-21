@@ -18,6 +18,15 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Changed
+
+- Document the Rust rules that overlap with off-by-default Clippy lints and how they differ.
+
+### Removed
+
+- `rust-require-reasoned-clippy-suppression`. Clippy's `allow_attributes_without_reason` covers the same attributes for every lint, not only Clippy's. Enable it, and `allow_attributes` to prefer `expect`.
+- `rust-no-empty-braced-struct`. Clippy's `empty_structs_with_brackets` reports the same structs, plus empty tuple structs.
+
 ## [0.7.1]
 
 ### Fixed

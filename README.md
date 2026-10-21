@@ -130,13 +130,19 @@ All rules link to their definitions. Most definitions include a `note` with exce
 
 ### Rust
 
+These rules target patterns that rustc and Clippy do not report. A few overlap with off-by-default Clippy lints but match differently:
+
+- `rust-no-dropped-error-source` also reports `.ok().ok_or(...)`, which `clippy::map_err_ignore` misses.
+- `rust-no-panicking-fallback`, `rust-no-panicking-let-else`, and `rust-no-panicking-match-arm` report only a panic that stands in for handling a failed value, and skip tests. `clippy::panic` and related lints report every panic, and `clippy::match_wild_err_arm` covers only `Err(_)` arms.
+
+To require a reason on lint suppressions or report empty braced structs, enable `clippy::allow_attributes_without_reason` and `clippy::empty_structs_with_brackets`. They replace two rules this set used to ship.
+
 | Rule | Severity | Reports |
 | --- | --- | --- |
 | [`rust-no-anyhow-in-public-api`](rules/rust-no-anyhow-in-public-api.yml) | warning | Visible functions, trait methods, and type aliases that expose `anyhow`. Return an error type callers can inspect. |
 | [`rust-no-deny-warnings`](rules/rust-no-deny-warnings.yml) | warning | `#![deny(warnings)]`, which can break a build when a compiler or dependency adds a warning. Set explicit lint levels instead. |
 | [`rust-no-deref-polymorphism`](rules/rust-no-deref-polymorphism.yml) | warning | `Deref` implementations used for API forwarding. Reserve `Deref` for smart pointers and expose methods on other types. |
 | [`rust-no-dropped-error-source`](rules/rust-no-dropped-error-source.yml) | warning | `map_err(\|_\| Error::Variant)` and `.ok().ok_or(...)` that discard the original error. Carry the source in the new error instead. |
-| [`rust-no-empty-braced-struct`](rules/rust-no-empty-braced-struct.yml) | warning | Empty braced structs. Use a unit struct unless braces carry a schema, FFI, or code-generation contract. |
 | [`rust-no-indexed-array-rebuild`](rules/rust-no-indexed-array-rebuild.yml) | warning | `[bytes[0], bytes[1], ...]` array literals that index the same slice element by element. Take the chunk with `split_first_chunk` or `try_into` instead. |
 | [`rust-no-option-bool-field`](rules/rust-no-option-bool-field.yml) | warning | `Option<bool>` struct fields. Name the three states with an enum. |
 | [`rust-no-panicking-fallback`](rules/rust-no-panicking-fallback.yml) | error | `unwrap_or_else` and `map_or_else` fallbacks that end in a panic or another diverging macro. Handle the failed or absent value instead. Skips test files and `#[cfg(test)]` items. |
@@ -149,7 +155,6 @@ All rules link to their definitions. Most definitions include a `note` with exce
 | [`rust-no-string-error-variant`](rules/rust-no-string-error-variant.yml) | warning | Bare `String` payloads in variants of enums named `Error` or ending in `Error`. Keep structured fields or source errors. |
 | [`rust-no-trivial-whitespace-helper`](rules/rust-no-trivial-whitespace-helper.yml) | error | Local helpers that only wrap standard whitespace checks. Inline the check or name the domain policy it implements. |
 | [`rust-no-visible-bool-argument`](rules/rust-no-visible-bool-argument.yml) | warning | `bool` parameters in visible functions and trait methods. Use a named enum or split the operation. |
-| [`rust-require-reasoned-clippy-suppression`](rules/rust-require-reasoned-clippy-suppression.yml) | warning | Clippy `allow` and `expect` attributes without a reason. Record why the local exception should remain. |
 | [`rust-require-thiserror-error-enum`](rules/rust-require-thiserror-error-enum.yml) | warning | Error enums without a `thiserror::Error` derive. Derive it instead of hand-writing error behavior. |
 
 ### TypeScript

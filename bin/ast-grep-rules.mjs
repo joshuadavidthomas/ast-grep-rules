@@ -104,7 +104,12 @@ try {
   const configPath = join(tempDir, "sgconfig.yml");
   writeFileSync(configPath, renderConfig(parserPath));
 
-  const commandArgs = [command, "--config", configPath];
+  const commandArgs = [
+    command,
+    "--config",
+    configPath,
+    "--custom-languages=allow",
+  ];
   if (command === "scan") commandArgs.push("--color=never");
   commandArgs.push(...args);
 

@@ -18,8 +18,11 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+## [0.8.0]
+
 ### Changed
 
+- Run the bundled rules with ast-grep 0.50.0.
 - Document the Rust rules that overlap with off-by-default Clippy lints and how they differ.
 
 ### Removed
@@ -107,7 +110,7 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Josh Thomas <josh@joshthomas.dev> (maintainer)
 
-[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.7.1...HEAD
+[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.8.0...HEAD
 [0.1.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.1.0
 [0.2.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.2.0
 [0.3.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.3.0
@@ -116,3 +119,4 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 [0.6.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.6.0
 [0.7.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.7.0
 [0.7.1]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.7.1
+[0.8.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.8.0

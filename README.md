@@ -135,8 +135,6 @@ These rules target patterns that rustc and Clippy do not report. A few overlap w
 - `rust-no-dropped-error-source` also reports `.ok().ok_or(...)`, which `clippy::map_err_ignore` misses.
 - `rust-no-panicking-fallback`, `rust-no-panicking-let-else`, and `rust-no-panicking-match-arm` report only a panic that stands in for handling a failed value, and skip tests. `clippy::panic` and related lints report every panic, and `clippy::match_wild_err_arm` covers only `Err(_)` arms.
 
-To require a reason on lint suppressions or report empty braced structs, enable `clippy::allow_attributes_without_reason` and `clippy::empty_structs_with_brackets`. They replace two rules this set used to ship.
-
 | Rule | Severity | Reports |
 | --- | --- | --- |
 | [`rust-no-anyhow-in-public-api`](rules/rust-no-anyhow-in-public-api.yml) | warning | Visible functions, trait methods, and type aliases that expose `anyhow`. Return an error type callers can inspect. |

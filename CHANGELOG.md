@@ -18,12 +18,18 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+## [0.9.0]
+
 ### Added
 
 - Swift rules for SwiftUI performance, accessibility, and deprecated API: `swift-no-any-view`, `swift-no-corner-radius-modifier`, `swift-no-eager-stack-in-scroll-view`, `swift-no-foreground-color`, `swift-no-formatter-in-view-body`, `swift-no-icon-only-button`, `swift-no-index-foreach-identity`, `swift-no-navigation-view`, `swift-no-observable-object`, `swift-no-on-tap-gesture`, `swift-no-print-changes`, `swift-no-single-parameter-on-change`, `swift-no-unstable-view-id`.
 - `swift-no-code-barricade`, the shared divider-comment check for Swift.
 - The deprecated-API Swift rules (`swift-no-navigation-view`, `swift-no-foreground-color`, `swift-no-corner-radius-modifier`, `swift-no-single-parameter-on-change`) are errors, so they fail the hook; the other SwiftUI rules are warnings.
 - A `swift` pre-commit hook that runs only the Swift rules.
+
+### Changed
+
+- Run the bundled rules with ast-grep 0.51.0.
 
 ## [0.8.0]
 
@@ -117,7 +123,7 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Josh Thomas <josh@joshthomas.dev> (maintainer)
 
-[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.8.0...HEAD
+[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.9.0...HEAD
 [0.1.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.1.0
 [0.2.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.2.0
 [0.3.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.3.0
@@ -127,3 +133,4 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 [0.7.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.7.0
 [0.7.1]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.7.1
 [0.8.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.8.0
+[0.9.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.9.0

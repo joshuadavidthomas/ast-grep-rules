@@ -1,0 +1,61 @@
+id: swift-no-formatter-in-view-body
+valid:
+  - |
+    struct EventRow: View {
+        let date: Date
+
+        var body: some View {
+            Text(date, format: .dateTime.day().month().year())
+        }
+    }
+  - |
+    struct EventRow: View {
+        private static let formatter = DateFormatter()
+        let date: Date
+
+        var body: some View {
+            Text(date, formatter: Self.formatter)
+        }
+    }
+  - |
+    func makeFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }
+  - |
+    var label: String {
+        NumberFormatter().string(from: 3) ?? ""
+    }
+invalid:
+  - |
+    struct EventRow: View {
+        let date: Date
+
+        var body: some View {
+            let formatter = DateFormatter()
+            Text(formatter.string(from: date))
+        }
+    }
+  - |
+    struct PriceTag: View {
+        let price: Decimal
+
+        @ViewBuilder
+        private var label: some View {
+            if price > 0 {
+                Text(NumberFormatter().string(for: price) ?? "")
+            }
+        }
+
+        var body: some View { label }
+    }
+  - |
+    struct DistanceRow: View {
+        func row(meters: Double) -> some View {
+            let measure = MeasurementFormatter()
+            return Text(measure.string(from: .init(value: meters, unit: UnitLength.meters)))
+        }
+
+        var body: some View { row(meters: 10) }
+    }

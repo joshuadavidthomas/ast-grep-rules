@@ -1,0 +1,103 @@
+id: swift-no-formatter-in-view-body
+snapshots:
+  "struct DistanceRow: View {\n    func row(meters: Double) -> some View {\n        let measure = MeasurementFormatter()\n        return Text(measure.string(from: .init(value: meters, unit: UnitLength.meters)))\n    }\n\n    var body: some View { row(meters: 10) }\n}\n":
+    labels:
+    - source: MeasurementFormatter()
+      style: primary
+      start: 93
+      end: 115
+    - source: some View
+      style: secondary
+      start: 59
+      end: 68
+    - source: |-
+        func row(meters: Double) -> some View {
+                let measure = MeasurementFormatter()
+                return Text(measure.string(from: .init(value: meters, unit: UnitLength.meters)))
+            }
+      style: secondary
+      start: 31
+      end: 210
+    - source: |-
+        {
+                let measure = MeasurementFormatter()
+                return Text(measure.string(from: .init(value: meters, unit: UnitLength.meters)))
+            }
+      style: secondary
+      start: 69
+      end: 210
+    - source: MeasurementFormatter
+      style: secondary
+      start: 93
+      end: 113
+  "struct EventRow: View {\n    let date: Date\n\n    var body: some View {\n        let formatter = DateFormatter()\n        Text(formatter.string(from: date))\n    }\n}\n":
+    labels:
+    - source: DateFormatter()
+      style: primary
+      start: 94
+      end: 109
+    - source: some View
+      style: secondary
+      start: 58
+      end: 67
+    - source: ": some View"
+      style: secondary
+      start: 56
+      end: 67
+    - source: |-
+        var body: some View {
+                let formatter = DateFormatter()
+                Text(formatter.string(from: date))
+            }
+      style: secondary
+      start: 48
+      end: 158
+    - source: |-
+        {
+                let formatter = DateFormatter()
+                Text(formatter.string(from: date))
+            }
+      style: secondary
+      start: 68
+      end: 158
+    - source: DateFormatter
+      style: secondary
+      start: 94
+      end: 107
+  "struct PriceTag: View {\n    let price: Decimal\n\n    @ViewBuilder\n    private var label: some View {\n        if price > 0 {\n            Text(NumberFormatter().string(for: price) ?? \"\")\n        }\n    }\n\n    var body: some View { label }\n}\n":
+    labels:
+    - source: NumberFormatter()
+      style: primary
+      start: 140
+      end: 157
+    - source: some View
+      style: secondary
+      start: 88
+      end: 97
+    - source: ": some View"
+      style: secondary
+      start: 86
+      end: 97
+    - source: |-
+        @ViewBuilder
+            private var label: some View {
+                if price > 0 {
+                    Text(NumberFormatter().string(for: price) ?? "")
+                }
+            }
+      style: secondary
+      start: 52
+      end: 199
+    - source: |-
+        {
+                if price > 0 {
+                    Text(NumberFormatter().string(for: price) ?? "")
+                }
+            }
+      style: secondary
+      start: 98
+      end: 199
+    - source: NumberFormatter
+      style: secondary
+      start: 140
+      end: 155

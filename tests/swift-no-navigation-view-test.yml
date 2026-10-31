@@ -1,0 +1,19 @@
+id: swift-no-navigation-view
+valid:
+  - |
+    NavigationStack {
+        ContentView()
+    }
+  - |
+    struct NavigationViewModel {}
+invalid:
+  - |
+    NavigationView {
+        ContentView()
+    }
+  - |
+    NavigationView {
+        Sidebar()
+        Detail()
+    }
+    .navigationViewStyle(.stack)

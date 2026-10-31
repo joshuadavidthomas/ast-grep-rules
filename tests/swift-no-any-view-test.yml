@@ -1,0 +1,20 @@
+id: swift-no-any-view
+valid:
+  - |
+    @ViewBuilder
+    func content() -> some View {
+        if isEditing { Editor() } else { Viewer() }
+    }
+  - |
+    .background(isHighlighted ? AnyShapeStyle(.thinMaterial) : AnyShapeStyle(.clear))
+  - |
+    let style: AnyView.Type = AnyView.self
+invalid:
+  - |
+    func content() -> AnyView {
+        isEditing ? AnyView(Editor()) : AnyView(Viewer())
+    }
+  - |
+    extension View {
+        func erased() -> AnyView { AnyView(self) }
+    }

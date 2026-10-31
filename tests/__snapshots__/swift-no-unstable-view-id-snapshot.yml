@@ -1,0 +1,128 @@
+id: swift-no-unstable-view-id
+snapshots:
+  "Chart(data).id(Int.random(in: 0...1000))\n":
+    labels:
+    - source: "Int.random(in: 0...1000)"
+      style: primary
+      start: 15
+      end: 39
+    - source: id
+      style: secondary
+      start: 12
+      end: 14
+    - source: id
+      style: secondary
+      start: 12
+      end: 14
+    - source: Chart(data).id
+      style: secondary
+      start: 0
+      end: 14
+    - source: "Chart(data).id(Int.random(in: 0...1000))"
+      style: secondary
+      start: 0
+      end: 40
+    - source: "(Int.random(in: 0...1000))"
+      style: secondary
+      start: 14
+      end: 40
+    - source: "(Int.random(in: 0...1000))"
+      style: secondary
+      start: 14
+      end: 40
+  "Clock().id(Date())\n":
+    labels:
+    - source: Date()
+      style: primary
+      start: 11
+      end: 17
+    - source: id
+      style: secondary
+      start: 8
+      end: 10
+    - source: id
+      style: secondary
+      start: 8
+      end: 10
+    - source: Clock().id
+      style: secondary
+      start: 0
+      end: 10
+    - source: Clock().id(Date())
+      style: secondary
+      start: 0
+      end: 18
+    - source: (Date())
+      style: secondary
+      start: 10
+      end: 18
+    - source: (Date())
+      style: secondary
+      start: 10
+      end: 18
+  "Row(item: item).id(UUID())\n":
+    labels:
+    - source: UUID()
+      style: primary
+      start: 19
+      end: 25
+    - source: id
+      style: secondary
+      start: 16
+      end: 18
+    - source: id
+      style: secondary
+      start: 16
+      end: 18
+    - source: "Row(item: item).id"
+      style: secondary
+      start: 0
+      end: 18
+    - source: "Row(item: item).id(UUID())"
+      style: secondary
+      start: 0
+      end: 26
+    - source: (UUID())
+      style: secondary
+      start: 18
+      end: 26
+    - source: (UUID())
+      style: secondary
+      start: 18
+      end: 26
+  "Text(title)\n    .padding()\n    .id(UUID().uuidString)\n":
+    labels:
+    - source: UUID().uuidString
+      style: primary
+      start: 35
+      end: 52
+    - source: id
+      style: secondary
+      start: 32
+      end: 34
+    - source: id
+      style: secondary
+      start: 32
+      end: 34
+    - source: |-
+        Text(title)
+            .padding()
+            .id
+      style: secondary
+      start: 0
+      end: 34
+    - source: |-
+        Text(title)
+            .padding()
+            .id(UUID().uuidString)
+      style: secondary
+      start: 0
+      end: 53
+    - source: (UUID().uuidString)
+      style: secondary
+      start: 34
+      end: 53
+    - source: (UUID().uuidString)
+      style: secondary
+      start: 34
+      end: 53

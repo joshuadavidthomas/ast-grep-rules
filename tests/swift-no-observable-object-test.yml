@@ -1,0 +1,20 @@
+id: swift-no-observable-object
+valid:
+  - |
+    @Observable
+    final class Model {
+        var items: [Item] = []
+    }
+  - |
+    final class Store: Identifiable, ObservableObjectProtocol {}
+  - |
+    let isObservableObject = value is ObservableObject.Type
+invalid:
+  - |
+    final class Model: ObservableObject {
+        @Published var items: [Item] = []
+    }
+  - |
+    final class Settings: NSObject, Combine.ObservableObject {}
+  - |
+    extension LegacyStore: ObservableObject {}

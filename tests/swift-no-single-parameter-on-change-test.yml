@@ -1,0 +1,17 @@
+id: swift-no-single-parameter-on-change
+valid:
+  - |
+    Form().onChange(of: query) { search() }
+  - |
+    Form().onChange(of: query) { oldValue, newValue in search(newValue) }
+  - |
+    Form().onChange(of: query, initial: true) { _, newValue in search(newValue) }
+  - |
+    Form().onChange(of: items.map { item in item.id }) { reload() }
+invalid:
+  - |
+    Form().onChange(of: query) { newValue in search(newValue) }
+  - |
+    Form().onChange(of: query) { _ in reload() }
+  - |
+    Form().onChange(of: query, perform: search)

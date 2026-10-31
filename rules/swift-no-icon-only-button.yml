@@ -1,0 +1,53 @@
+id: swift-no-icon-only-button
+language: Swift
+severity: warning
+message: "Give icon-only buttons and menus a text label, such as Button(\"Add\", systemImage: \"plus\", action: add)."
+note: "VoiceOver reads an image-only label as the symbol or asset name, or not at all. Use the title and systemImage initializer, or a Label, and apply .labelStyle(.iconOnly) when the control must stay visually icon-only. Adding .accessibilityLabel() also satisfies this rule."
+utils:
+  image-only-label:
+    kind: lambda_literal
+    has:
+      kind: statements
+      all:
+        - regex: "^Image\\s*\\("
+        - not:
+            regex: "\\.accessibilityLabel\\s*\\("
+        - not:
+            has:
+              nthChild: 2
+rule:
+  kind: simple_identifier
+  regex: "^(Button|Menu)$"
+  inside:
+    kind: call_expression
+    all:
+      - has:
+          kind: call_suffix
+          any:
+            - has:
+                matches: image-only-label
+                nthChild:
+                  position: 1
+                  reverse: true
+            - has:
+                kind: value_arguments
+                has:
+                  kind: value_argument
+                  all:
+                    - has:
+                        field: name
+                        regex: "^label$"
+                    - has:
+                        field: value
+                        matches: image-only-label
+      - not:
+          inside:
+            kind: navigation_expression
+            has:
+              kind: navigation_suffix
+              regex: "^\\.accessibilityLabel$"
+            stopBy:
+              not:
+                any:
+                  - kind: navigation_expression
+                  - kind: call_expression

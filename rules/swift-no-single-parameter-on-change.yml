@@ -1,0 +1,37 @@
+id: swift-no-single-parameter-on-change
+language: Swift
+severity: error
+message: "The one-parameter onChange(of:perform:) is deprecated; use the closure that takes no parameters or both the old and new values."
+note: "Write .onChange(of: value) { reload() } or .onChange(of: value) { oldValue, newValue in ... } (iOS 17+). For targets below iOS 17, keep the one-parameter form with an inline ast-grep-ignore comment that names the deployment target."
+rule:
+  kind: navigation_suffix
+  has:
+    field: suffix
+    regex: "^onChange$"
+  inside:
+    kind: navigation_expression
+    inside:
+      kind: call_expression
+      has:
+        kind: call_suffix
+        any:
+          - has:
+              kind: value_arguments
+              has:
+                kind: value_argument
+                has:
+                  field: name
+                  regex: "^perform$"
+          - has:
+              kind: lambda_literal
+              has:
+                kind: lambda_function_type
+                has:
+                  kind: lambda_function_type_parameters
+                  all:
+                    - has:
+                        kind: lambda_parameter
+                    - not:
+                        has:
+                          kind: lambda_parameter
+                          nthChild: 2

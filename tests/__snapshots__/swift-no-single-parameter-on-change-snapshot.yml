@@ -1,0 +1,112 @@
+id: swift-no-single-parameter-on-change
+snapshots:
+  "Form().onChange(of: query) { _ in reload() }\n":
+    labels:
+    - source: .onChange
+      style: primary
+      start: 6
+      end: 15
+    - source: _
+      style: secondary
+      start: 29
+      end: 30
+    - source: _
+      style: secondary
+      start: 29
+      end: 30
+    - source: _
+      style: secondary
+      start: 29
+      end: 30
+    - source: "{ _ in reload() }"
+      style: secondary
+      start: 27
+      end: 44
+    - source: "(of: query) { _ in reload() }"
+      style: secondary
+      start: 15
+      end: 44
+    - source: "Form().onChange(of: query) { _ in reload() }"
+      style: secondary
+      start: 0
+      end: 44
+    - source: Form().onChange
+      style: secondary
+      start: 0
+      end: 15
+    - source: onChange
+      style: secondary
+      start: 7
+      end: 15
+  "Form().onChange(of: query) { newValue in search(newValue) }\n":
+    labels:
+    - source: .onChange
+      style: primary
+      start: 6
+      end: 15
+    - source: newValue
+      style: secondary
+      start: 29
+      end: 37
+    - source: newValue
+      style: secondary
+      start: 29
+      end: 37
+    - source: newValue
+      style: secondary
+      start: 29
+      end: 37
+    - source: "{ newValue in search(newValue) }"
+      style: secondary
+      start: 27
+      end: 59
+    - source: "(of: query) { newValue in search(newValue) }"
+      style: secondary
+      start: 15
+      end: 59
+    - source: "Form().onChange(of: query) { newValue in search(newValue) }"
+      style: secondary
+      start: 0
+      end: 59
+    - source: Form().onChange
+      style: secondary
+      start: 0
+      end: 15
+    - source: onChange
+      style: secondary
+      start: 7
+      end: 15
+  "Form().onChange(of: query, perform: search)\n":
+    labels:
+    - source: .onChange
+      style: primary
+      start: 6
+      end: 15
+    - source: perform
+      style: secondary
+      start: 27
+      end: 34
+    - source: "perform: search"
+      style: secondary
+      start: 27
+      end: 42
+    - source: "(of: query, perform: search)"
+      style: secondary
+      start: 15
+      end: 43
+    - source: "(of: query, perform: search)"
+      style: secondary
+      start: 15
+      end: 43
+    - source: "Form().onChange(of: query, perform: search)"
+      style: secondary
+      start: 0
+      end: 43
+    - source: Form().onChange
+      style: secondary
+      start: 0
+      end: 15
+    - source: onChange
+      style: secondary
+      start: 7
+      end: 15

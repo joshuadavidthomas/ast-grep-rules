@@ -1,0 +1,29 @@
+id: swift-no-navigation-view
+snapshots:
+  "NavigationView {\n    ContentView()\n}\n":
+    labels:
+    - source: NavigationView
+      style: primary
+      start: 0
+      end: 14
+    - source: |-
+        NavigationView {
+            ContentView()
+        }
+      style: secondary
+      start: 0
+      end: 36
+  "NavigationView {\n    Sidebar()\n    Detail()\n}\n.navigationViewStyle(.stack)\n":
+    labels:
+    - source: NavigationView
+      style: primary
+      start: 0
+      end: 14
+    - source: |-
+        NavigationView {
+            Sidebar()
+            Detail()
+        }
+      style: secondary
+      start: 0
+      end: 45

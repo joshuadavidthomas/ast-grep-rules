@@ -1,0 +1,227 @@
+id: swift-no-eager-stack-in-scroll-view
+snapshots:
+  "ScrollView {\n    VStack {\n        ForEach(items) { item in Row(item: item) }\n    }\n}\n":
+    labels:
+    - source: VStack
+      style: primary
+      start: 17
+      end: 23
+    - source: ForEach
+      style: secondary
+      start: 34
+      end: 41
+    - source: "ForEach(items) { item in Row(item: item) }"
+      style: secondary
+      start: 34
+      end: 76
+    - source: |-
+        {
+                ForEach(items) { item in Row(item: item) }
+            }
+      style: secondary
+      start: 24
+      end: 82
+    - source: |-
+        {
+                ForEach(items) { item in Row(item: item) }
+            }
+      style: secondary
+      start: 24
+      end: 82
+    - source: ScrollView
+      style: secondary
+      start: 0
+      end: 10
+    - source: |-
+        ScrollView {
+            VStack {
+                ForEach(items) { item in Row(item: item) }
+            }
+        }
+      style: secondary
+      start: 0
+      end: 84
+    - source: |-
+        {
+            VStack {
+                ForEach(items) { item in Row(item: item) }
+            }
+        }
+      style: secondary
+      start: 11
+      end: 84
+    - source: |-
+        {
+            VStack {
+                ForEach(items) { item in Row(item: item) }
+            }
+        }
+      style: secondary
+      start: 11
+      end: 84
+    - source: |-
+        VStack {
+                ForEach(items) { item in Row(item: item) }
+            }
+      style: secondary
+      start: 17
+      end: 82
+  "ScrollView {\n    VStack(alignment: .leading) {\n        Header()\n        if showsItems {\n            ForEach(items) { item in Row(item: item) }\n        }\n    }\n}\n":
+    labels:
+    - source: VStack
+      style: primary
+      start: 17
+      end: 23
+    - source: ForEach
+      style: secondary
+      start: 100
+      end: 107
+    - source: "ForEach(items) { item in Row(item: item) }"
+      style: secondary
+      start: 100
+      end: 142
+    - source: |-
+        {
+                Header()
+                if showsItems {
+                    ForEach(items) { item in Row(item: item) }
+                }
+            }
+      style: secondary
+      start: 45
+      end: 158
+    - source: |-
+        (alignment: .leading) {
+                Header()
+                if showsItems {
+                    ForEach(items) { item in Row(item: item) }
+                }
+            }
+      style: secondary
+      start: 23
+      end: 158
+    - source: ScrollView
+      style: secondary
+      start: 0
+      end: 10
+    - source: |-
+        ScrollView {
+            VStack(alignment: .leading) {
+                Header()
+                if showsItems {
+                    ForEach(items) { item in Row(item: item) }
+                }
+            }
+        }
+      style: secondary
+      start: 0
+      end: 160
+    - source: |-
+        {
+            VStack(alignment: .leading) {
+                Header()
+                if showsItems {
+                    ForEach(items) { item in Row(item: item) }
+                }
+            }
+        }
+      style: secondary
+      start: 11
+      end: 160
+    - source: |-
+        {
+            VStack(alignment: .leading) {
+                Header()
+                if showsItems {
+                    ForEach(items) { item in Row(item: item) }
+                }
+            }
+        }
+      style: secondary
+      start: 11
+      end: 160
+    - source: |-
+        VStack(alignment: .leading) {
+                Header()
+                if showsItems {
+                    ForEach(items) { item in Row(item: item) }
+                }
+            }
+      style: secondary
+      start: 17
+      end: 158
+  "ScrollView(.horizontal) {\n    HStack(spacing: 8) {\n        ForEach(photos) { photo in Thumbnail(photo: photo) }\n            .padding(4)\n    }\n    .padding()\n}\n":
+    labels:
+    - source: HStack
+      style: primary
+      start: 30
+      end: 36
+    - source: ForEach
+      style: secondary
+      start: 59
+      end: 66
+    - source: "ForEach(photos) { photo in Thumbnail(photo: photo) }"
+      style: secondary
+      start: 59
+      end: 111
+    - source: |-
+        {
+                ForEach(photos) { photo in Thumbnail(photo: photo) }
+                    .padding(4)
+            }
+      style: secondary
+      start: 49
+      end: 141
+    - source: |-
+        (spacing: 8) {
+                ForEach(photos) { photo in Thumbnail(photo: photo) }
+                    .padding(4)
+            }
+      style: secondary
+      start: 36
+      end: 141
+    - source: ScrollView
+      style: secondary
+      start: 0
+      end: 10
+    - source: |-
+        ScrollView(.horizontal) {
+            HStack(spacing: 8) {
+                ForEach(photos) { photo in Thumbnail(photo: photo) }
+                    .padding(4)
+            }
+            .padding()
+        }
+      style: secondary
+      start: 0
+      end: 158
+    - source: |-
+        (.horizontal) {
+            HStack(spacing: 8) {
+                ForEach(photos) { photo in Thumbnail(photo: photo) }
+                    .padding(4)
+            }
+            .padding()
+        }
+      style: secondary
+      start: 10
+      end: 158
+    - source: |-
+        {
+            HStack(spacing: 8) {
+                ForEach(photos) { photo in Thumbnail(photo: photo) }
+                    .padding(4)
+            }
+            .padding()
+        }
+      style: secondary
+      start: 24
+      end: 158
+    - source: |-
+        HStack(spacing: 8) {
+                ForEach(photos) { photo in Thumbnail(photo: photo) }
+                    .padding(4)
+            }
+      style: secondary
+      start: 30
+      end: 141

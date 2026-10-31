@@ -72,3 +72,11 @@
   language: node
   types: [go]
   pass_filenames: true
+
+- id: swift
+  name: ast-grep rules (Swift)
+  description: Run the Swift rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^swift-
+  language: node
+  types: [swift]
+  pass_filenames: true

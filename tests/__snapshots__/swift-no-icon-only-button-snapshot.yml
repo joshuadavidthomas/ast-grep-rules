@@ -1,0 +1,144 @@
+id: swift-no-icon-only-button
+snapshots:
+  "Button {\n    add()\n} label: {\n    Image(systemName: \"plus\")\n}\n":
+    labels:
+    - source: Button
+      style: primary
+      start: 0
+      end: 6
+    - source: |
+        Image(systemName: "plus")
+      style: secondary
+      start: 34
+      end: 60
+    - source: |-
+        {
+            Image(systemName: "plus")
+        }
+      style: secondary
+      start: 28
+      end: 61
+    - source: |-
+        {
+            add()
+        } label: {
+            Image(systemName: "plus")
+        }
+      style: secondary
+      start: 7
+      end: 61
+    - source: |-
+        Button {
+            add()
+        } label: {
+            Image(systemName: "plus")
+        }
+      style: secondary
+      start: 0
+      end: 61
+  "Button(action: add) {\n    Image(systemName: \"plus\")\n        .font(.title)\n}\n.padding()\n":
+    labels:
+    - source: Button
+      style: primary
+      start: 0
+      end: 6
+    - source: |
+        Image(systemName: "plus")
+                .font(.title)
+      style: secondary
+      start: 26
+      end: 74
+    - source: |-
+        {
+            Image(systemName: "plus")
+                .font(.title)
+        }
+      style: secondary
+      start: 20
+      end: 75
+    - source: |-
+        (action: add) {
+            Image(systemName: "plus")
+                .font(.title)
+        }
+      style: secondary
+      start: 6
+      end: 75
+    - source: |-
+        Button(action: add) {
+            Image(systemName: "plus")
+                .font(.title)
+        }
+      style: secondary
+      start: 0
+      end: 75
+  "Button(action: share, label: { Image(.shareIcon) })\n":
+    labels:
+    - source: Button
+      style: primary
+      start: 0
+      end: 6
+    - source: label
+      style: secondary
+      start: 22
+      end: 27
+    - source: Image(.shareIcon)
+      style: secondary
+      start: 31
+      end: 48
+    - source: "{ Image(.shareIcon) }"
+      style: secondary
+      start: 29
+      end: 50
+    - source: "label: { Image(.shareIcon) }"
+      style: secondary
+      start: 22
+      end: 50
+    - source: "(action: share, label: { Image(.shareIcon) })"
+      style: secondary
+      start: 6
+      end: 51
+    - source: "(action: share, label: { Image(.shareIcon) })"
+      style: secondary
+      start: 6
+      end: 51
+    - source: "Button(action: share, label: { Image(.shareIcon) })"
+      style: secondary
+      start: 0
+      end: 51
+  "Menu {\n    Button(\"Rename\", action: rename)\n} label: {\n    Image(systemName: \"ellipsis.circle\")\n}\n":
+    labels:
+    - source: Menu
+      style: primary
+      start: 0
+      end: 4
+    - source: |
+        Image(systemName: "ellipsis.circle")
+      style: secondary
+      start: 59
+      end: 96
+    - source: |-
+        {
+            Image(systemName: "ellipsis.circle")
+        }
+      style: secondary
+      start: 53
+      end: 97
+    - source: |-
+        {
+            Button("Rename", action: rename)
+        } label: {
+            Image(systemName: "ellipsis.circle")
+        }
+      style: secondary
+      start: 5
+      end: 97
+    - source: |-
+        Menu {
+            Button("Rename", action: rename)
+        } label: {
+            Image(systemName: "ellipsis.circle")
+        }
+      style: secondary
+      start: 0
+      end: 97

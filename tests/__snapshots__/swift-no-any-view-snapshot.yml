@@ -1,0 +1,22 @@
+id: swift-no-any-view
+snapshots:
+  "extension View {\n    func erased() -> AnyView { AnyView(self) }\n}\n":
+    labels:
+    - source: AnyView(self)
+      style: primary
+      start: 48
+      end: 61
+    - source: AnyView
+      style: secondary
+      start: 48
+      end: 55
+  "func content() -> AnyView {\n    isEditing ? AnyView(Editor()) : AnyView(Viewer())\n}\n":
+    labels:
+    - source: AnyView(Editor())
+      style: primary
+      start: 44
+      end: 61
+    - source: AnyView
+      style: secondary
+      start: 44
+      end: 51

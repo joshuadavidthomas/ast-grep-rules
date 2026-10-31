@@ -1,0 +1,8 @@
+id: swift-no-observable-object
+language: Swift
+severity: warning
+message: "Avoid ObservableObject; mark the class @Observable so views update only when a property they read changes."
+note: "Any @Published change invalidates every view observing an ObservableObject. With @Observable (iOS 17+), hold the model in @State, pass it as a plain property or with @Bindable, and share it with .environment(). Keep ObservableObject only for Combine pipelines or targets below iOS 17, and suppress with an inline ast-grep-ignore comment that says why."
+rule:
+  kind: inheritance_specifier
+  regex: "^(Combine\\.)?ObservableObject$"

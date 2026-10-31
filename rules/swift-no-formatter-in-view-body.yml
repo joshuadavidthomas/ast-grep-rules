@@ -1,0 +1,27 @@
+id: swift-no-formatter-in-view-body
+language: Swift
+severity: warning
+message: "Do not create Foundation formatters while building a view; format with Text(value, format:) or reuse a shared formatter."
+note: "SwiftUI evaluates body and other `some View` builders on every update, and formatters are expensive to create. Prefer FormatStyle, such as Text(date, format: .dateTime.day().month()), or keep one static formatter outside the view builder."
+rule:
+  kind: call_expression
+  has:
+    kind: simple_identifier
+    regex: "^(DateFormatter|ISO8601DateFormatter|DateComponentsFormatter|DateIntervalFormatter|RelativeDateTimeFormatter|NumberFormatter|MeasurementFormatter|ByteCountFormatter|PersonNameComponentsFormatter|ListFormatter|LengthFormatter|MassFormatter|EnergyFormatter)$"
+  inside:
+    stopBy: end
+    any:
+      - kind: computed_property
+        inside:
+          kind: property_declaration
+          has:
+            kind: type_annotation
+            has:
+              kind: opaque_type
+              regex: "^some\\s+View$"
+      - kind: function_body
+        inside:
+          kind: function_declaration
+          has:
+            kind: opaque_type
+            regex: "^some\\s+View$"

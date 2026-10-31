@@ -1,0 +1,26 @@
+id: swift-no-code-barricade
+valid:
+  - |
+    // MARK: - Parsing
+    func parse() {}
+  - |
+    /* Parsing helpers */
+    func parse() {}
+  - |
+    /// Parses the input.
+    func parse() {}
+  - |
+    let divider = "================"
+invalid:
+  - |
+    // ====================
+    func parse() {}
+  - |
+    /* ******** Parsing ******** */
+    func parse() {}
+  - |
+    // MARK: ------ Validation ------
+    func validate() {}
+  - |
+    // //////////////// Storage ////////////////
+    func store() {}

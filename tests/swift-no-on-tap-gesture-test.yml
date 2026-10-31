@@ -1,0 +1,23 @@
+id: swift-no-on-tap-gesture
+valid:
+  - |
+    Button("Open", action: open)
+  - |
+    Card().onTapGesture(count: 2) { like() }
+  - |
+    Canvas().onTapGesture { location in add(at: location) }
+  - |
+    Canvas().onTapGesture(coordinateSpace: .local) { location in add(at: location) }
+  - |
+    Card().onLongPressGesture { open() }
+invalid:
+  - |
+    Card().onTapGesture { open() }
+  - |
+    Text("Settings")
+        .padding()
+        .onTapGesture {
+            showsSettings = true
+        }
+  - |
+    Card().onTapGesture(perform: open)

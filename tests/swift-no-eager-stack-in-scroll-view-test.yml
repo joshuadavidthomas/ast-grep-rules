@@ -1,0 +1,53 @@
+id: swift-no-eager-stack-in-scroll-view
+valid:
+  - |
+    ScrollView {
+        LazyVStack {
+            ForEach(items) { item in Row(item: item) }
+        }
+    }
+  - |
+    ScrollView {
+        VStack {
+            Header()
+            Footer()
+        }
+    }
+  - |
+    VStack {
+        ForEach(items) { item in Row(item: item) }
+    }
+  - |
+    ScrollView {
+        LazyVStack {
+            ForEach(items) { item in
+                VStack {
+                    ForEach(item.tags) { tag in Text(tag.name) }
+                }
+            }
+        }
+    }
+invalid:
+  - |
+    ScrollView {
+        VStack {
+            ForEach(items) { item in Row(item: item) }
+        }
+    }
+  - |
+    ScrollView(.horizontal) {
+        HStack(spacing: 8) {
+            ForEach(photos) { photo in Thumbnail(photo: photo) }
+                .padding(4)
+        }
+        .padding()
+    }
+  - |
+    ScrollView {
+        VStack(alignment: .leading) {
+            Header()
+            if showsItems {
+                ForEach(items) { item in Row(item: item) }
+            }
+        }
+    }

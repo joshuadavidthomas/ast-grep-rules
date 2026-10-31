@@ -1,0 +1,14 @@
+id: swift-no-print-changes
+snapshots:
+  "var body: some View {\n    let _ = Self._logChanges()\n    Text(title)\n}\n":
+    labels:
+    - source: Self._logChanges()
+      style: primary
+      start: 34
+      end: 52
+  "var body: some View {\n    let _ = Self._printChanges()\n    Text(title)\n}\n":
+    labels:
+    - source: Self._printChanges()
+      style: primary
+      start: 34
+      end: 54

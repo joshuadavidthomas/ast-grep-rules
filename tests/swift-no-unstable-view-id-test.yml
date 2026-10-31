@@ -1,0 +1,23 @@
+id: swift-no-unstable-view-id
+valid:
+  - |
+    Row(item: item).id(item.id)
+  - |
+    Text(title).id(resetToken)
+  - |
+    let id = UUID()
+  - |
+    Row(item: item).tag(UUID())
+  - |
+    Item(id: UUID())
+invalid:
+  - |
+    Row(item: item).id(UUID())
+  - |
+    Text(title)
+        .padding()
+        .id(UUID().uuidString)
+  - |
+    Chart(data).id(Int.random(in: 0...1000))
+  - |
+    Clock().id(Date())

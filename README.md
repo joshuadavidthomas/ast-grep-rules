@@ -1,8 +1,8 @@
 # ast-grep-rules
 
-An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, TypeScript, Svelte, HTML, Python, Go, Pi extensions, and OpenCode plugins.
+An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, TypeScript, Svelte, HTML, Python, Go, Swift, Pi extensions, and OpenCode plugins.
 
-The rules catch API design problems, weak error handling, deprecated Svelte patterns, and code clutter. Pre-commit users can choose rules by language or run the whole set.
+The rules catch API design problems, weak error handling, deprecated Svelte patterns, SwiftUI performance and accessibility mistakes, and code clutter. Pre-commit users can choose rules by language or run the whole set.
 
 ## Use with prek or pre-commit
 
@@ -40,6 +40,7 @@ repos:
 | `html` | HTML | IDs starting with `html-` |
 | `python` | Python | IDs starting with `python-` |
 | `go` | Go | IDs starting with `go-` |
+| `swift` | Swift | IDs starting with `swift-` |
 
 Language hooks include the shared checks for that language because shared rule IDs carry the same language prefix. For example, `rust` includes `rust-no-code-barricade`. Pi and OpenCode use product prefixes so each plugin ecosystem can run only its own rules.
 
@@ -127,6 +128,7 @@ All rules link to their definitions. Most definitions include a `note` with exce
 | [`svelte-no-code-barricade`](rules/common-no-code-barricade.yml) | Svelte | warning | Decorative divider comments in Svelte templates. Use a plain section comment or split the file. |
 | [`python-no-code-barricade`](rules/common-no-code-barricade.yml) | Python | warning | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
 | [`go-no-code-barricade`](rules/common-no-code-barricade.yml) | Go | warning | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
+| [`swift-no-code-barricade`](rules/common-no-code-barricade.yml) | Swift | warning | Decorative divider comments made from repeated punctuation. Use `// MARK: - Section` or split the file. |
 
 ### Rust
 
@@ -172,6 +174,31 @@ These rules target patterns that rustc and Clippy do not report. A few overlap w
 | [`typescript-no-unknown-parameters`](rules/typescript-no-unknown-parameters.yml) | error | Parameters typed as `unknown`, except a parameter named `cause`. Give the input a named contract or parse it at the I/O boundary. |
 | [`typescript-no-unknown-type-aliases`](rules/typescript-no-unknown-type-aliases.yml) | error | Type aliases that only rename `unknown`. Keep `unknown` visible or replace it with the parsed owner type. |
 | [`typescript-no-widen-then-assert`](rules/typescript-no-widen-then-assert.yml) | warning | A local `const` widened to `unknown`, `any`, `object`, or `Record<..., unknown>` and later asserted to a narrower type. Keep the precise type, or parse unknown input once at the boundary. |
+
+### Swift
+
+These rules target SwiftUI mistakes that compile cleanly, drawn from the [SwiftUI Pro](https://github.com/twostraws/SwiftUI-Agent-Skill) and [SwiftUI performance audit](https://github.com/Dimillian/Skills) agent skills. They need no iOS SDK, so they run where a compiler cannot report anything. The compiler never warns about the soft-deprecated APIs (`NavigationView`, `foregroundColor()`, `cornerRadius()`), and it warns about `onChange(of:perform:)` only in a macOS build that targets iOS 17 or later.
+
+A few rules overlap with [SwiftLint](https://github.com/realm/SwiftLint) but match differently:
+
+- `swift-no-on-tap-gesture` reports every `onTapGesture` that does not read the tap count or location, and asks for a `Button`. SwiftLint's `accessibility_trait_for_button` accepts a tap gesture that adds the `.isButton` or `.isLink` trait.
+- `swift-no-icon-only-button` reports only `Button` and `Menu` labels made of a single `Image`. SwiftLint's opt-in `accessibility_label_for_image` reports any image without a label or a decorative marker.
+
+| Rule | Severity | Reports |
+| --- | --- | --- |
+| [`swift-no-any-view`](rules/swift-no-any-view.yml) | warning | `AnyView(...)`, which hides the view type from SwiftUI's diffing. Return `some View` from a `@ViewBuilder`, use `Group`, or make the container generic. |
+| [`swift-no-corner-radius-modifier`](rules/swift-no-corner-radius-modifier.yml) | error | The soft-deprecated `cornerRadius()` modifier. Use `clipShape(.rect(cornerRadius:))`. |
+| [`swift-no-eager-stack-in-scroll-view`](rules/swift-no-eager-stack-in-scroll-view.yml) | warning | A `VStack` or `HStack` directly inside a `ScrollView` that contains a `ForEach`. Use `LazyVStack`, `LazyHStack`, or `List`. |
+| [`swift-no-foreground-color`](rules/swift-no-foreground-color.yml) | error | The soft-deprecated `foregroundColor()` modifier. Use `foregroundStyle()`. |
+| [`swift-no-formatter-in-view-body`](rules/swift-no-formatter-in-view-body.yml) | warning | Foundation formatters such as `DateFormatter()` created inside `body` or another `some View` builder. Use `Text(value, format:)` or a shared formatter. |
+| [`swift-no-icon-only-button`](rules/swift-no-icon-only-button.yml) | warning | `Button` and `Menu` labels made of a single `Image` with no `accessibilityLabel`. Pass a title with `systemImage:` or use a `Label`, plus `.labelStyle(.iconOnly)` if needed. |
+| [`swift-no-index-foreach-identity`](rules/swift-no-index-foreach-identity.yml) | warning | `ForEach` and `List` over `indices`, `0..<items.count`, or `id: \.offset`. Identify rows by the element. |
+| [`swift-no-navigation-view`](rules/swift-no-navigation-view.yml) | error | The deprecated `NavigationView`. Use `NavigationStack` or `NavigationSplitView`. |
+| [`swift-no-observable-object`](rules/swift-no-observable-object.yml) | warning | Types that conform to `ObservableObject`. Use the `@Observable` macro so views update only for the properties they read. |
+| [`swift-no-on-tap-gesture`](rules/swift-no-on-tap-gesture.yml) | warning | `onTapGesture` without a tap count or location. Use a `Button` so VoiceOver, keyboard, and Voice Control users can activate it. |
+| [`swift-no-print-changes`](rules/swift-no-print-changes.yml) | error | Leftover `Self._printChanges()` and `Self._logChanges()` debugging calls. |
+| [`swift-no-single-parameter-on-change`](rules/swift-no-single-parameter-on-change.yml) | error | The deprecated one-parameter `onChange(of:perform:)`. Use the zero- or two-parameter closure. |
+| [`swift-no-unstable-view-id`](rules/swift-no-unstable-view-id.yml) | warning | `.id()` given `UUID()`, `Date()`, `.now`, or a random value, which recreates the view on every update. Pass a stable identifier. |
 
 ### Pi
 

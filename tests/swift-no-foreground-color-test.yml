@@ -1,0 +1,15 @@
+id: swift-no-foreground-color
+valid:
+  - |
+    Text("Hi").foregroundStyle(.red)
+  - |
+    let color = theme.foregroundColor
+  - |
+    label.textColor = style.foregroundColor
+invalid:
+  - |
+    Text("Hi").foregroundColor(.red)
+  - |
+    Image(systemName: "star")
+        .font(.title)
+        .foregroundColor(isFavorite ? .yellow : .gray)

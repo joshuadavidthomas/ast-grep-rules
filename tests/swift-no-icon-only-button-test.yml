@@ -1,0 +1,53 @@
+id: swift-no-icon-only-button
+valid:
+  - |
+    Button("Add", systemImage: "plus", action: add)
+  - |
+    Button(action: add) {
+        Label("Add", systemImage: "plus")
+    }
+    .labelStyle(.iconOnly)
+  - |
+    Button {
+        add()
+    } label: {
+        Image(systemName: "plus")
+    }
+    .accessibilityLabel("Add")
+  - |
+    Button(action: add) {
+        Image(systemName: "plus")
+            .accessibilityLabel("Add")
+    }
+  - |
+    Button(action: add) {
+        Image(systemName: "plus")
+        Text("Add")
+    }
+  - |
+    Button {
+        Image(systemName: "plus")
+    } label: {
+        Text("Add")
+    }
+invalid:
+  - |
+    Button {
+        add()
+    } label: {
+        Image(systemName: "plus")
+    }
+  - |
+    Button(action: add) {
+        Image(systemName: "plus")
+            .font(.title)
+    }
+    .padding()
+  - |
+    Button(action: share, label: { Image(.shareIcon) })
+  - |
+    Menu {
+        Button("Rename", action: rename)
+    } label: {
+        Image(systemName: "ellipsis.circle")
+    }

@@ -1,0 +1,26 @@
+id: swift-no-code-barricade
+snapshots:
+  "/* ******** Parsing ******** */\nfunc parse() {}\n":
+    labels:
+    - source: /* ******** Parsing ******** */
+      style: primary
+      start: 0
+      end: 31
+  "// //////////////// Storage ////////////////\nfunc store() {}\n":
+    labels:
+    - source: // //////////////// Storage ////////////////
+      style: primary
+      start: 0
+      end: 44
+  "// ====================\nfunc parse() {}\n":
+    labels:
+    - source: // ====================
+      style: primary
+      start: 0
+      end: 23
+  "// MARK: ------ Validation ------\nfunc validate() {}\n":
+    labels:
+    - source: "// MARK: ------ Validation ------"
+      style: primary
+      start: 0
+      end: 33

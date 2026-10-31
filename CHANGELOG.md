@@ -18,6 +18,13 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- Swift rules for SwiftUI performance, accessibility, and deprecated API: `swift-no-any-view`, `swift-no-corner-radius-modifier`, `swift-no-eager-stack-in-scroll-view`, `swift-no-foreground-color`, `swift-no-formatter-in-view-body`, `swift-no-icon-only-button`, `swift-no-index-foreach-identity`, `swift-no-navigation-view`, `swift-no-observable-object`, `swift-no-on-tap-gesture`, `swift-no-print-changes`, `swift-no-single-parameter-on-change`, `swift-no-unstable-view-id`.
+- `swift-no-code-barricade`, the shared divider-comment check for Swift.
+- The deprecated-API Swift rules (`swift-no-navigation-view`, `swift-no-foreground-color`, `swift-no-corner-radius-modifier`, `swift-no-single-parameter-on-change`) are errors, so they fail the hook; the other SwiftUI rules are warnings.
+- A `swift` pre-commit hook that runs only the Swift rules.
+
 ## [0.8.0]
 
 ### Changed

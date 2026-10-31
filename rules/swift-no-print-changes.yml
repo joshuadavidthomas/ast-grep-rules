@@ -1,0 +1,9 @@
+id: swift-no-print-changes
+language: Swift
+severity: error
+message: "Remove Self._printChanges() and Self._logChanges() after debugging a re-render."
+note: "These private SwiftUI debugging hooks log on every body evaluation, including in release builds."
+rule:
+  any:
+    - pattern: Self._printChanges()
+    - pattern: Self._logChanges()

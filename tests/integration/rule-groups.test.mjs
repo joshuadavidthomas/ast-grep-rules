@@ -17,6 +17,7 @@ const fixtures = new Map([
   ["html", ["example.html", "<!-- ===== -->\n"]],
   ["python", ["example.py", "# =====\n"]],
   ["go", ["example.go", "// =====\n"]],
+  ["swift", ["example.swift", "// =====\n"]],
 ]);
 
 function scan(fixtureDir, group) {

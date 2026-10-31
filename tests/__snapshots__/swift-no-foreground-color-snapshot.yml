@@ -1,0 +1,44 @@
+id: swift-no-foreground-color
+snapshots:
+  "Image(systemName: \"star\")\n    .font(.title)\n    .foregroundColor(isFavorite ? .yellow : .gray)\n":
+    labels:
+    - source: .foregroundColor
+      style: primary
+      start: 48
+      end: 64
+    - source: |-
+        Image(systemName: "star")
+            .font(.title)
+            .foregroundColor(isFavorite ? .yellow : .gray)
+      style: secondary
+      start: 0
+      end: 94
+    - source: |-
+        Image(systemName: "star")
+            .font(.title)
+            .foregroundColor
+      style: secondary
+      start: 0
+      end: 64
+    - source: foregroundColor
+      style: secondary
+      start: 49
+      end: 64
+  "Text(\"Hi\").foregroundColor(.red)\n":
+    labels:
+    - source: .foregroundColor
+      style: primary
+      start: 10
+      end: 26
+    - source: Text("Hi").foregroundColor(.red)
+      style: secondary
+      start: 0
+      end: 32
+    - source: Text("Hi").foregroundColor
+      style: secondary
+      start: 0
+      end: 26
+    - source: foregroundColor
+      style: secondary
+      start: 11
+      end: 26

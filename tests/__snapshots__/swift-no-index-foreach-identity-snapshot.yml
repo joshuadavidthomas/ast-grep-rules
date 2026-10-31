@@ -1,0 +1,98 @@
+id: swift-no-index-foreach-identity
+snapshots:
+  "ForEach(0..<items.count, id: \\.self) { index in Row(item: items[index]) }\n":
+    labels:
+    - source: 0..<items.count
+      style: primary
+      start: 8
+      end: 23
+    - source: ForEach
+      style: secondary
+      start: 0
+      end: 7
+    - source: "ForEach(0..<items.count, id: \\.self) { index in Row(item: items[index]) }"
+      style: secondary
+      start: 0
+      end: 73
+    - source: "(0..<items.count, id: \\.self) { index in Row(item: items[index]) }"
+      style: secondary
+      start: 7
+      end: 73
+    - source: "(0..<items.count, id: \\.self)"
+      style: secondary
+      start: 7
+      end: 36
+  "ForEach(Array(items.enumerated()), id: \\.offset) { index, item in Row(item: item) }\n":
+    labels:
+    - source: "id: \\.offset"
+      style: primary
+      start: 35
+      end: 47
+    - source: id
+      style: secondary
+      start: 35
+      end: 37
+    - source: \.offset
+      style: secondary
+      start: 39
+      end: 47
+    - source: ForEach
+      style: secondary
+      start: 0
+      end: 7
+    - source: "ForEach(Array(items.enumerated()), id: \\.offset) { index, item in Row(item: item) }"
+      style: secondary
+      start: 0
+      end: 83
+    - source: "(Array(items.enumerated()), id: \\.offset) { index, item in Row(item: item) }"
+      style: secondary
+      start: 7
+      end: 83
+    - source: "(Array(items.enumerated()), id: \\.offset)"
+      style: secondary
+      start: 7
+      end: 48
+  "ForEach(items.indices, id: \\.self) { index in Row(item: items[index]) }\n":
+    labels:
+    - source: items.indices
+      style: primary
+      start: 8
+      end: 21
+    - source: ForEach
+      style: secondary
+      start: 0
+      end: 7
+    - source: "ForEach(items.indices, id: \\.self) { index in Row(item: items[index]) }"
+      style: secondary
+      start: 0
+      end: 71
+    - source: "(items.indices, id: \\.self) { index in Row(item: items[index]) }"
+      style: secondary
+      start: 7
+      end: 71
+    - source: "(items.indices, id: \\.self)"
+      style: secondary
+      start: 7
+      end: 34
+  "List(model.rows.indices, id: \\.self) { index in Text(model.rows[index].title) }\n":
+    labels:
+    - source: model.rows.indices
+      style: primary
+      start: 5
+      end: 23
+    - source: List
+      style: secondary
+      start: 0
+      end: 4
+    - source: "List(model.rows.indices, id: \\.self) { index in Text(model.rows[index].title) }"
+      style: secondary
+      start: 0
+      end: 79
+    - source: "(model.rows.indices, id: \\.self) { index in Text(model.rows[index].title) }"
+      style: secondary
+      start: 4
+      end: 79
+    - source: "(model.rows.indices, id: \\.self)"
+      style: secondary
+      start: 4
+      end: 36

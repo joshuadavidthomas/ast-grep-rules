@@ -1,0 +1,15 @@
+id: swift-no-corner-radius-modifier
+valid:
+  - |
+    Image("photo").clipShape(.rect(cornerRadius: 12))
+  - |
+    RoundedRectangle(cornerRadius: 8)
+  - |
+    view.layer.cornerRadius = 8
+invalid:
+  - |
+    Image("photo").cornerRadius(12)
+  - |
+    Card()
+        .padding()
+        .cornerRadius(8)

@@ -1,0 +1,20 @@
+id: swift-no-observable-object
+snapshots:
+  "extension LegacyStore: ObservableObject {}\n":
+    labels:
+    - source: ObservableObject
+      style: primary
+      start: 23
+      end: 39
+  "final class Model: ObservableObject {\n    @Published var items: [Item] = []\n}\n":
+    labels:
+    - source: ObservableObject
+      style: primary
+      start: 19
+      end: 35
+  "final class Settings: NSObject, Combine.ObservableObject {}\n":
+    labels:
+    - source: Combine.ObservableObject
+      style: primary
+      start: 32
+      end: 56

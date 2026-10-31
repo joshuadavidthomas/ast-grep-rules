@@ -1,0 +1,10 @@
+id: swift-no-navigation-view
+language: Swift
+severity: error
+message: "NavigationView is deprecated; use NavigationStack, or NavigationSplitView for multicolumn layouts."
+note: "NavigationStack (iOS 16+) supports value-based navigation with navigationDestination(for:) and programmatic paths. For targets below iOS 16, keep NavigationView with an inline ast-grep-ignore comment that names the deployment target."
+rule:
+  kind: simple_identifier
+  regex: "^NavigationView$"
+  inside:
+    kind: call_expression

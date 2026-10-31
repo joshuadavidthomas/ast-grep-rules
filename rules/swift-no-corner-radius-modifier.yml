@@ -1,0 +1,14 @@
+id: swift-no-corner-radius-modifier
+language: Swift
+severity: error
+message: "cornerRadius() is deprecated; use clipShape(.rect(cornerRadius:))."
+note: "The shape form (iOS 17+) also supports per-corner radii and continuous corners, such as .rect(cornerRadius: 12, style: .continuous). The SDK soft-deprecates cornerRadius(), so Xcode does not warn. UIKit's layer.cornerRadius property is not reported. For targets below iOS 17, use clipShape(RoundedRectangle(cornerRadius:)) instead."
+rule:
+  kind: navigation_suffix
+  has:
+    field: suffix
+    regex: "^cornerRadius$"
+  inside:
+    kind: navigation_expression
+    inside:
+      kind: call_expression

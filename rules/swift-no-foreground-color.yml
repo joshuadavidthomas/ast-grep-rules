@@ -1,0 +1,14 @@
+id: swift-no-foreground-color
+language: Swift
+severity: error
+message: "foregroundColor() is deprecated; use foregroundStyle()."
+note: "foregroundStyle() (iOS 15+) accepts any ShapeStyle, including hierarchical styles such as .secondary, gradients, and materials. The SDK soft-deprecates foregroundColor(), so Xcode does not warn. For targets below iOS 15, keep foregroundColor() with an inline ast-grep-ignore comment that names the deployment target."
+rule:
+  kind: navigation_suffix
+  has:
+    field: suffix
+    regex: "^foregroundColor$"
+  inside:
+    kind: navigation_expression
+    inside:
+      kind: call_expression

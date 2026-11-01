@@ -2,7 +2,7 @@ id: swift-no-index-foreach-identity
 language: Swift
 severity: error
 message: "Identify ForEach and List rows by the element, not by index or offset."
-note: "Indices describe positions, so inserting, deleting, moving, or filtering items gives rows the wrong identity, resets their state, and breaks animations. Iterate the elements with an Identifiable type or id: \\.id, use ForEach($items) for bindings, and identify enumerated sequences with id: \\.element.id. Fixed ranges such as 0..<5 are not reported."
+note: "Indices describe positions, so inserting, deleting, moving, or filtering items gives rows the wrong identity, resets their state, and breaks animations. Iterate the elements with an Identifiable type or id: \\.id, use ForEach($items) for bindings, and identify enumerated sequences with id: \\.element.id. Fixed ranges such as 0..<5 and the indices of a static constant reached through its type, such as Self.speeds.indices or Avatar.palette.indices, are not reported."
 rule:
   kind: value_argument
   any:
@@ -13,6 +13,10 @@ rule:
               field: name
               kind: value_argument_label
         - regex: "\\.indices$|^0\\s*\\.\\.<\\s*.+\\.count$"
+        # A static constant such as Self.speeds or Avatar.palette never changes,
+        # so its positions are stable identities.
+        - not:
+            regex: "^(0\\s*\\.\\.<\\s*)?(Self|[A-Z]\\w*)(\\.[A-Z]\\w*)*\\.[a-z_]\\w*\\.(indices|count)$"
     - all:
         - has:
             field: name

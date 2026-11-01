@@ -12,6 +12,12 @@ valid:
     ForEach(items, id: \.indices) { item in Row(item: item) }
   - |
     let rows = items.indices.map { $0 * 2 }
+  - |
+    ForEach(Self.speeds.indices, id: \.self) { index in SpeedButton(speed: Self.speeds[index]) }
+  - |
+    ForEach(Avatar.palette.indices, id: \.self) { index in Swatch(color: Avatar.palette[index]) }
+  - |
+    ForEach(0..<Self.speeds.count, id: \.self) { index in SpeedButton(speed: Self.speeds[index]) }
 invalid:
   - |
     ForEach(items.indices, id: \.self) { index in Row(item: items[index]) }
@@ -21,3 +27,9 @@ invalid:
     ForEach(Array(items.enumerated()), id: \.offset) { index, item in Row(item: item) }
   - |
     List(model.rows.indices, id: \.self) { index in Text(model.rows[index].title) }
+  - |
+    ForEach(Array(question.choices.enumerated()), id: \.offset) { index, choice in ChoiceRow(choice: choice) }
+  - |
+    ForEach(self.items.indices, id: \.self) { index in Row(item: items[index]) }
+  - |
+    ForEach(Store.shared.items.indices, id: \.self) { index in Row(item: Store.shared.items[index]) }

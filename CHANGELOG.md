@@ -22,6 +22,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Every rule is now an error, so any finding fails the hook. Warnings never failed the hook and prek hides the output of passing hooks, so a warning rule was effectively off. Suppress a deliberate exception with an inline `ast-grep-ignore` comment that says why, or turn the rule off with `--off`.
 
+### Fixed
+
+- `swift-no-index-foreach-identity` no longer reports the indices of a static constant reached through its type, such as `ForEach(Self.speeds.indices, id: \.self)` or `ForEach(Avatar.palette.indices, id: \.self)`.
+
 ## [0.9.0]
 
 ### Added

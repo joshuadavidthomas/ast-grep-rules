@@ -52,6 +52,58 @@ snapshots:
       style: secondary
       start: 7
       end: 48
+  "ForEach(Array(question.choices.enumerated()), id: \\.offset) { index, choice in ChoiceRow(choice: choice) }\n":
+    labels:
+    - source: "id: \\.offset"
+      style: primary
+      start: 46
+      end: 58
+    - source: id
+      style: secondary
+      start: 46
+      end: 48
+    - source: \.offset
+      style: secondary
+      start: 50
+      end: 58
+    - source: ForEach
+      style: secondary
+      start: 0
+      end: 7
+    - source: "ForEach(Array(question.choices.enumerated()), id: \\.offset) { index, choice in ChoiceRow(choice: choice) }"
+      style: secondary
+      start: 0
+      end: 106
+    - source: "(Array(question.choices.enumerated()), id: \\.offset) { index, choice in ChoiceRow(choice: choice) }"
+      style: secondary
+      start: 7
+      end: 106
+    - source: "(Array(question.choices.enumerated()), id: \\.offset)"
+      style: secondary
+      start: 7
+      end: 59
+  "ForEach(Store.shared.items.indices, id: \\.self) { index in Row(item: Store.shared.items[index]) }\n":
+    labels:
+    - source: Store.shared.items.indices
+      style: primary
+      start: 8
+      end: 34
+    - source: ForEach
+      style: secondary
+      start: 0
+      end: 7
+    - source: "ForEach(Store.shared.items.indices, id: \\.self) { index in Row(item: Store.shared.items[index]) }"
+      style: secondary
+      start: 0
+      end: 97
+    - source: "(Store.shared.items.indices, id: \\.self) { index in Row(item: Store.shared.items[index]) }"
+      style: secondary
+      start: 7
+      end: 97
+    - source: "(Store.shared.items.indices, id: \\.self)"
+      style: secondary
+      start: 7
+      end: 47
   "ForEach(items.indices, id: \\.self) { index in Row(item: items[index]) }\n":
     labels:
     - source: items.indices
@@ -74,6 +126,28 @@ snapshots:
       style: secondary
       start: 7
       end: 34
+  "ForEach(self.items.indices, id: \\.self) { index in Row(item: items[index]) }\n":
+    labels:
+    - source: self.items.indices
+      style: primary
+      start: 8
+      end: 26
+    - source: ForEach
+      style: secondary
+      start: 0
+      end: 7
+    - source: "ForEach(self.items.indices, id: \\.self) { index in Row(item: items[index]) }"
+      style: secondary
+      start: 0
+      end: 76
+    - source: "(self.items.indices, id: \\.self) { index in Row(item: items[index]) }"
+      style: secondary
+      start: 7
+      end: 76
+    - source: "(self.items.indices, id: \\.self)"
+      style: secondary
+      start: 7
+      end: 39
   "List(model.rows.indices, id: \\.self) { index in Text(model.rows[index].title) }\n":
     labels:
     - source: model.rows.indices

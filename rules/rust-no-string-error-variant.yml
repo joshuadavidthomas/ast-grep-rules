@@ -1,6 +1,6 @@
 id: rust-no-string-error-variant
 language: Rust
-severity: warning
+severity: error
 message: "Do not store bare String payloads in error variants; use structured fields or source errors."
 note: "Stringly error variants make recovery, testing, and formatting policy harder than typed error data."
 rule:

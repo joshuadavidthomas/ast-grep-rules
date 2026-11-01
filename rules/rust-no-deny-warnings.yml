@@ -1,6 +1,6 @@
 id: rust-no-deny-warnings
 language: Rust
-severity: warning
+severity: error
 message: "Do not use #![deny(warnings)]; configure explicit lint levels instead."
 note: "Denying all warnings can break builds when the compiler or dependencies add new warnings."
 rule:

@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import {
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { test } from "node:test";
@@ -36,6 +42,19 @@ function outputOf(result) {
   return `${result.stdout}${result.stderr}`;
 }
 
+test("every rule is an error", () => {
+  const rulesDir = resolve(packageRoot, "rules");
+
+  for (const filename of readdirSync(rulesDir)) {
+    const source = readFileSync(join(rulesDir, filename), "utf8");
+    const ids = source.match(/^id: .+$/gm) ?? [];
+    const errors = source.match(/^severity: error$/gm) ?? [];
+
+    assert.ok(ids.length > 0, filename);
+    assert.equal(errors.length, ids.length, filename);
+  }
+});
+
 test("language filters select only their rule group", () => {
   const fixtureDir = mkdtempSync(join(tmpdir(), "ast-grep-rule-groups-test-"));
 
@@ -48,23 +67,23 @@ test("language filters select only their rule group", () => {
       const result = scan(fixtureDir, group);
       const output = outputOf(result);
 
-      assert.equal(result.status, 0, output);
-      assert.match(output, new RegExp(`warning\\[${group}-no-code-barricade\\]`));
+      assert.equal(result.status, 1, output);
+      assert.match(output, new RegExp(`error\\[${group}-no-code-barricade\\]`));
 
       for (const otherGroup of fixtures.keys()) {
         if (otherGroup === group) continue;
-        assert.doesNotMatch(output, new RegExp(`warning\\[${otherGroup}-`));
+        assert.doesNotMatch(output, new RegExp(`\\[${otherGroup}-`));
       }
     }
 
     const allRules = scan(fixtureDir);
     const allOutput = outputOf(allRules);
 
-    assert.equal(allRules.status, 0, allOutput);
+    assert.equal(allRules.status, 1, allOutput);
     for (const group of fixtures.keys()) {
       assert.match(
         allOutput,
-        new RegExp(`warning\\[${group}-no-code-barricade\\]`),
+        new RegExp(`error\\[${group}-no-code-barricade\\]`),
       );
     }
   } finally {

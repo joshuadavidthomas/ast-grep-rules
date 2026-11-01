@@ -18,6 +18,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Changed
+
+- Every rule is now an error, so any finding fails the hook. Warnings never failed the hook and prek hides the output of passing hooks, so a warning rule was effectively off. Suppress a deliberate exception with an inline `ast-grep-ignore` comment that says why, or turn the rule off with `--off`.
+
 ## [0.9.0]
 
 ### Added

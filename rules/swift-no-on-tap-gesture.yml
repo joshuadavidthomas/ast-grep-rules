@@ -1,6 +1,6 @@
 id: swift-no-on-tap-gesture
 language: Swift
-severity: warning
+severity: error
 message: "Use a Button instead of onTapGesture; VoiceOver and keyboard users cannot find a tap gesture as a control."
 note: "A Button gets the button trait, focus, keyboard and Voice Control activation, and pressed styling for free. onTapGesture is right when you need the tap count or location, which this rule does not report. If you must keep it, add .accessibilityAddTraits(.isButton) and suppress with an inline ast-grep-ignore comment."
 rule:

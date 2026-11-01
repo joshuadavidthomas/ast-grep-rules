@@ -1,6 +1,6 @@
 id: swift-no-eager-stack-in-scroll-view
 language: Swift
-severity: warning
+severity: error
 message: "Use LazyVStack or LazyHStack for ForEach content in a ScrollView; an eager stack builds every row up front."
 note: "VStack and HStack create all of their children immediately, even rows far off screen. A lazy stack, or List, creates rows as they scroll into view. Keep the eager stack only for a small fixed collection, and suppress with an inline ast-grep-ignore comment that says why."
 rule:

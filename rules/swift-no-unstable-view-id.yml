@@ -1,6 +1,6 @@
 id: swift-no-unstable-view-id
 language: Swift
-severity: warning
+severity: error
 message: "Pass a stable identifier to .id(); a fresh UUID, date, or random value recreates the view on every body evaluation."
 note: "A new identity discards the view's state, restarts its animations, and rebuilds the subtree. Use a domain identifier such as item.id, or a value that changes only when you intend to reset the view."
 rule:

@@ -1,6 +1,6 @@
 id: typescript-no-known-value-widening
 language: TypeScript
-severity: warning
+severity: error
 message: "Do not give a known value an explicit unknown, object, Record, or anonymous object type; keep inference, use satisfies, or name the owner type."
 note: "A literal, array, object, function, or constructor already has a precise type. Annotating or asserting it as unknown, object, Record, or an inline object type throws that evidence away. An empty object used as a dictionary accumulator may stay annotated as Record or an index signature. This rule does not follow bindings or type aliases."
 utils:

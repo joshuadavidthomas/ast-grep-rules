@@ -83,9 +83,9 @@ test(
       );
       const output = `${scanned.stdout}${scanned.stderr}`;
 
-      assert.equal(scanned.status, 0, output);
+      assert.equal(scanned.status, 1, output);
       assert.match(output, /App\.svelte/);
-      assert.match(output, /warning\[svelte-no-create-event-dispatcher\]/);
+      assert.match(output, /error\[svelte-no-create-event-dispatcher\]/);
     } finally {
       rmSync(tempDir, { recursive: true, force: true });
     }

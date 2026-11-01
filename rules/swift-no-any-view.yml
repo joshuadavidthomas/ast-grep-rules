@@ -1,6 +1,6 @@
 id: swift-no-any-view
 language: Swift
-severity: warning
+severity: error
 message: "Avoid AnyView; return `some View` from a @ViewBuilder, use Group, or make the container generic over its content."
 note: "AnyView hides the view's type, so SwiftUI cannot diff the subtree structurally and rebuilds it more often. AnyShapeStyle is not affected. Keep AnyView only where the type must be erased, such as a heterogeneous collection of views, and suppress with an inline ast-grep-ignore comment that says why."
 rule:

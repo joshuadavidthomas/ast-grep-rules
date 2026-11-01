@@ -1,6 +1,6 @@
 id: rust-no-anyhow-in-public-api
 language: Rust
-severity: warning
+severity: error
 message: "Do not expose anyhow in public APIs; return a typed error instead."
 note: "anyhow is good for application boundaries, but public library APIs should expose structured error types callers can match and document."
 rule:

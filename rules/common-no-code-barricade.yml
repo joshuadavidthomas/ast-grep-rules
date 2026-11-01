@@ -1,6 +1,6 @@
 id: rust-no-code-barricade
 language: Rust
-severity: warning
+severity: error
 message: "Replace this decorative divider with a plain section comment."
 rule:
   any:
@@ -10,7 +10,7 @@ rule:
 ---
 id: typescript-no-code-barricade
 language: TypeScript
-severity: warning
+severity: error
 message: "Replace this decorative divider with a plain section comment."
 rule:
   kind: comment
@@ -18,7 +18,7 @@ rule:
 ---
 id: html-no-code-barricade
 language: Html
-severity: warning
+severity: error
 message: "Replace this decorative divider with a plain section comment."
 rule:
   kind: comment
@@ -26,7 +26,7 @@ rule:
 ---
 id: svelte-no-code-barricade
 language: svelte
-severity: warning
+severity: error
 message: "Replace this decorative divider with a plain section comment."
 rule:
   kind: comment
@@ -34,7 +34,7 @@ rule:
 ---
 id: python-no-code-barricade
 language: Python
-severity: warning
+severity: error
 message: "Replace this decorative divider with a plain section comment."
 rule:
   kind: comment
@@ -42,7 +42,7 @@ rule:
 ---
 id: go-no-code-barricade
 language: Go
-severity: warning
+severity: error
 message: "Replace this decorative divider with a plain section comment."
 rule:
   kind: comment
@@ -50,7 +50,7 @@ rule:
 ---
 id: swift-no-code-barricade
 language: Swift
-severity: warning
+severity: error
 message: "Replace this decorative divider with a plain section comment."
 note: "Use `// MARK: - Section` for Xcode's jump bar, or split the file."
 rule:

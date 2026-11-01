@@ -45,11 +45,11 @@ test("the wrapper scans plain and TypeScript Svelte scripts", () => {
     });
     const output = `${result.stdout}${result.stderr}`;
 
-    assert.equal(result.status, 0, output);
+    assert.equal(result.status, 1, output);
     assert.match(output, /plain\.svelte/);
     assert.match(output, /typescript\.svelte/);
     assert.equal(
-      output.match(/warning\[svelte-no-create-event-dispatcher\]/g)?.length,
+      output.match(/error\[svelte-no-create-event-dispatcher\]/g)?.length,
       4,
       output,
     );

@@ -60,7 +60,7 @@ pre-commit run all --all-files
 
 Preparing the hook downloads an isolated Node.js environment, ast-grep, and the Svelte parser. Later runs reuse that environment. The project does not need Node.js or an `sgconfig.yml`.
 
-Both tools scan tracked files. Add a new file to version control before expecting `--all-files` to include it. Rules with warning severity print findings without failing the hook; error rules fail it.
+Both tools scan tracked files. Add a new file to version control before expecting `--all-files` to include it. Every rule is an error, so any finding fails the hook. To keep a deliberate exception, put an `// ast-grep-ignore: <rule-id>` comment on the line above it and say why, or turn the rule off as shown below.
 
 ### Turn off rules
 
@@ -122,13 +122,13 @@ All rules link to their definitions. Most definitions include a `note` with exce
 
 | Rule | Language | Severity | Reports |
 | --- | --- | --- | --- |
-| [`rust-no-code-barricade`](rules/common-no-code-barricade.yml) | Rust | warning | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
-| [`typescript-no-code-barricade`](rules/common-no-code-barricade.yml) | TypeScript | warning | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
-| [`html-no-code-barricade`](rules/common-no-code-barricade.yml) | HTML | warning | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
-| [`svelte-no-code-barricade`](rules/common-no-code-barricade.yml) | Svelte | warning | Decorative divider comments in Svelte templates. Use a plain section comment or split the file. |
-| [`python-no-code-barricade`](rules/common-no-code-barricade.yml) | Python | warning | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
-| [`go-no-code-barricade`](rules/common-no-code-barricade.yml) | Go | warning | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
-| [`swift-no-code-barricade`](rules/common-no-code-barricade.yml) | Swift | warning | Decorative divider comments made from repeated punctuation. Use `// MARK: - Section` or split the file. |
+| [`rust-no-code-barricade`](rules/common-no-code-barricade.yml) | Rust | error | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
+| [`typescript-no-code-barricade`](rules/common-no-code-barricade.yml) | TypeScript | error | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
+| [`html-no-code-barricade`](rules/common-no-code-barricade.yml) | HTML | error | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
+| [`svelte-no-code-barricade`](rules/common-no-code-barricade.yml) | Svelte | error | Decorative divider comments in Svelte templates. Use a plain section comment or split the file. |
+| [`python-no-code-barricade`](rules/common-no-code-barricade.yml) | Python | error | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
+| [`go-no-code-barricade`](rules/common-no-code-barricade.yml) | Go | error | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
+| [`swift-no-code-barricade`](rules/common-no-code-barricade.yml) | Swift | error | Decorative divider comments made from repeated punctuation. Use `// MARK: - Section` or split the file. |
 
 ### Rust
 
@@ -139,23 +139,23 @@ These rules target patterns that rustc and Clippy do not report. A few overlap w
 
 | Rule | Severity | Reports |
 | --- | --- | --- |
-| [`rust-no-anyhow-in-public-api`](rules/rust-no-anyhow-in-public-api.yml) | warning | Visible functions, trait methods, and type aliases that expose `anyhow`. Return an error type callers can inspect. |
-| [`rust-no-deny-warnings`](rules/rust-no-deny-warnings.yml) | warning | `#![deny(warnings)]`, which can break a build when a compiler or dependency adds a warning. Set explicit lint levels instead. |
-| [`rust-no-deref-polymorphism`](rules/rust-no-deref-polymorphism.yml) | warning | `Deref` implementations used for API forwarding. Reserve `Deref` for smart pointers and expose methods on other types. |
-| [`rust-no-dropped-error-source`](rules/rust-no-dropped-error-source.yml) | warning | `map_err(\|_\| Error::Variant)` and `.ok().ok_or(...)` that discard the original error. Carry the source in the new error instead. |
-| [`rust-no-indexed-array-rebuild`](rules/rust-no-indexed-array-rebuild.yml) | warning | `[bytes[0], bytes[1], ...]` array literals that index the same slice element by element. Take the chunk with `split_first_chunk` or `try_into` instead. |
-| [`rust-no-option-bool-field`](rules/rust-no-option-bool-field.yml) | warning | `Option<bool>` struct fields. Name the three states with an enum. |
+| [`rust-no-anyhow-in-public-api`](rules/rust-no-anyhow-in-public-api.yml) | error | Visible functions, trait methods, and type aliases that expose `anyhow`. Return an error type callers can inspect. |
+| [`rust-no-deny-warnings`](rules/rust-no-deny-warnings.yml) | error | `#![deny(warnings)]`, which can break a build when a compiler or dependency adds a warning. Set explicit lint levels instead. |
+| [`rust-no-deref-polymorphism`](rules/rust-no-deref-polymorphism.yml) | error | `Deref` implementations used for API forwarding. Reserve `Deref` for smart pointers and expose methods on other types. |
+| [`rust-no-dropped-error-source`](rules/rust-no-dropped-error-source.yml) | error | `map_err(\|_\| Error::Variant)` and `.ok().ok_or(...)` that discard the original error. Carry the source in the new error instead. |
+| [`rust-no-indexed-array-rebuild`](rules/rust-no-indexed-array-rebuild.yml) | error | `[bytes[0], bytes[1], ...]` array literals that index the same slice element by element. Take the chunk with `split_first_chunk` or `try_into` instead. |
+| [`rust-no-option-bool-field`](rules/rust-no-option-bool-field.yml) | error | `Option<bool>` struct fields. Name the three states with an enum. |
 | [`rust-no-panicking-fallback`](rules/rust-no-panicking-fallback.yml) | error | `unwrap_or_else` and `map_or_else` fallbacks that end in a panic or another diverging macro. Handle the failed or absent value instead. Skips test files and `#[cfg(test)]` items. |
 | [`rust-no-panicking-let-else`](rules/rust-no-panicking-let-else.yml) | error | `let`-`else` branches that end in a panic or another diverging macro. Return, break, continue, or model the failed pattern. Skips test files and `#[cfg(test)]` items. |
 | [`rust-no-panicking-match-arm`](rules/rust-no-panicking-match-arm.yml) | error | Match arms that end in a panic or another diverging macro. Return, propagate, or give the arm a real value. Skips test files and `#[cfg(test)]` items. |
-| [`rust-no-public-struct-fields`](rules/rust-no-public-struct-fields.yml) | warning | Visible fields on visible structs. Keep representation private unless the struct is passive data. |
-| [`rust-no-public-tuple-newtype-field`](rules/rust-no-public-tuple-newtype-field.yml) | warning | Visible tuple-newtype fields. Keep the field private and expose chosen constructors or accessors. |
-| [`rust-no-single-field-struct`](rules/rust-no-single-field-struct.yml) | warning | Named-field structs with one field. Use a tuple newtype unless an external schema or FFI needs the field name. |
-| [`rust-no-single-member-enum`](rules/rust-no-single-member-enum.yml) | warning | Enums with one variant, except `#[non_exhaustive]` enums. Use a struct or newtype, or add the missing variants. |
-| [`rust-no-string-error-variant`](rules/rust-no-string-error-variant.yml) | warning | Bare `String` payloads in variants of enums named `Error` or ending in `Error`. Keep structured fields or source errors. |
+| [`rust-no-public-struct-fields`](rules/rust-no-public-struct-fields.yml) | error | Visible fields on visible structs. Keep representation private unless the struct is passive data. |
+| [`rust-no-public-tuple-newtype-field`](rules/rust-no-public-tuple-newtype-field.yml) | error | Visible tuple-newtype fields. Keep the field private and expose chosen constructors or accessors. |
+| [`rust-no-single-field-struct`](rules/rust-no-single-field-struct.yml) | error | Named-field structs with one field. Use a tuple newtype unless an external schema or FFI needs the field name. |
+| [`rust-no-single-member-enum`](rules/rust-no-single-member-enum.yml) | error | Enums with one variant, except `#[non_exhaustive]` enums. Use a struct or newtype, or add the missing variants. |
+| [`rust-no-string-error-variant`](rules/rust-no-string-error-variant.yml) | error | Bare `String` payloads in variants of enums named `Error` or ending in `Error`. Keep structured fields or source errors. |
 | [`rust-no-trivial-whitespace-helper`](rules/rust-no-trivial-whitespace-helper.yml) | error | Local helpers that only wrap standard whitespace checks. Inline the check or name the domain policy it implements. |
-| [`rust-no-visible-bool-argument`](rules/rust-no-visible-bool-argument.yml) | warning | `bool` parameters in visible functions and trait methods. Use a named enum or split the operation. |
-| [`rust-require-thiserror-error-enum`](rules/rust-require-thiserror-error-enum.yml) | warning | Error enums without a `thiserror::Error` derive. Derive it instead of hand-writing error behavior. |
+| [`rust-no-visible-bool-argument`](rules/rust-no-visible-bool-argument.yml) | error | `bool` parameters in visible functions and trait methods. Use a named enum or split the operation. |
+| [`rust-require-thiserror-error-enum`](rules/rust-require-thiserror-error-enum.yml) | error | Error enums without a `thiserror::Error` derive. Derive it instead of hand-writing error behavior. |
 
 ### TypeScript
 
@@ -165,15 +165,15 @@ These rules target patterns that rustc and Clippy do not report. A few overlap w
 | [`typescript-no-conditional-empty-object-spread`](rules/typescript-no-conditional-empty-object-spread.yml) | error | Object spreads that use `{}` on one side of a ternary to omit a field. Write the property or build the object in later statements. |
 | [`typescript-no-generic-error-message-helper`](rules/typescript-no-generic-error-message-helper.yml) | error | Helpers that reduce an unknown error to `error.message` or `String(error)`. Preserve the original error and write separate user-facing text. |
 | [`typescript-no-hand-rolled-object-type-guard`](rules/typescript-no-hand-rolled-object-type-guard.yml) | error | Object type predicates over unknown input that rely on `typeof value === "object"`. Parse the expected shape with a schema validator. |
-| [`typescript-no-known-value-widening`](rules/typescript-no-known-value-widening.yml) | warning | A written literal, array, object, or function given an explicit `unknown`, `object`, `Record`, or anonymous object type. Keep inference, use `satisfies`, or name the owner type. |
+| [`typescript-no-known-value-widening`](rules/typescript-no-known-value-widening.yml) | error | A written literal, array, object, or function given an explicit `unknown`, `object`, `Record`, or anonymous object type. Keep inference, use `satisfies`, or name the owner type. |
 | [`typescript-no-object-parameters`](rules/typescript-no-object-parameters.yml) | error | Function parameters typed as `object`. Use the owner type or parse the input at its boundary. |
 | [`typescript-no-record-string-unknown`](rules/typescript-no-record-string-unknown.yml) | error | Dictionary types whose value is `unknown`, `any`, `object`, or `{}`, including index signatures and `Readonly`/`NonNullable` wrappers. Declare the actual value type, or keep the input `unknown` and parse it at the boundary. |
 | [`typescript-no-runtime-typeof`](rules/typescript-no-runtime-typeof.yml) | error | Runtime `typeof` checks. Parse the value into a domain type at the I/O boundary. |
-| [`typescript-no-shape-in-symbol-names`](rules/typescript-no-shape-in-symbol-names.yml) | warning | The word `shape` in a TypeScript identifier. Name the owner type or the parsed domain value. |
-| [`typescript-no-shape-in-symbol-names-tsx`](rules/typescript-no-shape-in-symbol-names.yml) | warning | The same `shape` name check for TSX identifiers. |
+| [`typescript-no-shape-in-symbol-names`](rules/typescript-no-shape-in-symbol-names.yml) | error | The word `shape` in a TypeScript identifier. Name the owner type or the parsed domain value. |
+| [`typescript-no-shape-in-symbol-names-tsx`](rules/typescript-no-shape-in-symbol-names.yml) | error | The same `shape` name check for TSX identifiers. |
 | [`typescript-no-unknown-parameters`](rules/typescript-no-unknown-parameters.yml) | error | Parameters typed as `unknown`, except a parameter named `cause`. Give the input a named contract or parse it at the I/O boundary. |
 | [`typescript-no-unknown-type-aliases`](rules/typescript-no-unknown-type-aliases.yml) | error | Type aliases that only rename `unknown`. Keep `unknown` visible or replace it with the parsed owner type. |
-| [`typescript-no-widen-then-assert`](rules/typescript-no-widen-then-assert.yml) | warning | A local `const` widened to `unknown`, `any`, `object`, or `Record<..., unknown>` and later asserted to a narrower type. Keep the precise type, or parse unknown input once at the boundary. |
+| [`typescript-no-widen-then-assert`](rules/typescript-no-widen-then-assert.yml) | error | A local `const` widened to `unknown`, `any`, `object`, or `Record<..., unknown>` and later asserted to a narrower type. Keep the precise type, or parse unknown input once at the boundary. |
 
 ### Swift
 
@@ -186,19 +186,19 @@ A few rules overlap with [SwiftLint](https://github.com/realm/SwiftLint) but mat
 
 | Rule | Severity | Reports |
 | --- | --- | --- |
-| [`swift-no-any-view`](rules/swift-no-any-view.yml) | warning | `AnyView(...)`, which hides the view type from SwiftUI's diffing. Return `some View` from a `@ViewBuilder`, use `Group`, or make the container generic. |
+| [`swift-no-any-view`](rules/swift-no-any-view.yml) | error | `AnyView(...)`, which hides the view type from SwiftUI's diffing. Return `some View` from a `@ViewBuilder`, use `Group`, or make the container generic. |
 | [`swift-no-corner-radius-modifier`](rules/swift-no-corner-radius-modifier.yml) | error | The soft-deprecated `cornerRadius()` modifier. Use `clipShape(.rect(cornerRadius:))`. |
-| [`swift-no-eager-stack-in-scroll-view`](rules/swift-no-eager-stack-in-scroll-view.yml) | warning | A `VStack` or `HStack` directly inside a `ScrollView` that contains a `ForEach`. Use `LazyVStack`, `LazyHStack`, or `List`. |
+| [`swift-no-eager-stack-in-scroll-view`](rules/swift-no-eager-stack-in-scroll-view.yml) | error | A `VStack` or `HStack` directly inside a `ScrollView` that contains a `ForEach`. Use `LazyVStack`, `LazyHStack`, or `List`. |
 | [`swift-no-foreground-color`](rules/swift-no-foreground-color.yml) | error | The soft-deprecated `foregroundColor()` modifier. Use `foregroundStyle()`. |
-| [`swift-no-formatter-in-view-body`](rules/swift-no-formatter-in-view-body.yml) | warning | Foundation formatters such as `DateFormatter()` created inside `body` or another `some View` builder. Use `Text(value, format:)` or a shared formatter. |
-| [`swift-no-icon-only-button`](rules/swift-no-icon-only-button.yml) | warning | `Button` and `Menu` labels made of a single `Image` with no `accessibilityLabel`. Pass a title with `systemImage:` or use a `Label`, plus `.labelStyle(.iconOnly)` if needed. |
-| [`swift-no-index-foreach-identity`](rules/swift-no-index-foreach-identity.yml) | warning | `ForEach` and `List` over `indices`, `0..<items.count`, or `id: \.offset`. Identify rows by the element. |
+| [`swift-no-formatter-in-view-body`](rules/swift-no-formatter-in-view-body.yml) | error | Foundation formatters such as `DateFormatter()` created inside `body` or another `some View` builder. Use `Text(value, format:)` or a shared formatter. |
+| [`swift-no-icon-only-button`](rules/swift-no-icon-only-button.yml) | error | `Button` and `Menu` labels made of a single `Image` with no `accessibilityLabel`. Pass a title with `systemImage:` or use a `Label`, plus `.labelStyle(.iconOnly)` if needed. |
+| [`swift-no-index-foreach-identity`](rules/swift-no-index-foreach-identity.yml) | error | `ForEach` and `List` over `indices`, `0..<items.count`, or `id: \.offset`. Identify rows by the element. |
 | [`swift-no-navigation-view`](rules/swift-no-navigation-view.yml) | error | The deprecated `NavigationView`. Use `NavigationStack` or `NavigationSplitView`. |
-| [`swift-no-observable-object`](rules/swift-no-observable-object.yml) | warning | Types that conform to `ObservableObject`. Use the `@Observable` macro so views update only for the properties they read. |
-| [`swift-no-on-tap-gesture`](rules/swift-no-on-tap-gesture.yml) | warning | `onTapGesture` without a tap count or location. Use a `Button` so VoiceOver, keyboard, and Voice Control users can activate it. |
+| [`swift-no-observable-object`](rules/swift-no-observable-object.yml) | error | Types that conform to `ObservableObject`. Use the `@Observable` macro so views update only for the properties they read. |
+| [`swift-no-on-tap-gesture`](rules/swift-no-on-tap-gesture.yml) | error | `onTapGesture` without a tap count or location. Use a `Button` so VoiceOver, keyboard, and Voice Control users can activate it. |
 | [`swift-no-print-changes`](rules/swift-no-print-changes.yml) | error | Leftover `Self._printChanges()` and `Self._logChanges()` debugging calls. |
 | [`swift-no-single-parameter-on-change`](rules/swift-no-single-parameter-on-change.yml) | error | The deprecated one-parameter `onChange(of:perform:)`. Use the zero- or two-parameter closure. |
-| [`swift-no-unstable-view-id`](rules/swift-no-unstable-view-id.yml) | warning | `.id()` given `UUID()`, `Date()`, `.now`, or a random value, which recreates the view on every update. Pass a stable identifier. |
+| [`swift-no-unstable-view-id`](rules/swift-no-unstable-view-id.yml) | error | `.id()` given `UUID()`, `Date()`, `.now`, or a random value, which recreates the view on every update. Pass a stable identifier. |
 
 ### Pi
 
@@ -217,7 +217,7 @@ A few rules overlap with [SwiftLint](https://github.com/realm/SwiftLint) but mat
 
 | Rule | Severity | Reports |
 | --- | --- | --- |
-| [`svelte-no-create-event-dispatcher`](rules/svelte-no-create-event-dispatcher.yml) | warning | `createEventDispatcher` imports and direct calls. Svelte 5 components should declare and call callback props. |
+| [`svelte-no-create-event-dispatcher`](rules/svelte-no-create-event-dispatcher.yml) | error | `createEventDispatcher` imports and direct calls. Svelte 5 components should declare and call callback props. |
 
 The wrapper registers [`tree-sitter-svelte`](https://github.com/tree-sitter-grammars/tree-sitter-svelte) as an ast-grep custom language, so Svelte rules can match component and template nodes such as `{#if}` and `{#each}` blocks. It injects every `<script>` body as TypeScript so script rules also work with plain and `lang="ts"` blocks.
 

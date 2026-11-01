@@ -1,6 +1,6 @@
 id: rust-no-public-tuple-newtype-field
 language: Rust
-severity: warning
+severity: error
 message: "Avoid visible tuple newtype fields; keep the field private and expose intentional constructors or accessors."
 note: "A visible field lets callers bypass invariants, making the wrapper little more than a type alias."
 rule:

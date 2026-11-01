@@ -1,6 +1,6 @@
 id: typescript-no-shape-in-symbol-names
 language: TypeScript
-severity: warning
+severity: error
 message: "Do not put the word shape in a symbol name."
 note: "shape names the TypeScript view of a value, not the thing the program owns. Name the owner type or the parsed domain value instead."
 rule:
@@ -15,7 +15,7 @@ rule:
 ---
 id: typescript-no-shape-in-symbol-names-tsx
 language: Tsx
-severity: warning
+severity: error
 message: "Do not put the word shape in a symbol name."
 note: "shape names the TypeScript view of a value, not the thing the program owns. Name the owner type or the parsed domain value instead."
 rule:

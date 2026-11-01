@@ -1,6 +1,6 @@
 id: rust-no-single-field-struct
 language: Rust
-severity: warning
+severity: error
 message: "Prefer a tuple newtype over a named-field struct with only one field."
 note: "A single named field is often just a tuple newtype with extra ceremony. Keep the named field only when the name is part of an external schema or FFI contract."
 rule:

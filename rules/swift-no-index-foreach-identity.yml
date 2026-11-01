@@ -1,6 +1,6 @@
 id: swift-no-index-foreach-identity
 language: Swift
-severity: warning
+severity: error
 message: "Identify ForEach and List rows by the element, not by index or offset."
 note: "Indices describe positions, so inserting, deleting, moving, or filtering items gives rows the wrong identity, resets their state, and breaks animations. Iterate the elements with an Identifiable type or id: \\.id, use ForEach($items) for bindings, and identify enumerated sequences with id: \\.element.id. Fixed ranges such as 0..<5 are not reported."
 rule:

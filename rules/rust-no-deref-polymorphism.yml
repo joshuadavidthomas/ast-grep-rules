@@ -1,7 +1,7 @@
 id: rust-no-deref-polymorphism
 language: Rust
 severity: error
-message: "Avoid implementing Deref for API forwarding; expose explicit methods unless this type is a true smart pointer."
+message: "Do not implement Deref for API forwarding; expose explicit methods unless this type is a true smart pointer."
 note: "Deref is for pointer-like types. Using it as inheritance hides the real API surface."
 rule:
   all:

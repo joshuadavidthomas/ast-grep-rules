@@ -1,7 +1,7 @@
 id: rust-no-visible-bool-argument
 language: Rust
 severity: error
-message: "Avoid bool parameters in visible APIs; use a named enum or split the operation instead."
+message: "Do not take bool parameters in visible APIs; use a named enum or split the operation instead."
 note: "Boolean arguments hide intent at call sites and do not extend cleanly when a third state appears."
 rule:
   any:

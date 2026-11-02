@@ -1,0 +1,107 @@
+id: cargo-workspace-require-package-field
+snapshots:
+  "[package]\nname = \"djls-wasm\"\nedition = \"2024\"\n":
+    labels:
+    - source: edition = "2024"
+      style: primary
+      start: 29
+      end: 45
+    - source: package
+      style: secondary
+      start: 1
+      end: 8
+    - source: |
+        [package]
+        name = "djls-wasm"
+        edition = "2024"
+      style: secondary
+      start: 0
+      end: 46
+    - source: edition
+      style: secondary
+      start: 29
+      end: 36
+  "[package]\nname = \"djls-wasm\"\nedition = { workspace = false }\n":
+    labels:
+    - source: edition = { workspace = false }
+      style: primary
+      start: 29
+      end: 60
+    - source: package
+      style: secondary
+      start: 1
+      end: 8
+    - source: |
+        [package]
+        name = "djls-wasm"
+        edition = { workspace = false }
+      style: secondary
+      start: 0
+      end: 61
+    - source: edition
+      style: secondary
+      start: 29
+      end: 36
+  "[package]\nname = \"djls-wasm\"\nlicense = \"Apache-2.0\"\n":
+    labels:
+    - source: license = "Apache-2.0"
+      style: primary
+      start: 29
+      end: 51
+    - source: package
+      style: secondary
+      start: 1
+      end: 8
+    - source: |
+        [package]
+        name = "djls-wasm"
+        license = "Apache-2.0"
+      style: secondary
+      start: 0
+      end: 52
+    - source: license
+      style: secondary
+      start: 29
+      end: 36
+  "[package]\nname = \"djls-wasm\"\nrepository = \"https://github.com/joshuadavidthomas/django-language-server\"\n":
+    labels:
+    - source: repository = "https://github.com/joshuadavidthomas/django-language-server"
+      style: primary
+      start: 29
+      end: 103
+    - source: package
+      style: secondary
+      start: 1
+      end: 8
+    - source: |
+        [package]
+        name = "djls-wasm"
+        repository = "https://github.com/joshuadavidthomas/django-language-server"
+      style: secondary
+      start: 0
+      end: 104
+    - source: repository
+      style: secondary
+      start: 29
+      end: 39
+  "[package]\nname = \"djls-wasm\"\nrust-version = \"1.90\"\n":
+    labels:
+    - source: rust-version = "1.90"
+      style: primary
+      start: 29
+      end: 50
+    - source: package
+      style: secondary
+      start: 1
+      end: 8
+    - source: |
+        [package]
+        name = "djls-wasm"
+        rust-version = "1.90"
+      style: secondary
+      start: 0
+      end: 51
+    - source: rust-version
+      style: secondary
+      start: 29
+      end: 41

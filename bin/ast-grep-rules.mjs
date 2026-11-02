@@ -50,11 +50,9 @@ function resolveAstGrep() {
   }
 }
 
-function resolveSvelteParser() {
+function resolveParser(packageName, languageName) {
   try {
-    const packageJson = require.resolve(
-      "@tree-sitter-grammars/tree-sitter-svelte/package.json",
-    );
+    const packageJson = require.resolve(`${packageName}/package.json`);
     const parserRoot = dirname(packageJson);
     const packageRequire = createRequire(packageJson);
     const nodeGypBuild = packageRequire("node-gyp-build");
@@ -62,7 +60,7 @@ function resolveSvelteParser() {
     return realpathSync(nodeGypBuild.path(parserRoot));
   } catch (error) {
     throw new Error(
-      `Could not load the Svelte parser for ${describeRuntime()}. ` +
+      `Could not load the ${languageName} parser for ${describeRuntime()}. ` +
         "Prebuilt parsers cover glibc Linux x64, macOS x64/arm64, and " +
         "Windows x64. Other targets need Python and a native compiler. " +
         "After adding those tools, reinstall the hook environment or run " +
@@ -71,11 +69,12 @@ function resolveSvelteParser() {
   }
 }
 
-function renderConfig(parserPath) {
+function renderConfig(parserPaths) {
   const templatePath = resolve(packageRoot, "sgconfig.yml");
   const replacements = new Map([
     ["__RULES_DIR__", resolve(packageRoot, "rules")],
-    ["__SVELTE_PARSER_LIBRARY__", parserPath],
+    ["__SVELTE_PARSER_LIBRARY__", parserPaths.svelte],
+    ["__TOML_PARSER_LIBRARY__", parserPaths.toml],
     ["__TESTS_DIR__", resolve(packageRoot, "tests")],
   ]);
   let config = readFileSync(templatePath, "utf8");
@@ -99,10 +98,13 @@ let tempDir;
 
 try {
   const astGrep = resolveAstGrep();
-  const parserPath = resolveSvelteParser();
+  const parserPaths = {
+    svelte: resolveParser("@tree-sitter-grammars/tree-sitter-svelte", "Svelte"),
+    toml: resolveParser("@tree-sitter-grammars/tree-sitter-toml", "TOML"),
+  };
   tempDir = mkdtempSync(join(tmpdir(), "ast-grep-rules-"));
   const configPath = join(tempDir, "sgconfig.yml");
-  writeFileSync(configPath, renderConfig(parserPath));
+  writeFileSync(configPath, renderConfig(parserPaths));
 
   const commandArgs = [
     command,

@@ -6,6 +6,10 @@ customLanguages:
     libraryPath: __SVELTE_PARSER_LIBRARY__
     extensions:
       - svelte
+  toml:
+    libraryPath: __TOML_PARSER_LIBRARY__
+    extensions:
+      - toml
 languageInjections:
   - hostLanguage: svelte
     rule:

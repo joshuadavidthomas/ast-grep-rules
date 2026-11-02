@@ -1,0 +1,60 @@
+id: cargo-workspace-require-dependency
+language: toml
+severity: error
+message: "Do not declare a dependency source in a member crate manifest; add it to the root [workspace.dependencies] and use `workspace = true` here."
+note: "Member crates inherit dependencies with `name.workspace = true` or `name = { workspace = true, features = [...] }`. `features`, `optional`, and `default-features` may sit next to `workspace = true`. Manifests with a `[workspace]` table are workspace roots and are skipped. A crate that is deliberately outside the workspace's dependency set, such as a published crate that must pin its own version range, is the accepted exemption; add a `# ast-grep-ignore: cargo-workspace-require-dependency` comment above the entry that says why."
+files:
+  - "**/Cargo.toml"
+utils:
+  member-manifest:
+    not:
+      inside:
+        kind: document
+        has:
+          kind: table
+          has:
+            any:
+              - kind: bare_key
+                regex: "^workspace$"
+              - kind: dotted_key
+                regex: "^workspace\\s*\\."
+        stopBy: end
+  workspace-true:
+    kind: pair
+    all:
+      - has:
+          kind: bare_key
+          regex: "^workspace$"
+      - has:
+          kind: boolean
+          regex: "^true$"
+rule:
+  all:
+    - matches: member-manifest
+    - any:
+        # `name = "1"`, `name.version = "1"`, `name.path = "..."`, or an
+        # inline table without `workspace = true` in a dependency table.
+        - kind: pair
+          inside:
+            kind: table
+            has:
+              any:
+                - kind: bare_key
+                - kind: dotted_key
+              regex: "^(target\\s*\\.\\s*('[^']*'|\"[^\"]*\"|[A-Za-z0-9_-]+)\\s*\\.\\s*)?((dev|build)[-_])?dependencies$"
+          any:
+            - has:
+                kind: string
+            - has:
+                kind: inline_table
+                not:
+                  has:
+                    matches: workspace-true
+        # `[dependencies.name]` tables without `workspace = true`.
+        - kind: dotted_key
+          regex: "^(target\\s*\\.\\s*('[^']*'|\"[^\"]*\"|[A-Za-z0-9_-]+)\\s*\\.\\s*)?((dev|build)[-_])?dependencies\\s*\\.\\s*('[^']*'|\"[^\"]*\"|[A-Za-z0-9_-]+)$"
+          inside:
+            kind: table
+            not:
+              has:
+                matches: workspace-true

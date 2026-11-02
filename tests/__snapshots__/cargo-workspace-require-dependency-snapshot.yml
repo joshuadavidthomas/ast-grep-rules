@@ -1,0 +1,179 @@
+id: cargo-workspace-require-dependency
+snapshots:
+  "[build-dependencies]\ncc = { git = \"https://github.com/rust-lang/cc-rs\" }\n":
+    labels:
+    - source: cc = { git = "https://github.com/rust-lang/cc-rs" }
+      style: primary
+      start: 21
+      end: 72
+    - source: "{ git = \"https://github.com/rust-lang/cc-rs\" }"
+      style: secondary
+      start: 26
+      end: 72
+    - source: build-dependencies
+      style: secondary
+      start: 1
+      end: 19
+    - source: |
+        [build-dependencies]
+        cc = { git = "https://github.com/rust-lang/cc-rs" }
+      style: secondary
+      start: 0
+      end: 73
+  "[dependencies.serde]\nversion = \"1\"\nfeatures = [\"derive\"]\n":
+    labels:
+    - source: dependencies.serde
+      style: primary
+      start: 1
+      end: 19
+    - source: |
+        [dependencies.serde]
+        version = "1"
+        features = ["derive"]
+      style: secondary
+      start: 0
+      end: 57
+  "[dependencies]\nserde = { version = \"1\", features = [\"derive\"] }\n":
+    labels:
+    - source: serde = { version = "1", features = ["derive"] }
+      style: primary
+      start: 15
+      end: 63
+    - source: "{ version = \"1\", features = [\"derive\"] }"
+      style: secondary
+      start: 23
+      end: 63
+    - source: dependencies
+      style: secondary
+      start: 1
+      end: 13
+    - source: |
+        [dependencies]
+        serde = { version = "1", features = ["derive"] }
+      style: secondary
+      start: 0
+      end: 64
+  "[dependencies]\nserde.version = \"1\"\n":
+    labels:
+    - source: serde.version = "1"
+      style: primary
+      start: 15
+      end: 34
+    - source: "\"1\""
+      style: secondary
+      start: 31
+      end: 34
+    - source: dependencies
+      style: secondary
+      start: 1
+      end: 13
+    - source: |
+        [dependencies]
+        serde.version = "1"
+      style: secondary
+      start: 0
+      end: 35
+  "[dependencies]\nwasm-bindgen = \"0.2\"\n":
+    labels:
+    - source: wasm-bindgen = "0.2"
+      style: primary
+      start: 15
+      end: 35
+    - source: "\"0.2\""
+      style: secondary
+      start: 30
+      end: 35
+    - source: dependencies
+      style: secondary
+      start: 1
+      end: 13
+    - source: |
+        [dependencies]
+        wasm-bindgen = "0.2"
+      style: secondary
+      start: 0
+      end: 36
+  "[dev-dependencies.djls-test]\npath = \"../djls-test\"\n":
+    labels:
+    - source: dev-dependencies.djls-test
+      style: primary
+      start: 1
+      end: 27
+    - source: |
+        [dev-dependencies.djls-test]
+        path = "../djls-test"
+      style: secondary
+      start: 0
+      end: 51
+  "[dev-dependencies]\ndjls-test = { path = \"../djls-test\" }\n":
+    labels:
+    - source: djls-test = { path = "../djls-test" }
+      style: primary
+      start: 19
+      end: 56
+    - source: "{ path = \"../djls-test\" }"
+      style: secondary
+      start: 31
+      end: 56
+    - source: dev-dependencies
+      style: secondary
+      start: 1
+      end: 17
+    - source: |
+        [dev-dependencies]
+        djls-test = { path = "../djls-test" }
+      style: secondary
+      start: 0
+      end: 57
+  "[target.\"cfg(unix)\".dev-dependencies]\nnix = { version = \"0.29\" }\n":
+    labels:
+    - source: nix = { version = "0.29" }
+      style: primary
+      start: 38
+      end: 64
+    - source: "{ version = \"0.29\" }"
+      style: secondary
+      start: 44
+      end: 64
+    - source: target."cfg(unix)".dev-dependencies
+      style: secondary
+      start: 1
+      end: 36
+    - source: |
+        [target."cfg(unix)".dev-dependencies]
+        nix = { version = "0.29" }
+      style: secondary
+      start: 0
+      end: 65
+  "[target.'cfg(target_arch = \"wasm32\")'.dependencies]\nwasm-bindgen = \"0.2\"\n":
+    labels:
+    - source: wasm-bindgen = "0.2"
+      style: primary
+      start: 52
+      end: 72
+    - source: "\"0.2\""
+      style: secondary
+      start: 67
+      end: 72
+    - source: target.'cfg(target_arch = "wasm32")'.dependencies
+      style: secondary
+      start: 1
+      end: 50
+    - source: |
+        [target.'cfg(target_arch = "wasm32")'.dependencies]
+        wasm-bindgen = "0.2"
+      style: secondary
+      start: 0
+      end: 73
+  "[target.'cfg(windows)'.build-dependencies.winres]\nversion = \"0.1\"\n":
+    labels:
+    - source: target.'cfg(windows)'.build-dependencies.winres
+      style: primary
+      start: 1
+      end: 48
+    - source: |
+        [target.'cfg(windows)'.build-dependencies.winres]
+        version = "0.1"
+      style: secondary
+      start: 0
+      end: 66

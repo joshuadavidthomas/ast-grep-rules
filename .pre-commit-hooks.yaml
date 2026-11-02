@@ -14,6 +14,14 @@
   types: [rust]
   pass_filenames: true
 
+- id: cargo-workspace
+  name: ast-grep rules (Cargo workspace)
+  description: Run the Cargo workspace member manifest rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^cargo-workspace-
+  language: node
+  files: (^|/)Cargo\.toml$
+  pass_filenames: true
+
 - id: typescript
   name: ast-grep rules (TypeScript)
   description: Run the TypeScript rules from joshuadavidthomas/ast-grep-rules

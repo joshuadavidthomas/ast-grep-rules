@@ -32,9 +32,10 @@ jobs:
       - name: Test grouped hooks with prek
         run: >-
           uvx prek try-repo .
-          rust svelte
+          rust svelte cargo-workspace
           --files tests/integration/hook-fixtures/valid.rs
           tests/integration/hook-fixtures/valid.svelte
+          tests/integration/hook-fixtures/Cargo.toml
       - name: Test packaged hook with prek
         run: uvx prek try-repo . all --all-files
       - name: Test packaged hook with pre-commit

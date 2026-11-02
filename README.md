@@ -1,6 +1,6 @@
 # ast-grep-rules
 
-An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, TypeScript, Svelte, HTML, Python, Go, Swift, Pi extensions, and OpenCode plugins.
+An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, Cargo manifests, TypeScript, Svelte, HTML, Python, Go, Swift, Pi extensions, and OpenCode plugins.
 
 The rules catch API design problems, weak error handling, deprecated Svelte patterns, SwiftUI performance and accessibility mistakes, and code clutter. Pre-commit users can choose rules by language or run the whole set.
 
@@ -33,6 +33,7 @@ repos:
 | --- | --- | --- |
 | `all` | All text files | Every rule |
 | `rust` | Rust | IDs starting with `rust-` |
+| `cargo-workspace` | `Cargo.toml` manifests in a Cargo workspace | IDs starting with `cargo-workspace-` |
 | `typescript` | TypeScript and Svelte script blocks | IDs starting with `typescript-` |
 | `pi` | TypeScript Pi extensions | IDs starting with `pi-` |
 | `opencode` | TypeScript and TSX OpenCode plugins | IDs starting with `opencode-` |
@@ -58,7 +59,7 @@ pre-commit install --install-hooks
 pre-commit run all --all-files
 ```
 
-Preparing the hook downloads an isolated Node.js environment, ast-grep, and the Svelte parser. Later runs reuse that environment. The project does not need Node.js or an `sgconfig.yml`.
+Preparing the hook downloads an isolated Node.js environment, ast-grep, and the Svelte and TOML parsers. Later runs reuse that environment. The project does not need Node.js or an `sgconfig.yml`.
 
 Both tools scan tracked files. Add a new file to version control before expecting `--all-files` to include it. Every rule is an error, so any finding fails the hook. To keep a deliberate exception, put an `// ast-grep-ignore: <rule-id>` comment on the line above it and say why, or turn the rule off as shown below.
 
@@ -90,7 +91,7 @@ The command uses its packaged rules and configuration. Pass any [`ast-grep scan`
 
 ## Run from this repository
 
-Install a [maintained Node.js release](https://nodejs.org/en/about/previous-releases) (22, 24, or 26) and [just](https://just.systems/), then install the pinned ast-grep CLI and Svelte parser:
+Install a [maintained Node.js release](https://nodejs.org/en/about/previous-releases) (22, 24, or 26) and [just](https://just.systems/), then install the pinned ast-grep CLI and the Svelte and TOML parsers:
 
 ```sh
 npm install
@@ -161,6 +162,17 @@ These rules target patterns that rustc and Clippy do not report. A few overlap w
 | [`rust-no-string-error-variant`](rules/rust-no-string-error-variant.yml) | error | Bare `String` payloads in variants of enums named `Error` or ending in `Error`. Keep structured fields or source errors. |
 | [`rust-no-trivial-whitespace-helper`](rules/rust-no-trivial-whitespace-helper.yml) | error | Local helpers that only wrap standard whitespace checks. Inline the check or name the domain policy it implements. |
 | [`rust-require-thiserror-error-enum`](rules/rust-require-thiserror-error-enum.yml) | error | Error enums without a `thiserror::Error` derive. Derive it instead of hand-writing error behavior. |
+
+### Cargo
+
+The `cargo-workspace` rules check member crate manifests in a Cargo workspace. A `Cargo.toml` with a `[workspace]` or `[workspace.*]` table is the workspace root and is skipped; every other `Cargo.toml` is treated as a member. A standalone crate that is not part of a workspace has no root to inherit from, so leave out the `cargo-workspace` hook, or pass `--off` for both rules when it runs `all`.
+
+| Rule | Severity | Reports |
+| --- | --- | --- |
+| [`cargo-workspace-require-dependency`](rules/cargo-workspace-require-dependency.yml) | error | Entries in `[dependencies]`, `[dev-dependencies]`, `[build-dependencies]`, and their `[target.'cfg(...)'.*]` forms that give a version, `path`, or `git` source instead of `workspace = true`. Declare the dependency in the root `[workspace.dependencies]`. `features`, `optional`, and `default-features` may sit next to `workspace = true`. |
+| [`cargo-workspace-require-package-field`](rules/cargo-workspace-require-package-field.yml) | error | `[package]` `edition`, `rust-version`, `license`, or `repository` set to a value instead of `.workspace = true`. Set it in the root `[workspace.package]`. `version` is not checked. |
+
+The wrapper registers [`tree-sitter-toml`](https://github.com/tree-sitter-grammars/tree-sitter-toml) as an ast-grep custom language for `.toml` files. Its prebuilt parsers cover the same targets as the Svelte parser below.
 
 ### TypeScript
 
@@ -241,9 +253,9 @@ Use `common-` for files that contain rules for several languages and a language 
 ## Repository layout
 
 - `rules/` contains the rule definitions.
-- `tests/` contains valid and invalid examples, generated snapshots, and a real `.svelte` scan test.
-- `sgconfig.yml` defines the rules, tests, custom Svelte language, and script injection.
-- `bin/ast-grep-rules.mjs` resolves the native parser, renders the config paths, and runs the pinned ast-grep CLI.
+- `tests/` contains valid and invalid examples, generated snapshots, and real `.svelte` and `Cargo.toml` scan tests.
+- `sgconfig.yml` defines the rules, tests, custom Svelte and TOML languages, and script injection.
+- `bin/ast-grep-rules.mjs` resolves the native parsers, renders the config paths, and runs the pinned ast-grep CLI.
 - `.agents/skills/ast-grep/` contains the local agent guide for writing and debugging rules.
 
 ## License

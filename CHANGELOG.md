@@ -21,6 +21,9 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 ### Added
 
 - Rust rules against storing and passing bare bools: `rust-no-bool-field`, `rust-no-bool-parameter`, `rust-no-bool-tuple`, `rust-no-bool-literal-argument`, and `rust-no-fallible-bool-return`. They skip test files and `#[cfg(test)]` items. `rust-no-bool-field` also skips single-`bool` variant payloads such as `Bool(bool)`.
+- Cargo rules for member crate manifests in a workspace: `cargo-workspace-require-dependency` reports dependencies that give a version, `path`, or `git` source instead of `workspace = true`, and `cargo-workspace-require-package-field` reports `[package]` `edition`, `rust-version`, `license`, or `repository` values that do not inherit from the workspace. Manifests with a `[workspace]` table are skipped.
+- A `cargo-workspace` pre-commit hook that runs only the Cargo workspace rules on `Cargo.toml` files.
+- TOML as an ast-grep custom language, parsed with `@tree-sitter-grammars/tree-sitter-toml`.
 
 ### Removed
 

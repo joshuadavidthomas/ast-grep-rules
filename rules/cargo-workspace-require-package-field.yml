@@ -1,0 +1,47 @@
+id: cargo-workspace-require-package-field
+language: toml
+severity: error
+message: "Do not set edition, rust-version, license, or repository in a member crate manifest; set it in the root [workspace.package] and use `field.workspace = true` here."
+note: "Write `edition.workspace = true` (or `edition = { workspace = true }`) so every member crate tracks the workspace value. `version` is not checked because some workspaces version a binary crate separately. Manifests with a `[workspace]` table are workspace roots and are skipped. A crate that must differ from the workspace on purpose is the accepted exemption; add a `# ast-grep-ignore: cargo-workspace-require-package-field` comment above the field that says why."
+files:
+  - "**/Cargo.toml"
+utils:
+  member-manifest:
+    not:
+      inside:
+        kind: document
+        has:
+          kind: table
+          has:
+            any:
+              - kind: bare_key
+                regex: "^workspace$"
+              - kind: dotted_key
+                regex: "^workspace\\s*\\."
+        stopBy: end
+rule:
+  all:
+    - matches: member-manifest
+    - kind: pair
+      inside:
+        kind: table
+        has:
+          kind: bare_key
+          regex: "^package$"
+      has:
+        any:
+          - kind: bare_key
+          - kind: quoted_key
+        regex: "^[\"']?(edition|rust-version|license|repository)[\"']?$"
+    - not:
+        has:
+          kind: inline_table
+          has:
+            kind: pair
+            all:
+              - has:
+                  kind: bare_key
+                  regex: "^workspace$"
+              - has:
+                  kind: boolean
+                  regex: "^true$"

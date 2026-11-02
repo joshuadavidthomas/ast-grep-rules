@@ -10,7 +10,7 @@ default:
 lint *ARGS:
     uvx prek run --all-files --show-diff-on-failure --color always {{ ARGS }}
 
-# Run all tests with the pinned ast-grep and Svelte parser
+# Run all tests with the pinned ast-grep and Svelte and TOML parsers
 test *ARGS:
     npm test -- {{ ARGS }}
 

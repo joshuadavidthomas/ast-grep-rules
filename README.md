@@ -64,6 +64,25 @@ Preparing the hook downloads an isolated Node.js environment, ast-grep, and the 
 
 Both tools scan tracked files. Add a new file to version control before expecting `--all-files` to include it. Every rule is an error, so any finding fails the hook. Keep a deliberate exception with a suppression comment, or turn the rule off for the whole project.
 
+### Exclude files from a hook
+
+Set `exclude` on a hook to skip files or directories before prek or pre-commit passes them to the scanner:
+
+```yaml
+repos:
+  - repo: https://github.com/joshuadavidthomas/ast-grep-rules
+    rev: main
+    hooks:
+      - id: all
+        exclude: '^(generated/|vendor/|src/legacy\.rs$)'
+```
+
+This skips the root-level `generated/` and `vendor/` directories and the file `src/legacy.rs` for this hook only. To exclude those paths from every hook, put `exclude` at the top level of `.pre-commit-config.yaml` instead.
+
+`exclude` and `files` use Python regular expressions, not globs. Use `files` to limit included paths, or `types`, `types_or`, and `exclude_types` to filter file types. See pre-commit's [file type filters](https://pre-commit.com/#filtering-files-with-types) and [regular expression reference](https://pre-commit.com/#regular-expressions).
+
+Use the hook's `exclude` rather than `.ignore`, `.gitignore`, or ast-grep's `--globs` for these exclusions. The hooks pass filenames explicitly, and those ast-grep filters apply to directory traversal, not explicitly passed files. See [directory scan exclusions](#exclude-files-from-a-directory-scan) for direct command use.
+
 ### Suppress a finding
 
 Put an `ast-grep-ignore` comment that names the rule on the line above the finding, and say why in a comment above it:
@@ -85,8 +104,36 @@ name = "bindings"
 
 - Name each rule. Separate several with commas, as in `ast-grep-ignore: rule-a, rule-b`. A bare `ast-grep-ignore` hides every rule on that line.
 - The directive may also sit at the end of the line it suppresses.
-- To suppress a rule for a whole file, put the directive on the first line and leave the second line empty.
 - These comments silence only this rule set. Clippy and the compiler ignore them; suppress their lints in Rust with `#[expect(..., reason = "...")]`.
+
+### Suppress rules for a whole file
+
+Put the directive on the very first line and leave the second line empty. Put the reason after that blank line:
+
+```rust
+// ast-grep-ignore: rust-no-single-field-struct, rust-no-bool-field
+
+// Generated bindings; field shapes come from the upstream schema.
+struct Handle { raw: u64 }
+struct Flags { enabled: bool, count: u32 }
+```
+
+Both named rules are suppressed throughout the file. Other rules still run. Use the file's own comment syntax, as with [individual findings](#suppress-a-finding).
+
+To suppress every rule, use a bare directive on line 1, again followed by an empty line:
+
+```rust
+// ast-grep-ignore
+
+// Generated code; lint fixes belong in the generator.
+struct Handle { raw: u64 }
+```
+
+Do not put a license, shebang, or explanation before the directive. Without the empty second line, the directive suppresses only the following line, not the whole file. See ast-grep's [file-level suppression reference](https://ast-grep.github.io/guide/project/severity.html#file-level-suppression).
+
+Suppression comments do not disable the `clippy` hook's extra check for a missing or empty `clippy.toml`. That check runs outside ast-grep. To skip a manifest entirely, use the hook's `exclude`.
+
+### Check suppression comments
 
 To fail on blanket and stale suppressions, add ast-grep's hygiene checks to the `all` hook:
 
@@ -96,6 +143,8 @@ To fail on blanket and stale suppressions, add ast-grep's hygiene checks to the 
           - --error=no-suppress-all
           - --error=unused-suppression
 ```
+
+`--error=no-suppress-all` rejects bare directives for both individual lines and whole files. Use named rules for deliberate exceptions.
 
 `--error=no-suppress-all` works with any hook. Use `--error=unused-suppression` only with `all`: a language hook runs a subset of the rules, so it reports a comment for a rule it skipped as unused.
 
@@ -124,6 +173,22 @@ npx ast-grep-rules .
 ```
 
 The command uses its packaged rules and configuration. Pass any [`ast-grep scan`](https://ast-grep.github.io/reference/cli/scan.html) options after the command.
+
+### Exclude files from a directory scan
+
+For a direct directory scan, pass a negative glob to exclude paths:
+
+```sh
+npx ast-grep-rules . --globs '!generated/**' --globs '!vendor/**'
+```
+
+These patterns use gitignore-style globs, not pre-commit's regular expressions. Quote the patterns so the shell passes them unchanged. If several globs match, the last takes precedence.
+
+Directory scans also respect `.ignore`, `.gitignore`, Git's `.git/info/exclude`, and global Git ignore settings. Use `.ignore` for scanner exclusions without changing Git's ignore settings. The `--no-ignore` options can override these defaults. See the [ast-grep scan reference](https://ast-grep.github.io/reference/cli/scan.html).
+
+These exclusions do not filter explicitly passed filenames. For example, `npx ast-grep-rules generated/bindings.rs` still scans that file even when `.ignore` or a negative glob excludes it. Use [hook exclusions](#exclude-files-from-a-hook) with prek or pre-commit, or a [whole-file suppression](#suppress-rules-for-a-whole-file).
+
+If you maintain rule definitions, ast-grep also supports per-rule `files` and `ignores` glob lists in the rule YAML. These limit where that rule applies, not where other rules run. See the [rule path filters](https://ast-grep.github.io/guide/project/lint-rule.html#files-ignores). The packaged command uses this repository's rules and configuration, so a consumer's local `sgconfig.yml` does not change those definitions.
 
 ## Run from this repository
 

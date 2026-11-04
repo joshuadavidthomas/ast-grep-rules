@@ -136,6 +136,8 @@ These rules target patterns that rustc and Clippy do not report. A few overlap w
 
 - `rust-no-dropped-error-source` also reports `.ok().ok_or(...)`, which `clippy::map_err_ignore` misses.
 - `rust-no-panicking-fallback`, `rust-no-panicking-let-else`, and `rust-no-panicking-match-arm` report only a panic that stands in for handling a failed value, and skip tests. `clippy::panic` and related lints report every panic, and `clippy::match_wild_err_arm` covers only `Err(_)` arms.
+- `rust-no-bool-field` reports a single stored bool, including enum variant fields, `AtomicBool`, `Option<bool>`, `Vec<bool>`, and `Cell<bool>`. `clippy::struct_excessive_bools` counts only plain `bool` fields in structs and reports a struct only when it has more than `max-struct-bools` of them (default 3).
+- `rust-no-bool-parameter` reports a single `bool`, `&bool`, or `Option<bool>` parameter. `clippy::fn_params_excessive_bools` counts only plain `bool` parameters and reports a function only when it has more than `max-fn-params-bools` of them (default 3; set it to 0 to report any).
 
 | Rule | Severity | Reports |
 | --- | --- | --- |

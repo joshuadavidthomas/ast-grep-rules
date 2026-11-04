@@ -224,7 +224,7 @@ All rules link to their definitions. Most definitions include a `note` with exce
 
 | Rule | Language | Severity | Reports |
 | --- | --- | --- | --- |
-| [`rust-no-code-barricade`](rules/common-no-code-barricade.yml) | Rust | error | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
+| [`rust-no-code-barricade`](rules/common-no-code-barricade.yml) | Rust | error | Decorative divider comments made from repeated punctuation. Skips box-drawing-only line comments with corners or junctions, such as `────────┬───────` or `┌──────────┐`. Use a plain section comment or split the file. |
 | [`typescript-no-code-barricade`](rules/common-no-code-barricade.yml) | TypeScript | error | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
 | [`html-no-code-barricade`](rules/common-no-code-barricade.yml) | HTML | error | Decorative divider comments made from repeated punctuation. Use a plain section comment or split the file. |
 | [`svelte-no-code-barricade`](rules/common-no-code-barricade.yml) | Svelte | error | Decorative divider comments in Svelte templates. Use a plain section comment or split the file. |
@@ -253,7 +253,7 @@ These rules target patterns that rustc and Clippy do not report. A few overlap w
 | [`rust-no-dropped-error-source`](rules/rust-no-dropped-error-source.yml) | error | `map_err(\|_\| Error::Variant)` and `.ok().ok_or(...)` that discard the original error. Carry the source in the new error instead. |
 | [`rust-no-fallible-bool-return`](rules/rust-no-fallible-bool-return.yml) | error | Functions that return `Result<bool>` or `Option<bool>`. Return an enum that names each outcome. Skips trait impls and tests. |
 | [`rust-no-indexed-array-rebuild`](rules/rust-no-indexed-array-rebuild.yml) | error | `[bytes[0], bytes[1], ...]` array literals that index the same slice element by element. Take the chunk with `split_first_chunk` or `try_into` instead. |
-| [`rust-no-panicking-fallback`](rules/rust-no-panicking-fallback.yml) | error | `unwrap_or_else` and `map_or_else` fallbacks that end in a panic or another diverging macro. Handle the failed or absent value instead. Skips test files and `#[cfg(test)]` items. |
+| [`rust-no-panicking-fallback`](rules/rust-no-panicking-fallback.yml) | error | `unwrap_or_else` and `map_or_else` fallbacks that end in `panic!`, `unreachable!`, `todo!`, or `unimplemented!`, not value-producing macros such as `json!`. Handle the failed or absent value instead. Skips test files and `#[cfg(test)]` items. |
 | [`rust-no-panicking-let-else`](rules/rust-no-panicking-let-else.yml) | error | `let`-`else` branches that end in a panic or another diverging macro. Return, break, continue, or model the failed pattern. Skips test files and `#[cfg(test)]` items. |
 | [`rust-no-panicking-match-arm`](rules/rust-no-panicking-match-arm.yml) | error | Match arms that end in a panic or another diverging macro. Return, propagate, or give the arm a real value. Skips test files and `#[cfg(test)]` items. |
 | [`rust-no-public-struct-fields`](rules/rust-no-public-struct-fields.yml) | error | Visible fields on visible structs. Keep representation private unless the struct is passive data. |

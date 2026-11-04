@@ -40,28 +40,27 @@ rule:
           stopBy: end
 constraints:
   FALLBACK:
-    any:
-      - pattern: "|$$$PARAMS| $MACRO!($$$ARGS)"
-      - pattern: "|$$$PARAMS| { $MACRO!($$$ARGS) }"
-      - pattern: "|$$$PARAMS| { $$$BODY; $MACRO!($$$ARGS) }"
-      - pattern: "move |$$$PARAMS| $MACRO!($$$ARGS)"
-      - pattern: "move |$$$PARAMS| { $MACRO!($$$ARGS) }"
-      - pattern: "move |$$$PARAMS| { $$$BODY; $MACRO!($$$ARGS) }"
-      - pattern: "|$$$PARAMS| { panic!($$$ARGS); }"
-      - pattern: "|$$$PARAMS| { unreachable!($$$ARGS); }"
-      - pattern: "|$$$PARAMS| { todo!($$$ARGS); }"
-      - pattern: "|$$$PARAMS| { unimplemented!($$$ARGS); }"
-      - pattern: "|$$$PARAMS| { $$$BODY; panic!($$$ARGS); }"
-      - pattern: "|$$$PARAMS| { $$$BODY; unreachable!($$$ARGS); }"
-      - pattern: "|$$$PARAMS| { $$$BODY; todo!($$$ARGS); }"
-      - pattern: "|$$$PARAMS| { $$$BODY; unimplemented!($$$ARGS); }"
-      - pattern: "move |$$$PARAMS| { panic!($$$ARGS); }"
-      - pattern: "move |$$$PARAMS| { unreachable!($$$ARGS); }"
-      - pattern: "move |$$$PARAMS| { todo!($$$ARGS); }"
-      - pattern: "move |$$$PARAMS| { unimplemented!($$$ARGS); }"
-      - pattern: "move |$$$PARAMS| { $$$BODY; panic!($$$ARGS); }"
-      - pattern: "move |$$$PARAMS| { $$$BODY; unreachable!($$$ARGS); }"
-      - pattern: "move |$$$PARAMS| { $$$BODY; todo!($$$ARGS); }"
-      - pattern: "move |$$$PARAMS| { $$$BODY; unimplemented!($$$ARGS); }"
-  MACRO:
-    regex: "^(panic|unreachable|todo|unimplemented)$"
+    kind: closure_expression
+    has:
+      field: body
+      any:
+        - pattern: panic!($$$ARGS)
+        - pattern: unreachable!($$$ARGS)
+        - pattern: todo!($$$ARGS)
+        - pattern: unimplemented!($$$ARGS)
+        - pattern: "{ panic!($$$ARGS) }"
+        - pattern: "{ unreachable!($$$ARGS) }"
+        - pattern: "{ todo!($$$ARGS) }"
+        - pattern: "{ unimplemented!($$$ARGS) }"
+        - pattern: "{ $$$BODY; panic!($$$ARGS) }"
+        - pattern: "{ $$$BODY; unreachable!($$$ARGS) }"
+        - pattern: "{ $$$BODY; todo!($$$ARGS) }"
+        - pattern: "{ $$$BODY; unimplemented!($$$ARGS) }"
+        - pattern: "{ panic!($$$ARGS); }"
+        - pattern: "{ unreachable!($$$ARGS); }"
+        - pattern: "{ todo!($$$ARGS); }"
+        - pattern: "{ unimplemented!($$$ARGS); }"
+        - pattern: "{ $$$BODY; panic!($$$ARGS); }"
+        - pattern: "{ $$$BODY; unreachable!($$$ARGS); }"
+        - pattern: "{ $$$BODY; todo!($$$ARGS); }"
+        - pattern: "{ $$$BODY; unimplemented!($$$ARGS); }"

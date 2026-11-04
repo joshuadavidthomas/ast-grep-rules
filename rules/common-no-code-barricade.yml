@@ -7,6 +7,10 @@ rule:
     - kind: line_comment
     - kind: block_comment
   regex: '(?s).*(?:={5,}|-{5,}|─{5,}|\*{5,}|/{8,}).*'
+  not:
+    all:
+      - regex: '^//[/!]?[ \t]+[─│┌┐└┘├┤┬┴┼╭╮╰╯ \t]+\r?\n?$'
+      - regex: '[┌┐└┘├┤┬┴┼╭╮╰╯]'
 ---
 id: typescript-no-code-barricade
 language: TypeScript

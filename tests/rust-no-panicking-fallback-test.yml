@@ -1,6 +1,32 @@
 id: rust-no-panicking-fallback
 valid:
   - |
+    fn render(state: State) -> Value {
+        state.lookup(&["forloop".into()]).unwrap_or_else(|| json!({}))
+    }
+  - |
+    fn render(value: Option<Value>) -> Value {
+        value.unwrap_or_else(move || {
+            log_missing_value();
+            json!({})
+        })
+    }
+  - |
+    fn render(value: Result<Value, Error>) -> Value {
+        value.map_or_else(|error| { json!({"error": error}) }, |value| value)
+    }
+  - |
+    fn render(value: Option<()>) {
+        value.unwrap_or_else(|| { log_missing_value!(); })
+    }
+  - |
+    fn render(value: Option<Value>) -> Value {
+        value.unwrap_or_else(|| {
+            if strict_mode() { panic!("missing value"); }
+            json!({})
+        })
+    }
+  - |
     fn load(result: Result<Config, Error>) -> Config {
         result.unwrap_or_else(|error| recover(error))
     }
@@ -38,6 +64,43 @@ valid:
         }
     }
 invalid:
+  - |
+    fn load(option: Option<Config>) -> Config {
+        option.unwrap_or_else(|| unreachable!("missing config"))
+    }
+  - |
+    fn load(option: Option<Config>) -> Config {
+        option.unwrap_or_else(|| { todo!("load config") })
+    }
+  - |
+    fn load(option: Option<Config>) -> Config {
+        option.unwrap_or_else(move || {
+            log_missing_config();
+            unimplemented!("load config")
+        })
+    }
+  - |
+    fn load(result: Result<(), Error>) {
+        result.unwrap_or_else(move |error| {
+            log_error(error);
+            panic!("missing config");
+        })
+    }
+  - |
+    fn load(option: Option<()>) {
+        option.unwrap_or_else(|| {
+            log_missing_config();
+            todo!("load config");
+        })
+    }
+  - |
+    fn load(option: Option<()>) {
+        option.unwrap_or_else(move || { unimplemented!("load config"); })
+    }
+  - |
+    fn load(option: Option<Config>) -> Config {
+        option.unwrap_or_else(move || { panic!("missing config") })
+    }
   - |
     fn load(result: Result<Config, Error>) -> Config {
         result.unwrap_or_else(|error| panic!("failed to load config: {error}"))

@@ -18,6 +18,11 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Fixed
+
+- `rust-no-panicking-fallback` no longer reports value-producing macro fallbacks such as `unwrap_or_else(|| json!({}))`. Direct and block closures, including `move` closures, still report terminal `panic!`, `unreachable!`, `todo!`, and `unimplemented!` calls.
+- `rust-no-code-barricade` no longer reports box-drawing-only line comments with corners or junctions, including source-span markers such as `///     ────────┬───────`. T-junctions, crossings, square and rounded corners, and multiple junctions are supported. Plain and labeled decorative dividers are still reported, including those in documentation comments.
+
 ## [0.11.0]
 
 ### Added

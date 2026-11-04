@@ -1,42 +1,65 @@
 id: rust-no-code-barricade
 snapshots:
-  ? |
-    /* ******** Parsing ******** */
-    fn parse() {}
-  : labels:
+  "/* ******** Parsing ******** */\nfn parse() {}\n":
+    labels:
     - source: /* ******** Parsing ******** */
       style: primary
       start: 0
       end: 31
-  ? |
-    // ##### Storage #####
-    fn store() {}
-  : labels:
-    - source: '// ##### Storage #####'
+  "// ##### Storage #####\nfn store() {}\n":
+    labels:
+    - source: "// ##### Storage #####"
       style: primary
       start: 0
       end: 22
-  ? |
-    // //////////////// Storage ////////////////
-    fn store() {}
-  : labels:
+  "// //////////////// Storage ////////////////\nfn store() {}\n":
+    labels:
     - source: // //////////////// Storage ////////////////
       style: primary
       start: 0
       end: 44
-  ? |
-    // ====================
-    fn parse() {}
-  : labels:
+  "// ====================\nfn parse() {}\n":
+    labels:
     - source: // ====================
       style: primary
       start: 0
       end: 23
-  ? |
-    // ────── Validation ──────
-    fn validate() {}
-  : labels:
+  "// ────── Validation ──────\nfn validate() {}\n":
+    labels:
     - source: // ────── Validation ──────
       style: primary
       start: 0
       end: 51
+  "// ────── Validation ┬ Parsing ──────\nfn validate() {}\n":
+    labels:
+    - source: // ────── Validation ┬ Parsing ──────
+      style: primary
+      start: 0
+      end: 63
+  "// ────────*────────\nfn validate() {}\n":
+    labels:
+    - source: // ────────*────────
+      style: primary
+      start: 0
+      end: 52
+  "/// ────── Validation ──────\nfn validate() {}\n":
+    labels:
+    - source: |
+        /// ────── Validation ──────
+      style: primary
+      start: 0
+      end: 53
+  "/// ────────────────\nfn parse() {}\n":
+    labels:
+    - source: |
+        /// ────────────────
+      style: primary
+      start: 0
+      end: 53
+  "/// ┌────── Validation ──────┐\nfn validate() {}\n":
+    labels:
+    - source: |
+        /// ┌────── Validation ──────┐
+      style: primary
+      start: 0
+      end: 59

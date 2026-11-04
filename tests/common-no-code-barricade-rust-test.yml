@@ -8,7 +8,49 @@ valid:
     fn parse() {}
   - |
     const DIVIDER: &str = "================";
+  - |
+    /// The location of the full keyword argument:
+    ///     keyword=variable
+    ///             ────┬───
+    ///                 ╰── self.at
+    ///     ───┬───
+    ///        ╰── self.kwarg
+    ///     ────────┬───────
+    ///             ╰── self.all_at()
+    fn location() {}
+  - |
+    //     ────────┬───────
+    //             ╰── span
+    fn location() {}
+  - |
+    ///     ────────┴───────
+    ///     ────────┼───────
+    ///     ├──────────────┤
+    ///     ┌───────┬──────┐
+    ///     └───────┴──────┘
+    ///     ╭──────────────╮
+    ///     ╰──────────────╯
+    fn diagram() {}
+  - |
+    //!     ├───────┼──────┤
+    //      ───────┬──────┬───────
+    fn diagram() {}
 invalid:
+  - |
+    /// ────────────────
+    fn parse() {}
+  - |
+    /// ────── Validation ──────
+    fn validate() {}
+  - |
+    // ────── Validation ┬ Parsing ──────
+    fn validate() {}
+  - |
+    /// ┌────── Validation ──────┐
+    fn validate() {}
+  - |
+    // ────────*────────
+    fn validate() {}
   - |
     // ====================
     fn parse() {}

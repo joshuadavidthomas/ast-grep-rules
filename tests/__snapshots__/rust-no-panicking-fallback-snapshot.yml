@@ -1,24 +1,45 @@
 id: rust-no-panicking-fallback
 snapshots:
-  ? |
-    #[cfg(test)]
-    mod tests {}
-
-    fn load(result: Result<Config, Error>) -> Config {
-        result.unwrap_or_else(|error| panic!("failed to load config: {error}"))
-    }
-  : labels:
-    - source: 'result.unwrap_or_else(|error| panic!("failed to load config: {error}"))'
+  "#[cfg(test)]\nmod tests {}\n\nfn load(result: Result<Config, Error>) -> Config {\n    result.unwrap_or_else(|error| panic!(\"failed to load config: {error}\"))\n}\n":
+    labels:
+    - source: "result.unwrap_or_else(|error| panic!(\"failed to load config: {error}\"))"
       style: primary
       start: 82
       end: 153
-  ? |
-    fn load(option: Option<()>) {
+    - source: "panic!(\"failed to load config: {error}\")"
+      style: secondary
+      start: 112
+      end: 152
+  "fn load(option: Option<()>) {\n    option.unwrap_or_else(move || { unimplemented!(\"load config\"); })\n}\n":
+    labels:
+    - source: option.unwrap_or_else(move || { unimplemented!("load config"); })
+      style: primary
+      start: 34
+      end: 99
+    - source: "{ unimplemented!(\"load config\"); }"
+      style: secondary
+      start: 64
+      end: 98
+  "fn load(option: Option<()>) {\n    option.unwrap_or_else(|| {\n        log_missing_config();\n        todo!(\"load config\");\n    })\n}\n":
+    labels:
+    - source: |-
         option.unwrap_or_else(|| {
-            unreachable!("config must be present");
-        })
-    }
-  : labels:
+                log_missing_config();
+                todo!("load config");
+            })
+      style: primary
+      start: 34
+      end: 127
+    - source: |-
+        {
+                log_missing_config();
+                todo!("load config");
+            }
+      style: secondary
+      start: 59
+      end: 126
+  "fn load(option: Option<()>) {\n    option.unwrap_or_else(|| {\n        unreachable!(\"config must be present\");\n    })\n}\n":
+    labels:
     - source: |-
         option.unwrap_or_else(|| {
                 unreachable!("config must be present");
@@ -26,15 +47,15 @@ snapshots:
       style: primary
       start: 34
       end: 115
-  ? |
-    fn load(option: Option<Config>) -> Config {
-        Option::map_or_else(
-            option,
-            || panic!("missing config"),
-            |config| config,
-        )
-    }
-  : labels:
+    - source: |-
+        {
+                unreachable!("config must be present");
+            }
+      style: secondary
+      start: 59
+      end: 114
+  "fn load(option: Option<Config>) -> Config {\n    Option::map_or_else(\n        option,\n        || panic!(\"missing config\"),\n        |config| config,\n    )\n}\n":
+    labels:
     - source: |-
         Option::map_or_else(
                 option,
@@ -44,23 +65,60 @@ snapshots:
       style: primary
       start: 48
       end: 152
-  ? |
-    fn load(option: Option<Config>) -> Config {
-        option.unwrap_or_else(move || unimplemented!("load config"))
-    }
-  : labels:
+    - source: panic!("missing config")
+      style: secondary
+      start: 96
+      end: 120
+  "fn load(option: Option<Config>) -> Config {\n    option.unwrap_or_else(move || unimplemented!(\"load config\"))\n}\n":
+    labels:
     - source: option.unwrap_or_else(move || unimplemented!("load config"))
       style: primary
       start: 48
       end: 108
-  ? |
-    fn load(option: Option<Config>) -> Config {
-        option.unwrap_or_else(|| {
-            log_missing_config();
-            panic!("missing config")
-        })
-    }
-  : labels:
+    - source: unimplemented!("load config")
+      style: secondary
+      start: 78
+      end: 107
+  "fn load(option: Option<Config>) -> Config {\n    option.unwrap_or_else(move || {\n        log_missing_config();\n        unimplemented!(\"load config\")\n    })\n}\n":
+    labels:
+    - source: |-
+        option.unwrap_or_else(move || {
+                log_missing_config();
+                unimplemented!("load config")
+            })
+      style: primary
+      start: 48
+      end: 154
+    - source: |-
+        {
+                log_missing_config();
+                unimplemented!("load config")
+            }
+      style: secondary
+      start: 78
+      end: 153
+  "fn load(option: Option<Config>) -> Config {\n    option.unwrap_or_else(move || { panic!(\"missing config\") })\n}\n":
+    labels:
+    - source: option.unwrap_or_else(move || { panic!("missing config") })
+      style: primary
+      start: 48
+      end: 107
+    - source: "{ panic!(\"missing config\") }"
+      style: secondary
+      start: 78
+      end: 106
+  "fn load(option: Option<Config>) -> Config {\n    option.unwrap_or_else(|| unreachable!(\"missing config\"))\n}\n":
+    labels:
+    - source: option.unwrap_or_else(|| unreachable!("missing config"))
+      style: primary
+      start: 48
+      end: 104
+    - source: unreachable!("missing config")
+      style: secondary
+      start: 73
+      end: 103
+  "fn load(option: Option<Config>) -> Config {\n    option.unwrap_or_else(|| {\n        log_missing_config();\n        panic!(\"missing config\")\n    })\n}\n":
+    labels:
     - source: |-
         option.unwrap_or_else(|| {
                 log_missing_config();
@@ -69,30 +127,69 @@ snapshots:
       style: primary
       start: 48
       end: 144
-  ? |
-    fn load(result: Result<Config, Error>) -> Config {
-        Result::unwrap_or_else(result, |error| panic!("failed to load config: {error}"))
-    }
-  : labels:
-    - source: 'Result::unwrap_or_else(result, |error| panic!("failed to load config: {error}"))'
+    - source: |-
+        {
+                log_missing_config();
+                panic!("missing config")
+            }
+      style: secondary
+      start: 73
+      end: 143
+  "fn load(option: Option<Config>) -> Config {\n    option.unwrap_or_else(|| { todo!(\"load config\") })\n}\n":
+    labels:
+    - source: option.unwrap_or_else(|| { todo!("load config") })
+      style: primary
+      start: 48
+      end: 98
+    - source: "{ todo!(\"load config\") }"
+      style: secondary
+      start: 73
+      end: 97
+  "fn load(result: Result<(), Error>) {\n    result.unwrap_or_else(move |error| {\n        log_error(error);\n        panic!(\"missing config\");\n    })\n}\n":
+    labels:
+    - source: |-
+        result.unwrap_or_else(move |error| {
+                log_error(error);
+                panic!("missing config");
+            })
+      style: primary
+      start: 41
+      end: 144
+    - source: |-
+        {
+                log_error(error);
+                panic!("missing config");
+            }
+      style: secondary
+      start: 76
+      end: 143
+  "fn load(result: Result<Config, Error>) -> Config {\n    Result::unwrap_or_else(result, |error| panic!(\"failed to load config: {error}\"))\n}\n":
+    labels:
+    - source: "Result::unwrap_or_else(result, |error| panic!(\"failed to load config: {error}\"))"
       style: primary
       start: 55
       end: 135
-  ? |
-    fn load(result: Result<Config, Error>) -> Config {
-        result.map_or_else(|error| todo!("handle {error}"), |config| config)
-    }
-  : labels:
+    - source: "panic!(\"failed to load config: {error}\")"
+      style: secondary
+      start: 94
+      end: 134
+  "fn load(result: Result<Config, Error>) -> Config {\n    result.map_or_else(|error| todo!(\"handle {error}\"), |config| config)\n}\n":
+    labels:
     - source: result.map_or_else(|error| todo!("handle {error}"), |config| config)
       style: primary
       start: 55
       end: 123
-  ? |
-    fn load(result: Result<Config, Error>) -> Config {
-        result.unwrap_or_else(|error| panic!("failed to load config: {error}"))
-    }
-  : labels:
-    - source: 'result.unwrap_or_else(|error| panic!("failed to load config: {error}"))'
+    - source: todo!("handle {error}")
+      style: secondary
+      start: 82
+      end: 105
+  "fn load(result: Result<Config, Error>) -> Config {\n    result.unwrap_or_else(|error| panic!(\"failed to load config: {error}\"))\n}\n":
+    labels:
+    - source: "result.unwrap_or_else(|error| panic!(\"failed to load config: {error}\"))"
       style: primary
       start: 55
       end: 126
+    - source: "panic!(\"failed to load config: {error}\")"
+      style: secondary
+      start: 85
+      end: 125

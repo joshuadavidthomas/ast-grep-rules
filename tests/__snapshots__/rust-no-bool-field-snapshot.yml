@@ -1,0 +1,152 @@
+id: rust-no-bool-field
+snapshots:
+  "#[derive(Deserialize)]\nstruct Config {\n    #[serde(default)]\n    enabled: bool,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 74
+      end: 78
+    - source: "enabled: bool"
+      style: secondary
+      start: 65
+      end: 78
+  "#[derive(Parser)]\nstruct Args {\n    #[arg(long)]\n    quiet: bool,\n    verbose: bool,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 60
+      end: 64
+    - source: "quiet: bool"
+      style: secondary
+      start: 53
+      end: 64
+  "#[derive(clap::Subcommand)]\nenum Command {\n    Vendor {\n        #[clap(long)]\n        no_prune: bool,\n    },\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 96
+      end: 100
+    - source: "no_prune: bool"
+      style: secondary
+      start: 86
+      end: 100
+  "#[derive(nom::Parser)]\nstruct Grammar {\n    greedy: bool,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 52
+      end: 56
+    - source: "greedy: bool"
+      style: secondary
+      start: 44
+      end: 56
+  "enum Event {\n    Cursor(Point, bool),\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 31
+      end: 35
+    - source: (Point, bool)
+      style: secondary
+      start: 23
+      end: 36
+  "enum InputKind {\n    Key { pressed: bool },\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 36
+      end: 40
+    - source: "pressed: bool"
+      style: secondary
+      start: 27
+      end: 40
+  "enum Value {\n    Flags(Vec<bool>),\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 27
+      end: 31
+    - source: (Vec<bool>)
+      style: secondary
+      start: 22
+      end: 33
+  "pub struct WindowState {\n    pub mapped: bool,\n    pub minimized: bool,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 41
+      end: 45
+    - source: "pub mapped: bool"
+      style: secondary
+      start: 29
+      end: 45
+  "pub(crate) struct Read {\n    latin1: bool,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 37
+      end: 41
+    - source: "latin1: bool"
+      style: secondary
+      start: 29
+      end: 41
+  "struct CastState {\n    pending: Cell<bool>,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 37
+      end: 41
+    - source: "pending: Cell<bool>"
+      style: secondary
+      start: 23
+      end: 42
+  "struct Clipboard {\n    client_left: Arc<AtomicBool>,\n}\n":
+    labels:
+    - source: AtomicBool
+      style: primary
+      start: 40
+      end: 50
+    - source: "client_left: Arc<AtomicBool>"
+      style: secondary
+      start: 23
+      end: 51
+  "struct Pool {\n    child_pid: Option<u32>,\n    child_exited: bool,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 60
+      end: 64
+    - source: "child_exited: bool"
+      style: secondary
+      start: 46
+      end: 64
+  "struct Screencopy {\n    copied: AtomicBool,\n}\n":
+    labels:
+    - source: AtomicBool
+      style: primary
+      start: 32
+      end: 42
+    - source: "copied: AtomicBool"
+      style: secondary
+      start: 24
+      end: 42
+  "struct Staging {\n    bands: Vec<bool>,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 32
+      end: 36
+    - source: "bands: Vec<bool>"
+      style: secondary
+      start: 21
+      end: 37
+  "struct Visible(bool);\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 15
+      end: 19
+    - source: (bool)
+      style: secondary
+      start: 14
+      end: 20

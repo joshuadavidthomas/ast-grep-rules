@@ -1,0 +1,62 @@
+id: rust-no-bool-tuple
+snapshots:
+  "fn clamp(&self) -> (Point<f64, Logical>, bool) {\n    todo!()\n}\n":
+    labels:
+    - source: (Point<f64, Logical>, bool)
+      style: primary
+      start: 19
+      end: 46
+    - source: bool
+      style: secondary
+      start: 41
+      end: 45
+  "fn encode(&mut self) {\n    let body = |(state, refreshing): (&mut StripeState, bool)| {};\n}\n":
+    labels:
+    - source: (&mut StripeState, bool)
+      style: primary
+      start: 60
+      end: 84
+    - source: bool
+      style: secondary
+      start: 79
+      end: 83
+  "fn take(&mut self) -> (u64, u64, bool, bool) {\n    todo!()\n}\n":
+    labels:
+    - source: (u64, u64, bool, bool)
+      style: primary
+      start: 22
+      end: 44
+    - source: bool
+      style: secondary
+      start: 33
+      end: 37
+  "pub fn window_flags(window: &Window) -> (bool, bool) {\n    todo!()\n}\n":
+    labels:
+    - source: (bool, bool)
+      style: primary
+      start: 40
+      end: 52
+    - source: bool
+      style: secondary
+      start: 41
+      end: 45
+  "struct Clipboard {\n    conversions: Vec<(Read, OwnedFd, bool)>,\n}\n":
+    labels:
+    - source: (Read, OwnedFd, bool)
+      style: primary
+      start: 40
+      end: 61
+    - source: bool
+      style: secondary
+      start: 56
+      end: 60
+  "type Signals = [(bool, &'static str); 7];\n":
+    labels:
+    - source: (bool, &'static str)
+      style: primary
+      start: 16
+      end: 36
+    - source: bool
+      style: secondary
+      start: 17
+      end: 21

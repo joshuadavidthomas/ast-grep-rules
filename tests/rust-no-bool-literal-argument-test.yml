@@ -1,0 +1,63 @@
+id: rust-no-bool-literal-argument
+valid:
+  - |
+    fn zoom(&mut self, surface: X11Surface) {
+        self.x11_zoom(&surface, ExpandRequest::Fullscreen);
+    }
+  - |
+    fn submit(&mut self) -> Result<()> {
+        self.submit(image, size, &[], FrameCause::StillRefresh)
+    }
+  - |
+    fn flags() {
+        let stopping = AtomicBool::new(false);
+        let pending = Cell::new(true);
+        stopping.store(true, Ordering::Release);
+        pending.set(false);
+        let found = lookup().unwrap_or(false);
+        let answer = Some(true);
+        let done: Result<bool> = Ok(false);
+    }
+  - |
+    fn setters(surface: &X11Surface, command: &mut Command) {
+        surface.set_hidden(true);
+        command.kill_on_drop(true);
+    }
+  - |
+    #[cfg(test)]
+    mod tests {
+        #[test]
+        fn lease() {
+            state.set_browser_lease(true);
+            start_decoration_grab(&mut state, false);
+        }
+    }
+invalid:
+  - |
+    fn zoom(&mut self, surface: X11Surface) {
+        self.x11_zoom(&surface, false, true);
+    }
+  - |
+    fn paste(text: &str) -> Arc<[u8]> {
+        encode(text, false)
+    }
+  - |
+    fn notify(&mut self) -> u64 {
+        self.issue(settle::Audience::Everyone, false)
+    }
+  - |
+    fn load(path: &Path, flags: Vec<String>) -> Result<Vec<String>> {
+        load_pins(path, true, flags)
+    }
+  - |
+    fn new_menu(always_on_top: bool) -> WindowMenu {
+        WindowMenu::new(window, true)
+    }
+  - |
+    fn place(&mut self, window: Window, location: Point) {
+        self.space.map_element(window, location, false);
+    }
+  - |
+    fn text(lease: &Lease) -> &'static str {
+        control_text(true)
+    }

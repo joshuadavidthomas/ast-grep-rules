@@ -1,0 +1,39 @@
+id: rust-no-bool-tuple
+language: Rust
+severity: error
+message: "Do not put a bool in a tuple type; return or store a named struct or enum."
+note: "A bool inside a tuple has no name at all: readers see `.1` or a positional pattern, as with window_flags() -> (bool, bool), take() -> (u64, u64, bool, bool), or Vec<(Read, OwnedFd, bool)>. Name the states with an enum, or use a struct with named fields when the other members stay. This applies to return types, fields, generic arguments, and local annotations. Suppress a deliberate exception with an inline `ast-grep-ignore: rust-no-bool-tuple` comment that says why. Test files and items under #[cfg(test)] or a test attribute are skipped."
+ignores:
+  - "**/tests.rs"
+  - "**/tests/**"
+  - "**/*_test.rs"
+  - "**/*_tests.rs"
+utils:
+  test-attribute:
+    kind: attribute_item
+    regex: "^#\\[(cfg\\(test\\)|(\\w+::)*test(_case)?\\b|rstest\\b)"
+  test-item:
+    any:
+      - kind: function_item
+      - kind: mod_item
+      - kind: impl_item
+      - kind: struct_item
+      - kind: enum_item
+    follows:
+      matches: test-attribute
+      stopBy:
+        not:
+          any:
+            - kind: attribute_item
+            - kind: line_comment
+            - kind: block_comment
+rule:
+  all:
+    - kind: tuple_type
+    - has:
+        kind: primitive_type
+        regex: "^bool$"
+    - not:
+        inside:
+          matches: test-item
+          stopBy: end

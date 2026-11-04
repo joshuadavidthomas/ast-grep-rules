@@ -1,0 +1,100 @@
+id: rust-no-bool-literal-argument
+snapshots:
+  "fn load(path: &Path, flags: Vec<String>) -> Result<Vec<String>> {\n    load_pins(path, true, flags)\n}\n":
+    labels:
+    - source: "true"
+      style: primary
+      start: 86
+      end: 90
+    - source: load_pins(path, true, flags)
+      style: secondary
+      start: 70
+      end: 98
+    - source: (path, true, flags)
+      style: secondary
+      start: 79
+      end: 98
+  "fn new_menu(always_on_top: bool) -> WindowMenu {\n    WindowMenu::new(window, true)\n}\n":
+    labels:
+    - source: "true"
+      style: primary
+      start: 77
+      end: 81
+    - source: WindowMenu::new(window, true)
+      style: secondary
+      start: 53
+      end: 82
+    - source: (window, true)
+      style: secondary
+      start: 68
+      end: 82
+  "fn notify(&mut self) -> u64 {\n    self.issue(settle::Audience::Everyone, false)\n}\n":
+    labels:
+    - source: "false"
+      style: primary
+      start: 73
+      end: 78
+    - source: self.issue(settle::Audience::Everyone, false)
+      style: secondary
+      start: 34
+      end: 79
+    - source: (settle::Audience::Everyone, false)
+      style: secondary
+      start: 44
+      end: 79
+  "fn paste(text: &str) -> Arc<[u8]> {\n    encode(text, false)\n}\n":
+    labels:
+    - source: "false"
+      style: primary
+      start: 53
+      end: 58
+    - source: encode(text, false)
+      style: secondary
+      start: 40
+      end: 59
+    - source: (text, false)
+      style: secondary
+      start: 46
+      end: 59
+  "fn place(&mut self, window: Window, location: Point) {\n    self.space.map_element(window, location, false);\n}\n":
+    labels:
+    - source: "false"
+      style: primary
+      start: 100
+      end: 105
+    - source: self.space.map_element(window, location, false)
+      style: secondary
+      start: 59
+      end: 106
+    - source: (window, location, false)
+      style: secondary
+      start: 81
+      end: 106
+  "fn text(lease: &Lease) -> &'static str {\n    control_text(true)\n}\n":
+    labels:
+    - source: "true"
+      style: primary
+      start: 58
+      end: 62
+    - source: control_text(true)
+      style: secondary
+      start: 45
+      end: 63
+    - source: (true)
+      style: secondary
+      start: 57
+      end: 63
+  "fn zoom(&mut self, surface: X11Surface) {\n    self.x11_zoom(&surface, false, true);\n}\n":
+    labels:
+    - source: "false"
+      style: primary
+      start: 70
+      end: 75
+    - source: self.x11_zoom(&surface, false, true)
+      style: secondary
+      start: 46
+      end: 82
+    - source: (&surface, false, true)
+      style: secondary
+      start: 59
+      end: 82

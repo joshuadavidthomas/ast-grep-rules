@@ -1,0 +1,83 @@
+id: rust-no-bool-literal-argument
+language: Rust
+severity: error
+message: "Do not pass a bare true or false as an argument; pass a named enum variant or a named value."
+note: "A bare literal hides which mode the call picks: x11_zoom(&s, false, true), encode(false, false, ..), and set_browser_lease(true) all need the callee's signature to read. Change the callee to take an enum. Calls that store or wrap a value rather than pick a mode are skipped: Some, Ok, Err, `Type::from`, single-argument `Type::new`, and the `store`, `swap`, `insert`, `map_or`, `fetch_*`, and `compare_exchange*` methods. A method call with a single argument is skipped too, because the method name labels the value, as in cell.set(true), surface.set_hidden(true), or command.kill_on_drop(true). A third-party API whose signature you cannot change, such as Smithay's `Space::map_element(window, location, activate)`, can be called through a small wrapper that takes an enum, or suppressed with an inline `ast-grep-ignore: rust-no-bool-literal-argument` comment that names the parameter. Test files and items under #[cfg(test)] or a test attribute are skipped."
+ignores:
+  - "**/tests.rs"
+  - "**/tests/**"
+  - "**/*_test.rs"
+  - "**/*_tests.rs"
+utils:
+  test-attribute:
+    kind: attribute_item
+    regex: "^#\\[(cfg\\(test\\)|(\\w+::)*test(_case)?\\b|rstest\\b)"
+  test-item:
+    any:
+      - kind: function_item
+      - kind: mod_item
+      - kind: impl_item
+    follows:
+      matches: test-attribute
+      stopBy:
+        not:
+          any:
+            - kind: attribute_item
+            - kind: line_comment
+            - kind: block_comment
+  value-callee:
+    any:
+      - kind: identifier
+        regex: "^(Some|Ok|Err)$"
+      - kind: scoped_identifier
+        has:
+          field: name
+          regex: "^from$"
+      - kind: field_expression
+        has:
+          field: field
+          regex: "^(store|swap|insert|map_or|fetch_\\w+|compare_exchange(_weak)?)$"
+  single-argument-new:
+    all:
+      - kind: call_expression
+      - has:
+          field: function
+          kind: scoped_identifier
+          has:
+            field: name
+            regex: "^new$"
+      - has:
+          field: arguments
+          not:
+            has:
+              nthChild: 2
+  single-argument-method:
+    all:
+      - kind: call_expression
+      - has:
+          field: function
+          kind: field_expression
+      - has:
+          field: arguments
+          not:
+            has:
+              nthChild: 2
+rule:
+  all:
+    - kind: boolean_literal
+    - inside:
+        kind: arguments
+        inside:
+          kind: call_expression
+          field: arguments
+          not:
+            any:
+              - has:
+                  field: function
+                  matches: value-callee
+              - matches: single-argument-new
+              - matches: single-argument-method
+    - not:
+        inside:
+          matches: test-item
+          stopBy: end

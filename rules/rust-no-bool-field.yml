@@ -1,0 +1,71 @@
+id: rust-no-bool-field
+language: Rust
+severity: error
+message: "Do not store a bool in a struct field, enum variant, or atomic; name the states with an enum."
+note: "A stored bool usually names two modes (Utf8 or Latin1, Wayland or X11), lets false cover several situations (shown, or not mapped yet), or only means something next to another field (dirty with frame_pending, child_exited with child_pid). Model the states as an enum, fold the flag into the field it depends on, or reuse an existing enum such as KeyState. Fields of Option<bool>, Vec<bool>, Cell<bool>, and AtomicBool are reported too; rust-no-bool-tuple reports bools inside tuples. A one-way latch or an independent flag that mirrors an external schema can stay: suppress it with an inline `ast-grep-ignore: rust-no-bool-field` comment that names what true and false mean. A bool that only appears as a closure's or fn pointer's return type is not reported. Enum variants whose only payload is a bool, such as Bool(bool) modeling a source-language boolean, are skipped. clap flags are reported: give the field an enum type with action = ArgAction::SetTrue and a value_parser that maps the bool, or convert to a domain enum right after parsing. Test files and items under #[cfg(test)] or a test attribute are skipped."
+ignores:
+  - "**/tests.rs"
+  - "**/tests/**"
+  - "**/*_test.rs"
+  - "**/*_tests.rs"
+utils:
+  test-attribute:
+    kind: attribute_item
+    regex: "^#\\[(cfg\\(test\\)|(\\w+::)*test(_case)?\\b|rstest\\b)"
+  test-item:
+    any:
+      - kind: function_item
+      - kind: mod_item
+      - kind: impl_item
+      - kind: struct_item
+      - kind: enum_item
+    follows:
+      matches: test-attribute
+      stopBy:
+        not:
+          any:
+            - kind: attribute_item
+            - kind: line_comment
+            - kind: block_comment
+  bool-type:
+    any:
+      - kind: primitive_type
+        regex: "^bool$"
+      - kind: type_identifier
+        regex: "^AtomicBool$"
+  in-callable-type:
+    inside:
+      any:
+        - kind: function_type
+        - kind: trait_bounds
+        - kind: abstract_type
+        - kind: dynamic_type
+      stopBy:
+        any:
+          - kind: field_declaration
+          - kind: ordered_field_declaration_list
+rule:
+  all:
+    - matches: bool-type
+    - not:
+        matches: in-callable-type
+    - not:
+        inside:
+          kind: tuple_type
+    - any:
+        - inside:
+            kind: field_declaration
+            stopBy: end
+        - inside:
+            kind: ordered_field_declaration_list
+            stopBy: end
+    - not:
+        inside:
+          matches: test-item
+          stopBy: end
+    - not:
+        inside:
+          kind: ordered_field_declaration_list
+          regex: "^\\(\\s*bool\\s*,?\\s*\\)$"
+          inside:
+            kind: enum_variant

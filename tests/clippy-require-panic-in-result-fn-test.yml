@@ -1,0 +1,30 @@
+id: clippy-require-panic-in-result-fn
+valid:
+  - |
+    [workspace.lints.clippy]
+    panic_in_result_fn = "warn"
+  - |
+    [lints.clippy]
+    panic_in_result_fn = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "panic_in_result_fn" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    panic_in_result_fn = "allow"
+  - |
+    [workspace.lints.clippy]
+    panic_in_result_fn = { level = "allow", priority = 1 }

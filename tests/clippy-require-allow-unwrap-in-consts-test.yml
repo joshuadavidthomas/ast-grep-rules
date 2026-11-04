@@ -1,0 +1,21 @@
+id: clippy-require-allow-unwrap-in-consts
+valid:
+  - |
+    allow-unwrap-in-consts = true
+  - |
+    msrv = "1.90"
+    allow-unwrap-in-consts = true
+    accept-comment-above-attributes = true
+    accept-comment-above-statement = true
+    allow-expect-in-consts = true
+    allow-expect-in-tests = true
+invalid:
+  - |
+    allow-unwrap-in-consts = false
+  - |
+    accept-comment-above-attributes = true
+    accept-comment-above-statement = true
+    allow-expect-in-consts = true
+    allow-expect-in-tests = true
+  - |
+    # Clippy settings live here.

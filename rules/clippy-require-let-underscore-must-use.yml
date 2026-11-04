@@ -1,0 +1,19 @@
+id: clippy-require-let-underscore-must-use
+language: toml
+severity: error
+message: "Set `let_underscore_must_use = \"warn\"` in this Clippy lints table."
+note: "Applies to `[lints.clippy]` in a package manifest and `[workspace.lints.clippy]` in a workspace root. `deny` and `forbid` also satisfy the rule. To leave the lint off on purpose, add a `# ast-grep-ignore: clippy-require-let-underscore-must-use` comment above the table that says why, or pass `--off=clippy-require-let-underscore-must-use`."
+files:
+  - "**/Cargo.toml"
+rule:
+  matches: clippy-lints-header
+  inside:
+    kind: table
+    not:
+      has:
+        matches: clippy-lint-enabled
+        has:
+          any:
+            - kind: bare_key
+            - kind: quoted_key
+          regex: "^[\"']?let_underscore_must_use[\"']?$"

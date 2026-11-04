@@ -1,0 +1,7 @@
+id: clippy-lints-header
+language: toml
+rule:
+  kind: dotted_key
+  regex: "^(workspace\\s*\\.\\s*)?lints\\s*\\.\\s*clippy$"
+  inside:
+    kind: table

@@ -9,6 +9,7 @@
     "bin/",
     "rules/",
     "tests/",
+    "utils/",
     "LICENSE",
     "README.md",
     "sgconfig.yml"

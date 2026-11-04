@@ -1,0 +1,30 @@
+id: clippy-require-unimplemented
+valid:
+  - |
+    [workspace.lints.clippy]
+    unimplemented = "warn"
+  - |
+    [lints.clippy]
+    unimplemented = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "unimplemented" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    unimplemented = "allow"
+  - |
+    [workspace.lints.clippy]
+    unimplemented = { level = "allow", priority = 1 }

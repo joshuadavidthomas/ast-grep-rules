@@ -1,0 +1,30 @@
+id: clippy-require-clone-on-ref-ptr
+valid:
+  - |
+    [workspace.lints.clippy]
+    clone_on_ref_ptr = "warn"
+  - |
+    [lints.clippy]
+    clone_on_ref_ptr = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "clone_on_ref_ptr" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    clone_on_ref_ptr = "allow"
+  - |
+    [workspace.lints.clippy]
+    clone_on_ref_ptr = { level = "allow", priority = 1 }

@@ -1,0 +1,30 @@
+id: clippy-require-expect-used
+valid:
+  - |
+    [workspace.lints.clippy]
+    expect_used = "warn"
+  - |
+    [lints.clippy]
+    expect_used = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "expect_used" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    expect_used = "allow"
+  - |
+    [workspace.lints.clippy]
+    expect_used = { level = "allow", priority = 1 }

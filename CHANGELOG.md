@@ -24,6 +24,9 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 - Cargo rules for member crate manifests in a workspace: `cargo-workspace-require-dependency` reports dependencies that give a version, `path`, or `git` source instead of `workspace = true`, and `cargo-workspace-require-package-field` reports `[package]` `edition`, `rust-version`, `license`, or `repository` values that do not inherit from the workspace. Manifests with a `[workspace]` table are skipped.
 - A `cargo-workspace` pre-commit hook that runs only the Cargo workspace rules on `Cargo.toml` files.
 - TOML as an ast-grep custom language, parsed with `@tree-sitter-grammars/tree-sitter-toml`.
+- Clippy configuration rules for single crates and workspaces. `clippy-require-lints` reports a package that neither inherits workspace lints nor has a `[lints.clippy]` table. One rule per lint, such as `clippy-require-unwrap-used`, reports a `[lints.clippy]` or `[workspace.lints.clippy]` table that does not enable it, and one rule per setting, such as `clippy-require-allow-expect-in-tests`, reports a `clippy.toml` that does not set it.
+- A `clippy` pre-commit hook for `Cargo.toml`, `clippy.toml`, and `.clippy.toml` files. It also reports a `Cargo.toml` with no `clippy.toml` in its directory or a parent, through the wrapper's new `--require-clippy-config` option.
+- Shared utility rules in `utils/`, loaded through `utilDirs`.
 
 ### Removed
 

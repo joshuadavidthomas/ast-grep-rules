@@ -1,0 +1,80 @@
+id: clippy-require-lints
+valid:
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+  - |
+    lints.workspace = true
+
+    [package]
+    name = "app"
+  - |
+    lints = { workspace = true }
+
+    [package]
+    name = "app"
+  - |
+    [package]
+    name = "app"
+
+    [lints.clippy]
+    unwrap_used = "warn"
+  - |
+    [workspace]
+    members = ["crates/*"]
+
+    [workspace.lints.clippy]
+    unwrap_used = "warn"
+  - |
+    [workspace]
+    members = ["crates/*"]
+
+    [workspace.lints.clippy]
+    unwrap_used = "warn"
+
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+  - |
+    [package]
+    name = "app"
+
+    [dependencies]
+    serde_json = { package = "serde_json", version = "1" }
+
+    [lints]
+    workspace = true
+invalid:
+  - |
+    [package]
+    name = "app"
+  - |
+    [workspace]
+    members = ["crates/*"]
+
+    [workspace.lints.clippy]
+    unwrap_used = "warn"
+
+    [package]
+    name = "app"
+  - |
+    [package]
+    name = "app"
+    lints.workspace = true
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = false
+  - |
+    [package]
+    name = "app"
+
+    [lints.rust]
+    unsafe_code = "forbid"

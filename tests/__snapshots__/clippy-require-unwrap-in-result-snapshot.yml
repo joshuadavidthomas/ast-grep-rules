@@ -1,0 +1,38 @@
+id: clippy-require-unwrap-in-result
+snapshots:
+  "[lints.clippy]\nunwrap_in_result = \"allow\"\n":
+    labels:
+    - source: lints.clippy
+      style: primary
+      start: 1
+      end: 13
+    - source: |
+        [lints.clippy]
+        unwrap_in_result = "allow"
+      style: secondary
+      start: 0
+      end: 42
+  "[workspace.lints.clippy]\ndbg_macro = \"warn\"\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        dbg_macro = "warn"
+      style: secondary
+      start: 0
+      end: 44
+  "[workspace.lints.clippy]\nunwrap_in_result = { level = \"allow\", priority = 1 }\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        unwrap_in_result = { level = "allow", priority = 1 }
+      style: secondary
+      start: 0
+      end: 78

@@ -1,0 +1,11 @@
+id: toml-workspace-true
+language: toml
+rule:
+  kind: pair
+  all:
+    - has:
+        kind: bare_key
+        regex: "^workspace$"
+    - has:
+        kind: boolean
+        regex: "^true$"

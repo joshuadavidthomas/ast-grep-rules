@@ -1,0 +1,30 @@
+id: clippy-require-dbg-macro
+valid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    dbg_macro = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "dbg_macro" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    todo = "warn"
+  - |
+    [lints.clippy]
+    dbg_macro = "allow"
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = { level = "allow", priority = 1 }

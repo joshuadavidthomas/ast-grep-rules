@@ -1,0 +1,108 @@
+id: clippy-require-lints
+snapshots:
+  "[package]\nname = \"app\"\n":
+    labels:
+    - source: package
+      style: primary
+      start: 1
+      end: 8
+    - source: |
+        [package]
+        name = "app"
+      style: secondary
+      start: 0
+      end: 23
+    - source: |
+        [package]
+        name = "app"
+      style: secondary
+      start: 0
+      end: 23
+  "[package]\nname = \"app\"\n\n[lints.rust]\nunsafe_code = \"forbid\"\n":
+    labels:
+    - source: package
+      style: primary
+      start: 1
+      end: 8
+    - source: |
+        [package]
+        name = "app"
+        
+        [lints.rust]
+        unsafe_code = "forbid"
+      style: secondary
+      start: 0
+      end: 60
+    - source: |+
+        [package]
+        name = "app"
+        
+      style: secondary
+      start: 0
+      end: 24
+  "[package]\nname = \"app\"\n\n[lints]\nworkspace = false\n":
+    labels:
+    - source: package
+      style: primary
+      start: 1
+      end: 8
+    - source: |
+        [package]
+        name = "app"
+        
+        [lints]
+        workspace = false
+      style: secondary
+      start: 0
+      end: 50
+    - source: |+
+        [package]
+        name = "app"
+        
+      style: secondary
+      start: 0
+      end: 24
+  "[package]\nname = \"app\"\nlints.workspace = true\n":
+    labels:
+    - source: package
+      style: primary
+      start: 1
+      end: 8
+    - source: |
+        [package]
+        name = "app"
+        lints.workspace = true
+      style: secondary
+      start: 0
+      end: 46
+    - source: |
+        [package]
+        name = "app"
+        lints.workspace = true
+      style: secondary
+      start: 0
+      end: 46
+  "[workspace]\nmembers = [\"crates/*\"]\n\n[workspace.lints.clippy]\nunwrap_used = \"warn\"\n\n[package]\nname = \"app\"\n":
+    labels:
+    - source: package
+      style: primary
+      start: 84
+      end: 91
+    - source: |
+        [workspace]
+        members = ["crates/*"]
+        
+        [workspace.lints.clippy]
+        unwrap_used = "warn"
+        
+        [package]
+        name = "app"
+      style: secondary
+      start: 0
+      end: 106
+    - source: |
+        [package]
+        name = "app"
+      style: secondary
+      start: 83
+      end: 106

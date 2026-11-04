@@ -1,0 +1,30 @@
+id: clippy-require-unreachable
+valid:
+  - |
+    [workspace.lints.clippy]
+    unreachable = "warn"
+  - |
+    [lints.clippy]
+    unreachable = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "unreachable" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    unreachable = "allow"
+  - |
+    [workspace.lints.clippy]
+    unreachable = { level = "allow", priority = 1 }

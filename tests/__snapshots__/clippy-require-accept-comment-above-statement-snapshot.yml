@@ -1,0 +1,34 @@
+id: clippy-require-accept-comment-above-statement
+snapshots:
+  "# Clippy settings live here.\n":
+    labels:
+    - source: |
+        # Clippy settings live here.
+      style: primary
+      start: 0
+      end: 29
+  "accept-comment-above-attributes = true\nallow-expect-in-consts = true\nallow-expect-in-tests = true\nallow-unwrap-in-consts = true\n":
+    labels:
+    - source: |
+        accept-comment-above-attributes = true
+        allow-expect-in-consts = true
+        allow-expect-in-tests = true
+        allow-unwrap-in-consts = true
+      style: primary
+      start: 0
+      end: 128
+  "accept-comment-above-statement = false\n":
+    labels:
+    - source: accept-comment-above-statement = false
+      style: primary
+      start: 0
+      end: 38
+    - source: |
+        accept-comment-above-statement = false
+      style: secondary
+      start: 0
+      end: 39
+    - source: accept-comment-above-statement
+      style: secondary
+      start: 0
+      end: 30

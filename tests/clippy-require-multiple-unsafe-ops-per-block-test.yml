@@ -1,0 +1,30 @@
+id: clippy-require-multiple-unsafe-ops-per-block
+valid:
+  - |
+    [workspace.lints.clippy]
+    multiple_unsafe_ops_per_block = "warn"
+  - |
+    [lints.clippy]
+    multiple_unsafe_ops_per_block = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "multiple_unsafe_ops_per_block" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    multiple_unsafe_ops_per_block = "allow"
+  - |
+    [workspace.lints.clippy]
+    multiple_unsafe_ops_per_block = { level = "allow", priority = 1 }

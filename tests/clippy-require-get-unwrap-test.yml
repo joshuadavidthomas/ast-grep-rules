@@ -1,0 +1,30 @@
+id: clippy-require-get-unwrap
+valid:
+  - |
+    [workspace.lints.clippy]
+    get_unwrap = "warn"
+  - |
+    [lints.clippy]
+    get_unwrap = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "get_unwrap" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    get_unwrap = "allow"
+  - |
+    [workspace.lints.clippy]
+    get_unwrap = { level = "allow", priority = 1 }

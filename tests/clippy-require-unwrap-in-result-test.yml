@@ -1,0 +1,30 @@
+id: clippy-require-unwrap-in-result
+valid:
+  - |
+    [workspace.lints.clippy]
+    unwrap_in_result = "warn"
+  - |
+    [lints.clippy]
+    unwrap_in_result = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "unwrap_in_result" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    unwrap_in_result = "allow"
+  - |
+    [workspace.lints.clippy]
+    unwrap_in_result = { level = "allow", priority = 1 }

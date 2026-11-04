@@ -1,0 +1,19 @@
+id: clippy-require-map-err-ignore
+language: toml
+severity: error
+message: "Set `map_err_ignore = \"warn\"` in this Clippy lints table."
+note: "Applies to `[lints.clippy]` in a package manifest and `[workspace.lints.clippy]` in a workspace root. `deny` and `forbid` also satisfy the rule. To leave the lint off on purpose, add a `# ast-grep-ignore: clippy-require-map-err-ignore` comment above the table that says why, or pass `--off=clippy-require-map-err-ignore`."
+files:
+  - "**/Cargo.toml"
+rule:
+  matches: clippy-lints-header
+  inside:
+    kind: table
+    not:
+      has:
+        matches: clippy-lint-enabled
+        has:
+          any:
+            - kind: bare_key
+            - kind: quoted_key
+          regex: "^[\"']?map_err_ignore[\"']?$"

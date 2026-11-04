@@ -1,0 +1,30 @@
+id: clippy-require-unwrap-used
+valid:
+  - |
+    [workspace.lints.clippy]
+    unwrap_used = "warn"
+  - |
+    [lints.clippy]
+    unwrap_used = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "unwrap_used" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    unwrap_used = "allow"
+  - |
+    [workspace.lints.clippy]
+    unwrap_used = { level = "allow", priority = 1 }

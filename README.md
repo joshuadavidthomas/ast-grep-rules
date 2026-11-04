@@ -1,6 +1,6 @@
 # ast-grep-rules
 
-An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, Cargo manifests, TypeScript, Svelte, HTML, Python, Go, Swift, Pi extensions, and OpenCode plugins.
+An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, Cargo manifests, Clippy configuration, TypeScript, Svelte, HTML, Python, Go, Swift, Pi extensions, and OpenCode plugins.
 
 The rules catch API design problems, weak error handling, deprecated Svelte patterns, SwiftUI performance and accessibility mistakes, and code clutter. Pre-commit users can choose rules by language or run the whole set.
 
@@ -34,6 +34,7 @@ repos:
 | `all` | All text files | Every rule |
 | `rust` | Rust | IDs starting with `rust-` |
 | `cargo-workspace` | `Cargo.toml` manifests in a Cargo workspace | IDs starting with `cargo-workspace-` |
+| `clippy` | `Cargo.toml`, `clippy.toml`, and `.clippy.toml` | IDs starting with `clippy-`, plus the `clippy.toml` file check |
 | `typescript` | TypeScript and Svelte script blocks | IDs starting with `typescript-` |
 | `pi` | TypeScript Pi extensions | IDs starting with `pi-` |
 | `opencode` | TypeScript and TSX OpenCode plugins | IDs starting with `opencode-` |
@@ -174,6 +175,43 @@ The `cargo-workspace` rules check member crate manifests in a Cargo workspace. A
 
 The wrapper registers [`tree-sitter-toml`](https://github.com/tree-sitter-grammars/tree-sitter-toml) as an ast-grep custom language for `.toml` files. Its prebuilt parsers cover the same targets as the Svelte parser below.
 
+### Clippy
+
+These rules hold every crate to one Clippy setup: a set of pedantic and restriction lints enabled in `Cargo.toml`, and the `clippy.toml` settings that relax them for tests, consts, and comments above attributes or statements. They work for single crates and workspaces. A workspace sets the lints once in the root `[workspace.lints.clippy]` and each member inherits them with `[lints] workspace = true`. Cargo cannot hold the `clippy.toml` settings; Clippy reads them only from `clippy.toml` or `.clippy.toml`, starting in the crate directory and walking up, so one file at the workspace root covers every member.
+
+| Rule | Severity | Reports |
+| --- | --- | --- |
+| [`clippy-require-lints`](rules/clippy-require-lints.yml) | error | A `[package]` with neither `[lints] workspace = true` nor a `[lints.clippy]` table. `[workspace.lints]` reaches only packages that opt in, including the workspace root's own package. |
+| [`clippy-require-pedantic`](rules/clippy-require-pedantic.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `pedantic = { level = "warn", priority = -1 }`. `deny` and `forbid` also pass. |
+| [`clippy-require-allow-attributes`](rules/clippy-require-allow-attributes.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `allow_attributes = "warn"`, so suppressions use `#[expect]`, which warns once the suppressed lint stops firing. `deny` and `forbid` also pass. |
+| [`clippy-require-allow-attributes-without-reason`](rules/clippy-require-allow-attributes-without-reason.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `allow_attributes_without_reason = "warn"`, so every `#[allow]` must say why with `reason = "..."`. `deny` and `forbid` also pass. |
+| [`clippy-require-clone-on-ref-ptr`](rules/clippy-require-clone-on-ref-ptr.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `clone_on_ref_ptr = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-dbg-macro`](rules/clippy-require-dbg-macro.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `dbg_macro = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-expect-used`](rules/clippy-require-expect-used.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `expect_used = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-get-unwrap`](rules/clippy-require-get-unwrap.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `get_unwrap = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-let-underscore-must-use`](rules/clippy-require-let-underscore-must-use.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `let_underscore_must_use = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-map-err-ignore`](rules/clippy-require-map-err-ignore.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `map_err_ignore = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-mem-forget`](rules/clippy-require-mem-forget.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `mem_forget = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-mod-module-files`](rules/clippy-require-mod-module-files.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `mod_module_files = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-multiple-unsafe-ops-per-block`](rules/clippy-require-multiple-unsafe-ops-per-block.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `multiple_unsafe_ops_per_block = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-panic-in-result-fn`](rules/clippy-require-panic-in-result-fn.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `panic_in_result_fn = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-todo`](rules/clippy-require-todo.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `todo = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-undocumented-unsafe-blocks`](rules/clippy-require-undocumented-unsafe-blocks.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `undocumented_unsafe_blocks = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-unimplemented`](rules/clippy-require-unimplemented.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `unimplemented = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-unreachable`](rules/clippy-require-unreachable.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `unreachable = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-unused-result-ok`](rules/clippy-require-unused-result-ok.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `unused_result_ok = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-unwrap-in-result`](rules/clippy-require-unwrap-in-result.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `unwrap_in_result = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-unwrap-used`](rules/clippy-require-unwrap-used.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `unwrap_used = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-wildcard-enum-match-arm`](rules/clippy-require-wildcard-enum-match-arm.yml) | error | A `[lints.clippy]` or `[workspace.lints.clippy]` table without `wildcard_enum_match_arm = "warn"`. `deny` and `forbid` also pass. |
+| [`clippy-require-accept-comment-above-attributes`](rules/clippy-require-accept-comment-above-attributes.yml) | error | A `clippy.toml` or `.clippy.toml` without `accept-comment-above-attributes = true`. |
+| [`clippy-require-accept-comment-above-statement`](rules/clippy-require-accept-comment-above-statement.yml) | error | A `clippy.toml` or `.clippy.toml` without `accept-comment-above-statement = true`. |
+| [`clippy-require-allow-expect-in-consts`](rules/clippy-require-allow-expect-in-consts.yml) | error | A `clippy.toml` or `.clippy.toml` without `allow-expect-in-consts = true`. |
+| [`clippy-require-allow-expect-in-tests`](rules/clippy-require-allow-expect-in-tests.yml) | error | A `clippy.toml` or `.clippy.toml` without `allow-expect-in-tests = true`. |
+| [`clippy-require-allow-unwrap-in-consts`](rules/clippy-require-allow-unwrap-in-consts.yml) | error | A `clippy.toml` or `.clippy.toml` without `allow-unwrap-in-consts = true`. |
+| `clippy-require-config-file` | error | A `Cargo.toml` with no `clippy.toml` or `.clippy.toml` in its directory or a parent, or whose nearest one is blank. Only the `clippy` hook runs this check, through the wrapper's `--require-clippy-config` option, because ast-grep cannot report a file that does not exist. |
+
+The per-lint and per-setting rules are separate so a project can turn off one with `--off`. The `clippy` hook checks only the files pre-commit passes it, so deleting a `clippy.toml` without touching a `Cargo.toml` is caught on the next `--all-files` run, not in that commit.
+
 ### TypeScript
 
 | Rule | Severity | Reports |
@@ -253,6 +291,7 @@ Use `common-` for files that contain rules for several languages and a language 
 ## Repository layout
 
 - `rules/` contains the rule definitions.
+- `utils/` contains utility rules shared across rule files, used through `matches`.
 - `tests/` contains valid and invalid examples, generated snapshots, and real `.svelte` and `Cargo.toml` scan tests.
 - `sgconfig.yml` defines the rules, tests, custom Svelte and TOML languages, and script injection.
 - `bin/ast-grep-rules.mjs` resolves the native parsers, renders the config paths, and runs the pinned ast-grep CLI.

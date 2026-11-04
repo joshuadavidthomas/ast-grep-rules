@@ -1,0 +1,21 @@
+id: clippy-require-accept-comment-above-statement
+valid:
+  - |
+    accept-comment-above-statement = true
+  - |
+    msrv = "1.90"
+    accept-comment-above-statement = true
+    accept-comment-above-attributes = true
+    allow-expect-in-consts = true
+    allow-expect-in-tests = true
+    allow-unwrap-in-consts = true
+invalid:
+  - |
+    accept-comment-above-statement = false
+  - |
+    accept-comment-above-attributes = true
+    allow-expect-in-consts = true
+    allow-expect-in-tests = true
+    allow-unwrap-in-consts = true
+  - |
+    # Clippy settings live here.

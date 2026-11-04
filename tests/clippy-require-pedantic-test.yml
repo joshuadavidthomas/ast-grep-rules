@@ -1,0 +1,30 @@
+id: clippy-require-pedantic
+valid:
+  - |
+    [workspace.lints.clippy]
+    pedantic = "warn"
+  - |
+    [lints.clippy]
+    pedantic = { level = "warn", priority = -1 }
+  - |
+    [lints.clippy]
+    "pedantic" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    pedantic = "allow"
+  - |
+    [workspace.lints.clippy]
+    pedantic = { level = "allow", priority = 1 }

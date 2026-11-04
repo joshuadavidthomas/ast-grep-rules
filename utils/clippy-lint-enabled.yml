@@ -1,0 +1,19 @@
+id: clippy-lint-enabled
+language: toml
+rule:
+  kind: pair
+  any:
+    - has:
+        kind: string
+        regex: "^[\"'](warn|deny|forbid)[\"']$"
+    - has:
+        kind: inline_table
+        has:
+          kind: pair
+          all:
+            - has:
+                kind: bare_key
+                regex: "^level$"
+            - has:
+                kind: string
+                regex: "^[\"'](warn|deny|forbid)[\"']$"

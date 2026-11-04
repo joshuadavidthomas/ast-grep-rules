@@ -1,0 +1,30 @@
+id: clippy-require-mod-module-files
+valid:
+  - |
+    [workspace.lints.clippy]
+    mod_module_files = "warn"
+  - |
+    [lints.clippy]
+    mod_module_files = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "mod_module_files" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    mod_module_files = "allow"
+  - |
+    [workspace.lints.clippy]
+    mod_module_files = { level = "allow", priority = 1 }

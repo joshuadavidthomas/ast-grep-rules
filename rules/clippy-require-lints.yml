@@ -1,0 +1,52 @@
+id: clippy-require-lints
+language: toml
+severity: error
+message: "Do not leave a package without Clippy lints; add `[lints] workspace = true` to inherit the workspace lints, or a `[lints.clippy]` table."
+note: "`[workspace.lints]` applies only to packages that opt in with `lints.workspace = true`, including the workspace root's own package. A package that is deliberately unlinted, such as a generated crate, is the accepted exemption; add a `# ast-grep-ignore: clippy-require-lints` comment above `[package]` that says why."
+files:
+  - "**/Cargo.toml"
+rule:
+  kind: bare_key
+  regex: "^package$"
+  inside:
+    kind: table
+    inside:
+      kind: document
+      not:
+        any:
+          # [lints]
+          # workspace = true
+          - has:
+              kind: table
+              all:
+                - has:
+                    kind: bare_key
+                    regex: "^lints$"
+                - has:
+                    matches: toml-workspace-true
+          # lints.workspace = true, before the first table
+          - has:
+              kind: pair
+              all:
+                - has:
+                    kind: dotted_key
+                    regex: "^lints\\s*\\.\\s*workspace$"
+                - has:
+                    kind: boolean
+                    regex: "^true$"
+          # lints = { workspace = true }, before the first table
+          - has:
+              kind: pair
+              all:
+                - has:
+                    kind: bare_key
+                    regex: "^lints$"
+                - has:
+                    kind: inline_table
+                    has:
+                      matches: toml-workspace-true
+          - has:
+              kind: table
+              has:
+                kind: dotted_key
+                regex: "^lints\\s*\\.\\s*clippy$"

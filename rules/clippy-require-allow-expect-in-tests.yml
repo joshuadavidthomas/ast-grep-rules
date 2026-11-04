@@ -1,0 +1,27 @@
+id: clippy-require-allow-expect-in-tests
+language: toml
+severity: error
+message: "Set `allow-expect-in-tests = true` in clippy.toml."
+note: "Clippy reads these settings only from clippy.toml or .clippy.toml, not from Cargo.toml. To keep the default on purpose, add a `# ast-grep-ignore: clippy-require-allow-expect-in-tests` comment that says why, or pass `--off=clippy-require-allow-expect-in-tests`."
+files:
+  - "**/clippy.toml"
+  - "**/.clippy.toml"
+rule:
+  any:
+    - kind: pair
+      inside:
+        kind: document
+      has:
+        kind: bare_key
+        regex: "^allow-expect-in-tests$"
+      not:
+        has:
+          kind: boolean
+          regex: "^true$"
+    - kind: document
+      not:
+        has:
+          kind: pair
+          has:
+            kind: bare_key
+            regex: "^allow-expect-in-tests$"

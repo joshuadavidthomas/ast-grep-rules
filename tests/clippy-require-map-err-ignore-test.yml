@@ -1,0 +1,30 @@
+id: clippy-require-map-err-ignore
+valid:
+  - |
+    [workspace.lints.clippy]
+    map_err_ignore = "warn"
+  - |
+    [lints.clippy]
+    map_err_ignore = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "map_err_ignore" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    map_err_ignore = "allow"
+  - |
+    [workspace.lints.clippy]
+    map_err_ignore = { level = "allow", priority = 1 }

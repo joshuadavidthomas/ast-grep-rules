@@ -1,0 +1,30 @@
+id: clippy-require-unused-result-ok
+valid:
+  - |
+    [workspace.lints.clippy]
+    unused_result_ok = "warn"
+  - |
+    [lints.clippy]
+    unused_result_ok = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "unused_result_ok" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    unused_result_ok = "allow"
+  - |
+    [workspace.lints.clippy]
+    unused_result_ok = { level = "allow", priority = 1 }

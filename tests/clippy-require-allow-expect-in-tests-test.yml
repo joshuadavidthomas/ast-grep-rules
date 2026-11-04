@@ -1,0 +1,21 @@
+id: clippy-require-allow-expect-in-tests
+valid:
+  - |
+    allow-expect-in-tests = true
+  - |
+    msrv = "1.90"
+    allow-expect-in-tests = true
+    accept-comment-above-attributes = true
+    accept-comment-above-statement = true
+    allow-expect-in-consts = true
+    allow-unwrap-in-consts = true
+invalid:
+  - |
+    allow-expect-in-tests = false
+  - |
+    accept-comment-above-attributes = true
+    accept-comment-above-statement = true
+    allow-expect-in-consts = true
+    allow-unwrap-in-consts = true
+  - |
+    # Clippy settings live here.

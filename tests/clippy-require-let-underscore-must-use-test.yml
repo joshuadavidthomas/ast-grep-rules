@@ -1,0 +1,30 @@
+id: clippy-require-let-underscore-must-use
+valid:
+  - |
+    [workspace.lints.clippy]
+    let_underscore_must_use = "warn"
+  - |
+    [lints.clippy]
+    let_underscore_must_use = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "let_underscore_must_use" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    let_underscore_must_use = "allow"
+  - |
+    [workspace.lints.clippy]
+    let_underscore_must_use = { level = "allow", priority = 1 }

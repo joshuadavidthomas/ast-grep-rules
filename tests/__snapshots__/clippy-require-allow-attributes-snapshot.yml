@@ -1,0 +1,38 @@
+id: clippy-require-allow-attributes
+snapshots:
+  "[lints.clippy]\nallow_attributes = \"allow\"\n":
+    labels:
+    - source: lints.clippy
+      style: primary
+      start: 1
+      end: 13
+    - source: |
+        [lints.clippy]
+        allow_attributes = "allow"
+      style: secondary
+      start: 0
+      end: 42
+  "[workspace.lints.clippy]\nallow_attributes = { level = \"allow\", priority = 1 }\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        allow_attributes = { level = "allow", priority = 1 }
+      style: secondary
+      start: 0
+      end: 78
+  "[workspace.lints.clippy]\ntodo = \"warn\"\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        todo = "warn"
+      style: secondary
+      start: 0
+      end: 39

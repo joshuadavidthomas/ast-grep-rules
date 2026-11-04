@@ -1,0 +1,38 @@
+id: clippy-require-get-unwrap
+snapshots:
+  "[lints.clippy]\nget_unwrap = \"allow\"\n":
+    labels:
+    - source: lints.clippy
+      style: primary
+      start: 1
+      end: 13
+    - source: |
+        [lints.clippy]
+        get_unwrap = "allow"
+      style: secondary
+      start: 0
+      end: 36
+  "[workspace.lints.clippy]\ndbg_macro = \"warn\"\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        dbg_macro = "warn"
+      style: secondary
+      start: 0
+      end: 44
+  "[workspace.lints.clippy]\nget_unwrap = { level = \"allow\", priority = 1 }\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        get_unwrap = { level = "allow", priority = 1 }
+      style: secondary
+      start: 0
+      end: 72

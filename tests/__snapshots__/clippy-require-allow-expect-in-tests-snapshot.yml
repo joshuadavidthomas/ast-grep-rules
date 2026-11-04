@@ -1,0 +1,34 @@
+id: clippy-require-allow-expect-in-tests
+snapshots:
+  "# Clippy settings live here.\n":
+    labels:
+    - source: |
+        # Clippy settings live here.
+      style: primary
+      start: 0
+      end: 29
+  "accept-comment-above-attributes = true\naccept-comment-above-statement = true\nallow-expect-in-consts = true\nallow-unwrap-in-consts = true\n":
+    labels:
+    - source: |
+        accept-comment-above-attributes = true
+        accept-comment-above-statement = true
+        allow-expect-in-consts = true
+        allow-unwrap-in-consts = true
+      style: primary
+      start: 0
+      end: 137
+  "allow-expect-in-tests = false\n":
+    labels:
+    - source: allow-expect-in-tests = false
+      style: primary
+      start: 0
+      end: 29
+    - source: |
+        allow-expect-in-tests = false
+      style: secondary
+      start: 0
+      end: 30
+    - source: allow-expect-in-tests
+      style: secondary
+      start: 0
+      end: 21

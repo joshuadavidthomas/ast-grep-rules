@@ -1,0 +1,30 @@
+id: clippy-require-allow-attributes
+valid:
+  - |
+    [workspace.lints.clippy]
+    allow_attributes = "warn"
+  - |
+    [lints.clippy]
+    allow_attributes = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "allow_attributes" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    todo = "warn"
+  - |
+    [lints.clippy]
+    allow_attributes = "allow"
+  - |
+    [workspace.lints.clippy]
+    allow_attributes = { level = "allow", priority = 1 }

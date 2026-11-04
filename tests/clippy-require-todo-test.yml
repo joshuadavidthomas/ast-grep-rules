@@ -1,0 +1,30 @@
+id: clippy-require-todo
+valid:
+  - |
+    [workspace.lints.clippy]
+    todo = "warn"
+  - |
+    [lints.clippy]
+    todo = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "todo" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    todo = "allow"
+  - |
+    [workspace.lints.clippy]
+    todo = { level = "allow", priority = 1 }

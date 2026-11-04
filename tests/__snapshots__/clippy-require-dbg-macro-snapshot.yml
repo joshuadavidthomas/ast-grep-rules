@@ -1,0 +1,38 @@
+id: clippy-require-dbg-macro
+snapshots:
+  "[lints.clippy]\ndbg_macro = \"allow\"\n":
+    labels:
+    - source: lints.clippy
+      style: primary
+      start: 1
+      end: 13
+    - source: |
+        [lints.clippy]
+        dbg_macro = "allow"
+      style: secondary
+      start: 0
+      end: 35
+  "[workspace.lints.clippy]\ndbg_macro = { level = \"allow\", priority = 1 }\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        dbg_macro = { level = "allow", priority = 1 }
+      style: secondary
+      start: 0
+      end: 71
+  "[workspace.lints.clippy]\ntodo = \"warn\"\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        todo = "warn"
+      style: secondary
+      start: 0
+      end: 39

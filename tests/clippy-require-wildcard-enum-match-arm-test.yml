@@ -1,0 +1,30 @@
+id: clippy-require-wildcard-enum-match-arm
+valid:
+  - |
+    [workspace.lints.clippy]
+    wildcard_enum_match_arm = "warn"
+  - |
+    [lints.clippy]
+    wildcard_enum_match_arm = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "wildcard_enum_match_arm" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    wildcard_enum_match_arm = "allow"
+  - |
+    [workspace.lints.clippy]
+    wildcard_enum_match_arm = { level = "allow", priority = 1 }

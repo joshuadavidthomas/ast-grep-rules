@@ -22,6 +22,14 @@
   files: (^|/)Cargo\.toml$
   pass_filenames: true
 
+- id: clippy
+  name: ast-grep rules (Clippy)
+  description: Run the Clippy configuration rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^clippy- --require-clippy-config
+  language: node
+  files: (^|/)(Cargo|\.?clippy)\.toml$
+  pass_filenames: true
+
 - id: typescript
   name: ast-grep rules (TypeScript)
   description: Run the TypeScript rules from joshuadavidthomas/ast-grep-rules

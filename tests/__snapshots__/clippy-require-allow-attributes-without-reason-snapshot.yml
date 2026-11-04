@@ -1,0 +1,38 @@
+id: clippy-require-allow-attributes-without-reason
+snapshots:
+  "[lints.clippy]\nallow_attributes_without_reason = \"allow\"\n":
+    labels:
+    - source: lints.clippy
+      style: primary
+      start: 1
+      end: 13
+    - source: |
+        [lints.clippy]
+        allow_attributes_without_reason = "allow"
+      style: secondary
+      start: 0
+      end: 57
+  "[workspace.lints.clippy]\nallow_attributes_without_reason = { level = \"allow\", priority = 1 }\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        allow_attributes_without_reason = { level = "allow", priority = 1 }
+      style: secondary
+      start: 0
+      end: 93
+  "[workspace.lints.clippy]\ntodo = \"warn\"\n":
+    labels:
+    - source: workspace.lints.clippy
+      style: primary
+      start: 1
+      end: 23
+    - source: |
+        [workspace.lints.clippy]
+        todo = "warn"
+      style: secondary
+      start: 0
+      end: 39

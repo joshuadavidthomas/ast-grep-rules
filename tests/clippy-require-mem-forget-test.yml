@@ -1,0 +1,30 @@
+id: clippy-require-mem-forget
+valid:
+  - |
+    [workspace.lints.clippy]
+    mem_forget = "warn"
+  - |
+    [lints.clippy]
+    mem_forget = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "mem_forget" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    mem_forget = "allow"
+  - |
+    [workspace.lints.clippy]
+    mem_forget = { level = "allow", priority = 1 }

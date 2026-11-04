@@ -1,0 +1,27 @@
+id: clippy-require-accept-comment-above-statement
+language: toml
+severity: error
+message: "Set `accept-comment-above-statement = true` in clippy.toml."
+note: "Clippy reads these settings only from clippy.toml or .clippy.toml, not from Cargo.toml. To keep the default on purpose, add a `# ast-grep-ignore: clippy-require-accept-comment-above-statement` comment that says why, or pass `--off=clippy-require-accept-comment-above-statement`."
+files:
+  - "**/clippy.toml"
+  - "**/.clippy.toml"
+rule:
+  any:
+    - kind: pair
+      inside:
+        kind: document
+      has:
+        kind: bare_key
+        regex: "^accept-comment-above-statement$"
+      not:
+        has:
+          kind: boolean
+          regex: "^true$"
+    - kind: document
+      not:
+        has:
+          kind: pair
+          has:
+            kind: bare_key
+            regex: "^accept-comment-above-statement$"

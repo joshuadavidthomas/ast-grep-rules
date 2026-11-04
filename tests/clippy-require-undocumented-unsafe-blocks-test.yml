@@ -1,0 +1,30 @@
+id: clippy-require-undocumented-unsafe-blocks
+valid:
+  - |
+    [workspace.lints.clippy]
+    undocumented_unsafe_blocks = "warn"
+  - |
+    [lints.clippy]
+    undocumented_unsafe_blocks = { level = "deny", priority = 1 }
+  - |
+    [lints.clippy]
+    "undocumented_unsafe_blocks" = "forbid"
+  - |
+    [package]
+    name = "app"
+
+    [lints]
+    workspace = true
+
+    [lints.rust]
+    unsafe_code = "forbid"
+invalid:
+  - |
+    [workspace.lints.clippy]
+    dbg_macro = "warn"
+  - |
+    [lints.clippy]
+    undocumented_unsafe_blocks = "allow"
+  - |
+    [workspace.lints.clippy]
+    undocumented_unsafe_blocks = { level = "allow", priority = 1 }

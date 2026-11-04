@@ -20,7 +20,7 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ### Added
 
-- Rust rules against storing and passing bare bools: `rust-no-bool-field`, `rust-no-bool-parameter`, `rust-no-bool-tuple`, `rust-no-bool-literal-argument`, and `rust-no-fallible-bool-return`. They skip test files and `#[cfg(test)]` items.
+- Rust rules against storing and passing bare bools: `rust-no-bool-field`, `rust-no-bool-parameter`, `rust-no-bool-tuple`, `rust-no-bool-literal-argument`, and `rust-no-fallible-bool-return`. They skip test files and `#[cfg(test)]` items. `rust-no-bool-field` also skips clap flags marked `#[arg(...)]` or `#[clap(...)]` and single-`bool` variant payloads such as `Bool(bool)`.
 
 ### Removed
 

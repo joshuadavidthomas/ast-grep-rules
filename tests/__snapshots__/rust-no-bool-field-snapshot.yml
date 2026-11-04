@@ -1,5 +1,35 @@
 id: rust-no-bool-field
 snapshots:
+  "#[derive(Deserialize)]\nstruct Config {\n    #[serde(default)]\n    enabled: bool,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 74
+      end: 78
+    - source: "enabled: bool"
+      style: secondary
+      start: 65
+      end: 78
+  "#[derive(Parser)]\nstruct Args {\n    #[arg(long)]\n    quiet: bool,\n    verbose: bool,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 79
+      end: 83
+    - source: "verbose: bool"
+      style: secondary
+      start: 70
+      end: 83
+  "#[derive(nom::Parser)]\nstruct Grammar {\n    greedy: bool,\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 52
+      end: 56
+    - source: "greedy: bool"
+      style: secondary
+      start: 44
+      end: 56
   "enum Event {\n    Cursor(Point, bool),\n}\n":
     labels:
     - source: bool
@@ -20,6 +50,16 @@ snapshots:
       style: secondary
       start: 27
       end: 40
+  "enum Value {\n    Flags(Vec<bool>),\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 27
+      end: 31
+    - source: (Vec<bool>)
+      style: secondary
+      start: 22
+      end: 33
   "pub struct WindowState {\n    pub mapped: bool,\n    pub minimized: bool,\n}\n":
     labels:
     - source: bool

@@ -2,7 +2,7 @@ id: rust-no-bool-field
 language: Rust
 severity: error
 message: "Do not store a bool in a struct field, enum variant, or atomic; name the states with an enum."
-note: "A stored bool usually names two modes (Utf8 or Latin1, Wayland or X11), lets false cover several situations (shown, or not mapped yet), or only means something next to another field (dirty with frame_pending, child_exited with child_pid). Model the states as an enum, fold the flag into the field it depends on, or reuse an existing enum such as KeyState. Fields of Option<bool>, Vec<bool>, Cell<bool>, and AtomicBool are reported too; rust-no-bool-tuple reports bools inside tuples. A one-way latch or an independent flag that mirrors an external schema can stay: suppress it with an inline `ast-grep-ignore: rust-no-bool-field` comment that names what true and false mean. A bool that only appears as a closure's or fn pointer's return type is not reported. Test files and items under #[cfg(test)] or a test attribute are skipped."
+note: "A stored bool usually names two modes (Utf8 or Latin1, Wayland or X11), lets false cover several situations (shown, or not mapped yet), or only means something next to another field (dirty with frame_pending, child_exited with child_pid). Model the states as an enum, fold the flag into the field it depends on, or reuse an existing enum such as KeyState. Fields of Option<bool>, Vec<bool>, Cell<bool>, and AtomicBool are reported too; rust-no-bool-tuple reports bools inside tuples. A one-way latch or an independent flag that mirrors an external schema can stay: suppress it with an inline `ast-grep-ignore: rust-no-bool-field` comment that names what true and false mean. A bool that only appears as a closure's or fn pointer's return type is not reported. Fields marked with clap #[arg(...)] or #[clap(...)] attributes, and enum variants whose only payload is a bool, such as Bool(bool) modeling a source-language boolean, are skipped. Test files and items under #[cfg(test)] or a test attribute are skipped."
 ignores:
   - "**/tests.rs"
   - "**/tests/**"
@@ -63,3 +63,22 @@ rule:
         inside:
           matches: test-item
           stopBy: end
+    - not:
+        inside:
+          kind: field_declaration
+          stopBy: end
+          follows:
+            kind: attribute_item
+            regex: "^#\\[(arg|clap)\\("
+            stopBy:
+              not:
+                any:
+                  - kind: attribute_item
+                  - kind: line_comment
+                  - kind: block_comment
+    - not:
+        inside:
+          kind: ordered_field_declaration_list
+          regex: "^\\(\\s*bool\\s*,?\\s*\\)$"
+          inside:
+            kind: enum_variant

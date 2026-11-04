@@ -18,6 +18,8 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+## [0.11.0]
+
 ### Added
 
 - Rust rules against storing and passing bare bools: `rust-no-bool-field`, `rust-no-bool-parameter`, `rust-no-bool-tuple`, `rust-no-bool-literal-argument`, and `rust-no-fallible-bool-return`. They skip test files and `#[cfg(test)]` items. `rust-no-bool-field` also skips single-`bool` variant payloads such as `Bool(bool)`.
@@ -153,7 +155,7 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Josh Thomas <josh@joshthomas.dev> (maintainer)
 
-[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.10.0...HEAD
+[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.11.0...HEAD
 [0.1.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.1.0
 [0.2.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.2.0
 [0.3.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.3.0
@@ -165,3 +167,4 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 [0.8.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.8.0
 [0.9.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.9.0
 [0.10.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.10.0
+[0.11.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.11.0

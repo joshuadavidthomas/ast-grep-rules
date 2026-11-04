@@ -51,3 +51,5 @@ invalid:
     }
   - |
     fn track(&mut self, pressed: &bool) {}
+  - |
+    pub fn render(compact: Option<bool>) {}

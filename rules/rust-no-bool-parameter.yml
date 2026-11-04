@@ -2,7 +2,7 @@ id: rust-no-bool-parameter
 language: Rust
 severity: error
 message: "Do not take a bool parameter; take a named enum or split the function."
-note: "Callers pass bool parameters as bare literals, as in x11_zoom(&s, false, true) or encode(false, false, ..), and the reader cannot tell which mode each literal picks. Take an enum that names the modes, pass the value the bool was computed from, or split the function in two. Every function and trait method is checked, private ones included. Methods in `impl Trait for Type` blocks are skipped because the trait fixes their signature; the rule reports the trait's own declaration when the trait is local. A parameter whose type only mentions bool in a closure's return, such as `impl Fn(u32) -> bool`, is a predicate and is not reported. When a caller always passes a computed value and true and false each mean one thing, suppress it with an inline `ast-grep-ignore: rust-no-bool-parameter` comment that says so. Test files and items under #[cfg(test)] or a test attribute are skipped."
+note: "Reports bool, &bool, and Option<bool> parameters. Callers pass bool parameters as bare literals, as in x11_zoom(&s, false, true) or encode(false, false, ..), and the reader cannot tell which mode each literal picks. Take an enum that names the modes, pass the value the bool was computed from, or split the function in two. Every function and trait method is checked, private ones included. Methods in `impl Trait for Type` blocks are skipped because the trait fixes their signature; the rule reports the trait's own declaration when the trait is local. A parameter whose type only mentions bool in a closure's return, such as `impl Fn(u32) -> bool`, is a predicate and is not reported. When a caller always passes a computed value and true and false each mean one thing, suppress it with an inline `ast-grep-ignore: rust-no-bool-parameter` comment that says so. Test files and items under #[cfg(test)] or a test attribute are skipped."
 ignores:
   - "**/tests.rs"
   - "**/tests/**"
@@ -44,6 +44,8 @@ rule:
             has:
               field: type
               matches: bool-type
+          - kind: generic_type
+            regex: "^Option<\\s*bool\\s*>$"
     - any:
         - inside:
             kind: function_item

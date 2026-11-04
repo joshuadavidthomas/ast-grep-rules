@@ -80,6 +80,20 @@ snapshots:
       style: secondary
       start: 0
       end: 85
+  "pub fn render(compact: Option<bool>) {}\n":
+    labels:
+    - source: "compact: Option<bool>"
+      style: primary
+      start: 14
+      end: 35
+    - source: Option<bool>
+      style: secondary
+      start: 23
+      end: 35
+    - source: "pub fn render(compact: Option<bool>) {}"
+      style: secondary
+      start: 0
+      end: 39
   "pub(crate) trait Lease {\n    fn set_browser_lease(&mut self, held: bool);\n}\n":
     labels:
     - source: "held: bool"

@@ -35,14 +35,7 @@ valid:
         Bool(bool),
         Int(i64),
     }
-  - |
-    /// Command-line arguments.
-    #[derive(Parser, Debug, Clone)]
-    struct Args {
-        /// Suppress output.
-        #[arg(global = true, long, short)]
-        pub quiet: bool,
-    }
+invalid:
   - |
     #[derive(clap::Subcommand)]
     enum Command {
@@ -51,7 +44,6 @@ valid:
             no_prune: bool,
         },
     }
-invalid:
   - |
     #[derive(nom::Parser)]
     struct Grammar {

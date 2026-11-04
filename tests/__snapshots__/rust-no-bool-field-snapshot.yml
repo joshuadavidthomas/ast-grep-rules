@@ -14,12 +14,22 @@ snapshots:
     labels:
     - source: bool
       style: primary
-      start: 79
-      end: 83
-    - source: "verbose: bool"
+      start: 60
+      end: 64
+    - source: "quiet: bool"
       style: secondary
-      start: 70
-      end: 83
+      start: 53
+      end: 64
+  "#[derive(clap::Subcommand)]\nenum Command {\n    Vendor {\n        #[clap(long)]\n        no_prune: bool,\n    },\n}\n":
+    labels:
+    - source: bool
+      style: primary
+      start: 96
+      end: 100
+    - source: "no_prune: bool"
+      style: secondary
+      start: 86
+      end: 100
   "#[derive(nom::Parser)]\nstruct Grammar {\n    greedy: bool,\n}\n":
     labels:
     - source: bool

@@ -28,6 +28,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 - A `clippy` pre-commit hook for `Cargo.toml`, `clippy.toml`, and `.clippy.toml` files. It also reports a `Cargo.toml` with no `clippy.toml` in its directory or a parent, through the wrapper's new `--require-clippy-config` option.
 - Shared utility rules in `utils/`, loaded through `utilDirs`.
 
+### Changed
+
+- Document suppression comments in the README: placement, comment syntax per language, TOML manifests, whole-file suppression, and the `no-suppress-all` and `unused-suppression` checks.
+
 ### Removed
 
 - `rust-no-visible-bool-argument`. `rust-no-bool-parameter` reports the same `bool`, `&bool`, and `Option<bool>` parameters, plus those in private functions. It skips closure predicates such as `impl Fn(u32) -> bool` and test code, which the old rule reported. Replace `--off=rust-no-visible-bool-argument` with `--off=rust-no-bool-parameter`.

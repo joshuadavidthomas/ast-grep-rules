@@ -62,7 +62,42 @@ pre-commit run all --all-files
 
 Preparing the hook downloads an isolated Node.js environment, ast-grep, and the Svelte and TOML parsers. Later runs reuse that environment. The project does not need Node.js or an `sgconfig.yml`.
 
-Both tools scan tracked files. Add a new file to version control before expecting `--all-files` to include it. Every rule is an error, so any finding fails the hook. To keep a deliberate exception, put an `// ast-grep-ignore: <rule-id>` comment on the line above it and say why, or turn the rule off as shown below.
+Both tools scan tracked files. Add a new file to version control before expecting `--all-files` to include it. Every rule is an error, so any finding fails the hook. Keep a deliberate exception with a suppression comment, or turn the rule off for the whole project.
+
+### Suppress a finding
+
+Put an `ast-grep-ignore` comment that names the rule on the line above the finding, and say why in a comment above it:
+
+```rust
+// The FFI layout needs a named field.
+// ast-grep-ignore: rust-no-single-field-struct
+struct Handle { raw: *mut c_void }
+```
+
+Write the directive in the file's own comment syntax: `//` in Rust, TypeScript, Go, Swift, and Svelte scripts; `#` in Python and TOML; `<!-- -->` in HTML and Svelte markup. In a Cargo or Clippy manifest the finding is on a table header such as `[package]` or `[lints.clippy]`, so put the comment above that header:
+
+```toml
+# Generated bindings; lints are owned upstream.
+# ast-grep-ignore: clippy-require-lints
+[package]
+name = "bindings"
+```
+
+- Name each rule. Separate several with commas, as in `ast-grep-ignore: rule-a, rule-b`. A bare `ast-grep-ignore` hides every rule on that line.
+- The directive may also sit at the end of the line it suppresses.
+- To suppress a rule for a whole file, put the directive on the first line and leave the second line empty.
+- These comments silence only this rule set. Clippy and the compiler ignore them; suppress their lints in Rust with `#[expect(..., reason = "...")]`.
+
+To fail on blanket and stale suppressions, add ast-grep's hygiene checks to the `all` hook:
+
+```yaml
+      - id: all
+        args:
+          - --error=no-suppress-all
+          - --error=unused-suppression
+```
+
+`--error=no-suppress-all` works with any hook. Use `--error=unused-suppression` only with `all`: a language hook runs a subset of the rules, so it reports a comment for a rule it skipped as unused.
 
 ### Turn off rules
 

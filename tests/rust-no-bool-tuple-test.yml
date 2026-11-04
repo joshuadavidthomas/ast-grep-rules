@@ -1,0 +1,48 @@
+id: rust-no-bool-tuple
+valid:
+  - |
+    pub fn window_flags(window: &Window) -> WindowFlags {
+        todo!()
+    }
+  - |
+    struct Clipboard {
+        conversions: Vec<(Read, OwnedFd)>,
+    }
+  - |
+    fn focus_report(&self) -> (Option<(WindowRecord, Part)>, TextField) {
+        todo!()
+    }
+  - |
+    fn assign(&mut self, text: &str, usable: impl Fn(u32) -> bool) -> (Vec<u32>, KeymapEdit) {
+        todo!()
+    }
+  - |
+    #[cfg(test)]
+    mod tests {
+        fn cases() -> Vec<(&'static str, bool)> {
+            vec![]
+        }
+    }
+invalid:
+  - |
+    pub fn window_flags(window: &Window) -> (bool, bool) {
+        todo!()
+    }
+  - |
+    struct Clipboard {
+        conversions: Vec<(Read, OwnedFd, bool)>,
+    }
+  - |
+    fn take(&mut self) -> (u64, u64, bool, bool) {
+        todo!()
+    }
+  - |
+    type Signals = [(bool, &'static str); 7];
+  - |
+    fn clamp(&self) -> (Point<f64, Logical>, bool) {
+        todo!()
+    }
+  - |
+    fn encode(&mut self) {
+        let body = |(state, refreshing): (&mut StripeState, bool)| {};
+    }

@@ -1,0 +1,96 @@
+id: rust-no-bool-parameter
+snapshots:
+  "fn encode(text: &str, latin1: bool) -> Arc<[u8]> {\n    todo!()\n}\n":
+    labels:
+    - source: "latin1: bool"
+      style: primary
+      start: 22
+      end: 34
+    - source: bool
+      style: secondary
+      start: 30
+      end: 34
+    - source: |-
+        fn encode(text: &str, latin1: bool) -> Arc<[u8]> {
+            todo!()
+        }
+      style: secondary
+      start: 0
+      end: 64
+  "fn next(self, is_bad: bool, is_good: bool) -> Self {\n    self\n}\n":
+    labels:
+    - source: "is_bad: bool"
+      style: primary
+      start: 14
+      end: 26
+    - source: bool
+      style: secondary
+      start: 22
+      end: 26
+    - source: |-
+        fn next(self, is_bad: bool, is_good: bool) -> Self {
+            self
+        }
+      style: secondary
+      start: 0
+      end: 63
+  "fn track(&mut self, pressed: &bool) {}\n":
+    labels:
+    - source: "pressed: &bool"
+      style: primary
+      start: 20
+      end: 34
+    - source: bool
+      style: secondary
+      start: 30
+      end: 34
+    - source: "&bool"
+      style: secondary
+      start: 29
+      end: 34
+    - source: "fn track(&mut self, pressed: &bool) {}"
+      style: secondary
+      start: 0
+      end: 38
+  "impl State {\n    pub(crate) fn x11_zoom(&mut self, surface: &X11Surface, fullscreen: bool, enabled: bool) {}\n}\n":
+    labels:
+    - source: "fullscreen: bool"
+      style: primary
+      start: 73
+      end: 89
+    - source: bool
+      style: secondary
+      start: 85
+      end: 89
+    - source: "pub(crate) fn x11_zoom(&mut self, surface: &X11Surface, fullscreen: bool, enabled: bool) {}"
+      style: secondary
+      start: 17
+      end: 108
+  "pub fn push_stripe(out: &mut Vec<u8>, y: u16, height: u16, key: bool, unit: &[u8]) {}\n":
+    labels:
+    - source: "key: bool"
+      style: primary
+      start: 59
+      end: 68
+    - source: bool
+      style: secondary
+      start: 64
+      end: 68
+    - source: "pub fn push_stripe(out: &mut Vec<u8>, y: u16, height: u16, key: bool, unit: &[u8]) {}"
+      style: secondary
+      start: 0
+      end: 85
+  "pub(crate) trait Lease {\n    fn set_browser_lease(&mut self, held: bool);\n}\n":
+    labels:
+    - source: "held: bool"
+      style: primary
+      start: 61
+      end: 71
+    - source: bool
+      style: secondary
+      start: 67
+      end: 71
+    - source: "fn set_browser_lease(&mut self, held: bool);"
+      style: secondary
+      start: 29
+      end: 73

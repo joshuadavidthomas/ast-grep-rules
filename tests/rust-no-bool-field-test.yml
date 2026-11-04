@@ -1,0 +1,72 @@
+id: rust-no-bool-field
+valid:
+  - |
+    pub struct Read {
+        encoding: Encoding,
+    }
+  - |
+    enum InputKind {
+        Key { state: KeyState },
+        Button { button: u32, state: ButtonState },
+    }
+  - |
+    struct Pool {
+        child: Child,
+    }
+  - |
+    struct Filter {
+        accepts: Box<dyn Fn(&Window) -> bool>,
+        inside: fn(Point) -> bool,
+    }
+  - |
+    struct Flags {
+        window_flags: (bool, bool),
+    }
+  - |
+    #[cfg(test)]
+    mod tests {
+        struct Harness {
+            resize: bool,
+        }
+    }
+invalid:
+  - |
+    pub(crate) struct Read {
+        latin1: bool,
+    }
+  - |
+    pub struct WindowState {
+        pub mapped: bool,
+        pub minimized: bool,
+    }
+  - |
+    enum InputKind {
+        Key { pressed: bool },
+    }
+  - |
+    struct Pool {
+        child_pid: Option<u32>,
+        child_exited: bool,
+    }
+  - |
+    struct Screencopy {
+        copied: AtomicBool,
+    }
+  - |
+    struct Clipboard {
+        client_left: Arc<AtomicBool>,
+    }
+  - |
+    struct CastState {
+        pending: Cell<bool>,
+    }
+  - |
+    struct Staging {
+        bands: Vec<bool>,
+    }
+  - |
+    struct Visible(bool);
+  - |
+    enum Event {
+        Cursor(Point, bool),
+    }

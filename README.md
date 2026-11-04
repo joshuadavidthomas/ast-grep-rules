@@ -140,9 +140,14 @@ These rules target patterns that rustc and Clippy do not report. A few overlap w
 | Rule | Severity | Reports |
 | --- | --- | --- |
 | [`rust-no-anyhow-in-public-api`](rules/rust-no-anyhow-in-public-api.yml) | error | Visible functions, trait methods, and type aliases that expose `anyhow`. Return an error type callers can inspect. |
+| [`rust-no-bool-field`](rules/rust-no-bool-field.yml) | error | `bool`, `AtomicBool`, `Cell<bool>`, `Vec<bool>`, and `Option<bool>` in struct fields and enum variants. Name the states with an enum or fold the flag into the field it depends on. Skips tests. |
+| [`rust-no-bool-literal-argument`](rules/rust-no-bool-literal-argument.yml) | error | Bare `true` or `false` call arguments, such as `x11_zoom(&s, false, true)`. Skips calls that wrap or store a value (`Some`, `Ok`, `Err`, single-argument `new`, `store`, `insert`, `map_or`, and others), single-argument method calls such as `set_hidden(true)`, and tests. |
+| [`rust-no-bool-parameter`](rules/rust-no-bool-parameter.yml) | error | `bool` parameters in every function and trait method, private ones included. Skips `impl Trait for Type` methods, closure predicates such as `impl Fn(u32) -> bool`, and tests. Take a named enum or split the function. |
+| [`rust-no-bool-tuple`](rules/rust-no-bool-tuple.yml) | error | Tuple types with a `bool` element, such as `-> (bool, bool)` or `Vec<(Read, OwnedFd, bool)>`. Use a named struct or enum. Skips tests. |
 | [`rust-no-deny-warnings`](rules/rust-no-deny-warnings.yml) | error | `#![deny(warnings)]`, which can break a build when a compiler or dependency adds a warning. Set explicit lint levels instead. |
 | [`rust-no-deref-polymorphism`](rules/rust-no-deref-polymorphism.yml) | error | `Deref` implementations used for API forwarding. Reserve `Deref` for smart pointers and expose methods on other types. |
 | [`rust-no-dropped-error-source`](rules/rust-no-dropped-error-source.yml) | error | `map_err(\|_\| Error::Variant)` and `.ok().ok_or(...)` that discard the original error. Carry the source in the new error instead. |
+| [`rust-no-fallible-bool-return`](rules/rust-no-fallible-bool-return.yml) | error | Functions that return `Result<bool>` or `Option<bool>`. Return an enum that names each outcome. Skips trait impls and tests. |
 | [`rust-no-indexed-array-rebuild`](rules/rust-no-indexed-array-rebuild.yml) | error | `[bytes[0], bytes[1], ...]` array literals that index the same slice element by element. Take the chunk with `split_first_chunk` or `try_into` instead. |
 | [`rust-no-option-bool-field`](rules/rust-no-option-bool-field.yml) | error | `Option<bool>` struct fields. Name the three states with an enum. |
 | [`rust-no-panicking-fallback`](rules/rust-no-panicking-fallback.yml) | error | `unwrap_or_else` and `map_or_else` fallbacks that end in a panic or another diverging macro. Handle the failed or absent value instead. Skips test files and `#[cfg(test)]` items. |

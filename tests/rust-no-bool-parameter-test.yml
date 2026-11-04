@@ -1,0 +1,53 @@
+id: rust-no-bool-parameter
+valid:
+  - |
+    pub fn push_stripe(out: &mut Vec<u8>, y: u16, height: u16, kind: FrameKind, unit: &[u8]) {}
+  - |
+    fn load_pins(path: &Path, source: ConfigSource, flags: Vec<String>) -> Result<Vec<String>> {
+        todo!()
+    }
+  - |
+    fn assign(&mut self, text: &str, usable: impl Fn(u32) -> bool) -> Vec<u32> {
+        todo!()
+    }
+  - |
+    fn is_minimized(&self, window: &Window) -> bool {
+        self.minimized.contains(window)
+    }
+  - |
+    impl XWaylandShellHandler for State {
+        fn allow_selection_access(&mut self, xwm: XwmId, selection: SelectionTarget) -> bool {
+            true
+        }
+        fn fullscreen_request(&mut self, xwm: XwmId, window: X11Surface, fullscreen: bool) {}
+    }
+  - |
+    fn reap(&mut self) {
+        let alive = |exited: bool| !exited;
+    }
+  - |
+    #[cfg(test)]
+    mod tests {
+        fn start_decoration_grab(state: &mut State, resize: bool) {}
+    }
+invalid:
+  - |
+    fn encode(text: &str, latin1: bool) -> Arc<[u8]> {
+        todo!()
+    }
+  - |
+    impl State {
+        pub(crate) fn x11_zoom(&mut self, surface: &X11Surface, fullscreen: bool, enabled: bool) {}
+    }
+  - |
+    pub fn push_stripe(out: &mut Vec<u8>, y: u16, height: u16, key: bool, unit: &[u8]) {}
+  - |
+    pub(crate) trait Lease {
+        fn set_browser_lease(&mut self, held: bool);
+    }
+  - |
+    fn next(self, is_bad: bool, is_good: bool) -> Self {
+        self
+    }
+  - |
+    fn track(&mut self, pressed: &bool) {}

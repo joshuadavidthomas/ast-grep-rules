@@ -1,0 +1,64 @@
+id: rust-no-fallible-bool-return
+snapshots:
+  "fn cached(&self) -> Option<bool> {\n    None\n}\n":
+    labels:
+    - source: Option<bool>
+      style: primary
+      start: 20
+      end: 32
+    - source: |-
+        fn cached(&self) -> Option<bool> {
+            None
+        }
+      style: secondary
+      start: 0
+      end: 45
+  "pub async fn serve(connection: Connection) -> Result<bool> {\n    todo!()\n}\n":
+    labels:
+    - source: Result<bool>
+      style: primary
+      start: 46
+      end: 58
+    - source: |-
+        pub async fn serve(connection: Connection) -> Result<bool> {
+            todo!()
+        }
+      style: secondary
+      start: 0
+      end: 74
+  "pub fn update(&mut self, appearance: Appearance) -> anyhow::Result<bool> {\n    todo!()\n}\n":
+    labels:
+    - source: anyhow::Result<bool>
+      style: primary
+      start: 52
+      end: 72
+    - source: |-
+        pub fn update(&mut self, appearance: Appearance) -> anyhow::Result<bool> {
+            todo!()
+        }
+      style: secondary
+      start: 0
+      end: 88
+  "pub(crate) fn try_system(&self, command: &Command) -> Result<bool, CommandSinkError> {\n    todo!()\n}\n":
+    labels:
+    - source: Result<bool, CommandSinkError>
+      style: primary
+      start: 54
+      end: 84
+    - source: |-
+        pub(crate) fn try_system(&self, command: &Command) -> Result<bool, CommandSinkError> {
+            todo!()
+        }
+      style: secondary
+      start: 0
+      end: 100
+  "trait Clock {\n    fn update_clock(&mut self, time: SystemTime) -> io::Result<bool>;\n}\n":
+    labels:
+    - source: io::Result<bool>
+      style: primary
+      start: 66
+      end: 82
+    - source: "fn update_clock(&mut self, time: SystemTime) -> io::Result<bool>;"
+      style: secondary
+      start: 18
+      end: 83

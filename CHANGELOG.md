@@ -18,6 +18,10 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- Rust rules against storing and passing bare bools: `rust-no-bool-field`, `rust-no-bool-parameter`, `rust-no-bool-tuple`, `rust-no-bool-literal-argument`, and `rust-no-fallible-bool-return`. They skip test files and `#[cfg(test)]` items. `rust-no-bool-parameter` covers private functions too, so it reports every case `rust-no-visible-bool-argument` reports, and `rust-no-bool-field` reports every case `rust-no-option-bool-field` reports.
+
 ## [0.10.0]
 
 ### Changed

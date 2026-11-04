@@ -1,0 +1,53 @@
+id: rust-no-fallible-bool-return
+valid:
+  - |
+    pub(crate) fn try_system(&self, command: &Command) -> Result<Enqueued, CommandSinkError> {
+        todo!()
+    }
+  - |
+    pub async fn serve(connection: Connection) -> Result<PortalService> {
+        todo!()
+    }
+  - |
+    pub fn is_ready(&self) -> bool {
+        matches!(self, Self::Ready)
+    }
+  - |
+    fn sizes(&self) -> Result<Vec<bool>> {
+        todo!()
+    }
+  - |
+    impl TryFrom<u8> for Flag {
+        type Error = Error;
+        fn try_from(byte: u8) -> Result<bool, Error> {
+            todo!()
+        }
+    }
+  - |
+    #[cfg(test)]
+    mod tests {
+        fn probe() -> Option<bool> {
+            None
+        }
+    }
+invalid:
+  - |
+    pub(crate) fn try_system(&self, command: &Command) -> Result<bool, CommandSinkError> {
+        todo!()
+    }
+  - |
+    pub async fn serve(connection: Connection) -> Result<bool> {
+        todo!()
+    }
+  - |
+    pub fn update(&mut self, appearance: Appearance) -> anyhow::Result<bool> {
+        todo!()
+    }
+  - |
+    fn cached(&self) -> Option<bool> {
+        None
+    }
+  - |
+    trait Clock {
+        fn update_clock(&mut self, time: SystemTime) -> io::Result<bool>;
+    }

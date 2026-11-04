@@ -1,0 +1,49 @@
+id: rust-no-fallible-bool-return
+language: Rust
+severity: error
+message: "Do not return Result<bool> or Option<bool>; return an enum that names each outcome."
+note: "A bool beside an error is a third outcome channel: serve() -> Result<bool> means serving, unavailable but keep running, or failed; try_system() -> Result<bool, _> means queued, dropped under backpressure, or failed. Callers have to remember what Ok(false) means. Return an enum such as `Enqueued { Queued, DroppedUnderBackpressure }`, or return Result<()> when no caller reads the bool. Methods in `impl Trait for Type` blocks are skipped because the trait fixes their signature. Suppress a deliberate exception with an inline `ast-grep-ignore: rust-no-fallible-bool-return` comment that says what true and false mean. Test files and items under #[cfg(test)] or a test attribute are skipped."
+ignores:
+  - "**/tests.rs"
+  - "**/tests/**"
+  - "**/*_test.rs"
+  - "**/*_tests.rs"
+utils:
+  test-attribute:
+    kind: attribute_item
+    regex: "^#\\[(cfg\\(test\\)|(\\w+::)*test(_case)?\\b|rstest\\b)"
+  test-item:
+    any:
+      - kind: function_item
+      - kind: mod_item
+      - kind: impl_item
+    follows:
+      matches: test-attribute
+      stopBy:
+        not:
+          any:
+            - kind: attribute_item
+            - kind: line_comment
+            - kind: block_comment
+  trait-impl:
+    kind: impl_item
+    has:
+      field: trait
+      regex: "."
+rule:
+  all:
+    - kind: generic_type
+    - regex: "^((\\w+::)*(Result|Option))<\\s*bool\\s*(,|>)"
+    - inside:
+        any:
+          - kind: function_item
+          - kind: function_signature_item
+        field: return_type
+    - not:
+        inside:
+          matches: trait-impl
+          stopBy: end
+    - not:
+        inside:
+          matches: test-item
+          stopBy: end

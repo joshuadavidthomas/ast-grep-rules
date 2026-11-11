@@ -22,8 +22,8 @@
     "test": "node tests/run.mjs"
   },
   "dependencies": {
-    "@ast-grep/cli": "0.51.0",
+    "@ast-grep/cli": "0.51.1",
     "@tree-sitter-grammars/tree-sitter-svelte": "1.0.2",
-    "@tree-sitter-grammars/tree-sitter-toml": "0.6.0"
+    "@tree-sitter-grammars/tree-sitter-toml": "0.7.0"
   }
 }

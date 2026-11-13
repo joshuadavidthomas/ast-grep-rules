@@ -18,10 +18,16 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+## [0.12.0]
+
 ### Added
 
 - Django rules that keep ORM query logic on models, managers, and querysets: `django-no-query-outside-models`, `django-no-get-with-filter`, `django-no-create-outside-managers`, `django-no-q-outside-models`, and `django-no-select-for-update-outside-models`. They skip model, manager, queryset, migration, and test modules; the query, `get`, and `Q` rules also skip django-filter `filters` modules.
 - A `django` pre-commit hook that runs only the Django rules on Python files.
+
+### Changed
+
+- Run the bundled rules with ast-grep 0.51.1.
 
 ### Fixed
 
@@ -165,7 +171,7 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 - Josh Thomas <josh@joshthomas.dev> (maintainer)
 
-[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.11.0...HEAD
+[unreleased]: https://github.com/joshuadavidthomas/ast-grep-rules/compare/v0.12.0...HEAD
 [0.1.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.1.0
 [0.2.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.2.0
 [0.3.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.3.0
@@ -178,3 +184,4 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 [0.9.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.9.0
 [0.10.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.10.0
 [0.11.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.11.0
+[0.12.0]: https://github.com/joshuadavidthomas/ast-grep-rules/releases/tag/v0.12.0

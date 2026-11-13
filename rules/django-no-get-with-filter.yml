@@ -1,0 +1,58 @@
+id: django-no-get-with-filter
+language: python
+severity: error
+message: "Do not filter inside .get(); scope the queryset with a named method and pass only pk= or id=, as in .for_client(client).get(pk=pk)."
+note: >-
+  `.get(pk=...)` and `.get(id=...)` are allowed. Any other lookup, a positional `Q(...)`, or a
+  `**kwargs` splat is a filter that needs a name: add a QuerySet method such as `for_client(client)`
+  or `is_published()` and chain `.get(pk=...)` after it. For a natural key, add a manager
+  method such as `get_by_natural_key(slug)` or `get_by_slug(slug)`. The rule checks `.get()`
+  only on a manager (`objects`, `_default_manager`, `_base_manager`) or a chain that starts
+  from one or from `get_queryset()`, so `dict.get` and HTTP clients are not reported.
+  Code that works on any model, such as `model.objects.get(**kwargs)` or
+  `apps.get_model(label).objects.filter(...)`, has no single QuerySet to move to: suppress it with an
+  inline `ast-grep-ignore: django-no-get-with-filter` comment that says why.
+  Models, managers, querysets, FilterSet, migration, and test modules are skipped.
+ignores:
+  - "**/models.py"
+  - "**/models/**"
+  - "**/managers.py"
+  - "**/managers/**"
+  - "**/querysets.py"
+  - "**/querysets/**"
+  - "**/filters.py"
+  - "**/filters/**"
+  - "**/migrations/**"
+  - "**/tests/**"
+  - "**/tests.py"
+  - "**/test_*.py"
+  - "**/*_tests.py"
+  - "**/conftest.py"
+rule:
+  kind: call
+  all:
+    - has:
+        field: function
+        kind: attribute
+        all:
+          - has:
+              field: attribute
+              regex: "^get$"
+          - has:
+              field: object
+              matches: django-manager-receiver
+    - has:
+        field: arguments
+        has:
+          any:
+            - kind: keyword_argument
+              not:
+                has:
+                  field: name
+                  regex: "^(pk|id)$"
+            - kind: dictionary_splat
+            - kind: list_splat
+            - pattern: Q($$$)
+            - pattern: models.Q($$$)
+            - kind: binary_operator
+            - kind: unary_operator

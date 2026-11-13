@@ -1,0 +1,30 @@
+id: django-no-select-for-update-outside-models
+language: python
+severity: error
+message: "Do not lock rows with select_for_update() outside models, managers, and querysets; move the lock into a transition method on the model or its QuerySet."
+note: >-
+  A row lock belongs with the state change it protects. Write a method such as
+  `Invoice.objects.filter(pk=pk).claim_for_processing()` or `invoice.mark_paid()` that opens the
+  transaction, calls `select_for_update()`, checks the current state, and writes the new one.
+  Callers then invoke the transition. Models, managers, querysets, migration, and test modules are skipped.
+ignores:
+  - "**/models.py"
+  - "**/models/**"
+  - "**/managers.py"
+  - "**/managers/**"
+  - "**/querysets.py"
+  - "**/querysets/**"
+  - "**/migrations/**"
+  - "**/tests/**"
+  - "**/tests.py"
+  - "**/test_*.py"
+  - "**/*_tests.py"
+  - "**/conftest.py"
+rule:
+  kind: call
+  has:
+    field: function
+    kind: attribute
+    has:
+      field: attribute
+      regex: "^select_for_update$"

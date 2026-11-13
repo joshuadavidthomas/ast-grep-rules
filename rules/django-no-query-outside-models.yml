@@ -1,0 +1,68 @@
+id: django-no-query-outside-models
+language: python
+severity: error
+message: "Do not build ORM queries outside models, managers, and querysets; add or reuse a named QuerySet method (for_*, is_*, exclude_*, with_*, set_*) and call it."
+note: >-
+  Put the query on the model's QuerySet and expose it through `objects = MyQuerySet.as_manager()`
+  or `MyManager.from_queryset(MyQuerySet)()`. Name methods by intent: `for_user(user)` or
+  `for_client(client)` to scope, `is_live()` / `not_archived()` / `exclude_drafts()` for named states,
+  `within_dates(start, end)` / `greater_than_price(value)` for ranges, `with_totals()` for annotations
+  and subqueries, and `set_processing()` / `toggle_featured()` for bulk writes through `.update()`.
+  Admin and DRF `get_queryset()` that scope by `request.user` should return
+  `super().get_queryset().for_user(self.request.user)`. Search or filtering by request parameters
+  belongs in a `.search(term)` QuerySet method or a django-filter FilterSet. `Prefetch("items", queryset=...)`
+  and form fields that take `queryset=` should receive a named method such as `Item.objects.is_active()`.
+  Chain `.all()`, `.order_by()`, `.select_related()`, `.prefetch_related()`, `.values()`, `.only()`,
+  `.defer()`, `.count()`, `.exists()`, `.first()`, and `.last()` freely on named methods.
+  Each chain is reported once, at its outermost query call. ast-grep has no types, so `.filter`,
+  `.exclude`, `.annotate`, `.aggregate`, `.extra`, and `.raw` match on any receiver; `.update`
+  matches only on a manager or a chain that starts from one. A non-ORM call such as pandas
+  `DataFrame.filter` or matplotlib `Axes.annotate` can stay: suppress it with an inline
+  `ast-grep-ignore: django-no-query-outside-models` comment that names the library.
+  Code that works on any model, such as `model.objects.get(**kwargs)` or
+  `apps.get_model(label).objects.filter(...)`, has no single QuerySet to move to: suppress it with an
+  inline `ast-grep-ignore: django-no-query-outside-models` comment that says why.
+  Models, managers, querysets, FilterSet, migration, and test modules are skipped.
+ignores:
+  - "**/models.py"
+  - "**/models/**"
+  - "**/managers.py"
+  - "**/managers/**"
+  - "**/querysets.py"
+  - "**/querysets/**"
+  - "**/filters.py"
+  - "**/filters/**"
+  - "**/migrations/**"
+  - "**/tests/**"
+  - "**/tests.py"
+  - "**/test_*.py"
+  - "**/*_tests.py"
+  - "**/conftest.py"
+utils:
+  query-call:
+    kind: call
+    has:
+      field: function
+      kind: attribute
+      any:
+        - has:
+            field: attribute
+            regex: "^(filter|exclude|annotate|aggregate|extra|raw)$"
+        - all:
+            - has:
+                field: attribute
+                regex: "^update$"
+            - has:
+                field: object
+                matches: django-manager-receiver
+rule:
+  all:
+    - matches: query-call
+    - not:
+        inside:
+          matches: query-call
+          stopBy:
+            not:
+              any:
+                - kind: call
+                - kind: attribute

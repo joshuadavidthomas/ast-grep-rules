@@ -1,0 +1,35 @@
+id: django-no-get-with-filter
+valid:
+  - |
+    assignment = TemplateAssignment.objects.for_client(client).get(pk=assignment_id)
+  - |
+    thing = Thing.objects.get(pk=pk)
+  - |
+    thing = Thing.objects.get(id=thing_id)
+  - |
+    thing = Thing.objects.select_related("batch").get(pk=pk)
+  - |
+    value = data.get("key")
+  - |
+    value = response.json().get("key")
+  - |
+    response = requests.Session().get(url, timeout=5)
+  - |
+    value = request.GET.get("page", default="1")
+invalid:
+  - |
+    assignment = TemplateAssignment.objects.get(pk=assignment_id, client=client)
+  - |
+    batch = Batch.objects.get(batch_id=batch_id)
+  - |
+    prop = Property.objects.select_related("batch").get(id=property_id, batch__batch_id=batch_id)
+  - |
+    thing = Thing.objects.get(Q(slug=slug) | Q(code=slug))
+  - |
+    thing = Thing.objects.get(**lookup)
+  - |
+    thing = self.get_queryset().get(slug=slug)
+  - |
+    thing = Thing.objects.for_client(client).get(pk=pk, status=status)
+  - |
+    user = User._default_manager.get(username=username)

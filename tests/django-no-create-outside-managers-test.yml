@@ -1,0 +1,21 @@
+id: django-no-create-outside-managers
+valid:
+  - |
+    invoice = Invoice.objects.create_invoice(client, lines)
+  - |
+    batch = Batch.objects.create_for_user(request.user)
+  - |
+    form = ThingForm.create(data)
+  - |
+    session = client.sessions.create(name="x")
+invalid:
+  - |
+    thing = Thing.objects.create(name=name, created_by=request.user)
+  - |
+    Thing.objects.bulk_create([Thing(name=name) for name in names])
+  - |
+    thing, created = Thing.objects.get_or_create(name=name)
+  - |
+    thing, created = Thing.objects.update_or_create(name=name, defaults={"count": 1})
+  - |
+    user = User._default_manager.create(username=username)

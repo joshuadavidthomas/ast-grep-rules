@@ -7,6 +7,12 @@ updates:
       timezone: America/Chicago
     cooldown:
       default-days: 7
+    ignore:
+      # tree-sitter-toml 0.7 needs tree-sitter ^0.22 as an optional peer, but
+      # tree-sitter-svelte 1.0.2 requires ^0.21. npm 10 (Node 22) rejects that
+      # conflict, so `npm ci` fails. Drop this once the Svelte grammar supports 0.22.
+      - dependency-name: "@tree-sitter-grammars/tree-sitter-toml"
+        versions: [">=0.7.0"]
     groups:
       npm:
         patterns:

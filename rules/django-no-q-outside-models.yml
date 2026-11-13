@@ -1,0 +1,28 @@
+id: django-no-q-outside-models
+language: python
+severity: error
+message: "Do not build Q objects outside models, managers, and querysets; put the condition in a named QuerySet method (is_*, not_*, exclude_*, search) and call it."
+note: >-
+  A `Q(...)` built in a view, service, or helper and passed into `.filter(q)` is the same
+  hand-built query in disguise. Move the condition onto the QuerySet: `is_overdue()` for a named
+  state, or `search(term)` for request-driven search. Request-parameter filtering can also live in
+  a django-filter FilterSet. Models, managers, querysets, FilterSet, migration, and test modules are skipped.
+ignores:
+  - "**/models.py"
+  - "**/models/**"
+  - "**/managers.py"
+  - "**/managers/**"
+  - "**/querysets.py"
+  - "**/querysets/**"
+  - "**/filters.py"
+  - "**/filters/**"
+  - "**/migrations/**"
+  - "**/tests/**"
+  - "**/tests.py"
+  - "**/test_*.py"
+  - "**/*_tests.py"
+  - "**/conftest.py"
+rule:
+  any:
+    - pattern: Q($$$ARGS)
+    - pattern: models.Q($$$ARGS)

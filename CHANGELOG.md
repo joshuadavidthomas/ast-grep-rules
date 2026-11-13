@@ -18,6 +18,11 @@ and this project attempts to adhere to [Semantic Versioning](https://semver.org/
 
 ## [Unreleased]
 
+### Added
+
+- Django rules that keep ORM query logic on models, managers, and querysets: `django-no-query-outside-models`, `django-no-get-with-filter`, `django-no-create-outside-managers`, `django-no-q-outside-models`, and `django-no-select-for-update-outside-models`. They skip model, manager, queryset, migration, and test modules; the query, `get`, and `Q` rules also skip django-filter `filters` modules.
+- A `django` pre-commit hook that runs only the Django rules on Python files.
+
 ### Fixed
 
 - `rust-no-panicking-fallback` no longer reports value-producing macro fallbacks such as `unwrap_or_else(|| json!({}))`. Direct and block closures, including `move` closures, still report terminal `panic!`, `unreachable!`, `todo!`, and `unimplemented!` calls.

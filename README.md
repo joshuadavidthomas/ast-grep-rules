@@ -1,6 +1,6 @@
 # ast-grep-rules
 
-An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, Cargo manifests, Clippy configuration, TypeScript, Svelte, HTML, Python, Go, Swift, Pi extensions, and OpenCode plugins.
+An opinionated set of [ast-grep](https://ast-grep.github.io/) rules for Rust, Cargo manifests, Clippy configuration, TypeScript, Svelte, HTML, Python, Django, Go, Swift, Pi extensions, and OpenCode plugins.
 
 The rules catch API design problems, weak error handling, deprecated Svelte patterns, SwiftUI performance and accessibility mistakes, and code clutter. Pre-commit users can choose rules by language or run the whole set.
 
@@ -41,10 +41,11 @@ repos:
 | `svelte` | Svelte | IDs starting with `svelte-` |
 | `html` | HTML | IDs starting with `html-` |
 | `python` | Python | IDs starting with `python-` |
+| `django` | Python | IDs starting with `django-` |
 | `go` | Go | IDs starting with `go-` |
 | `swift` | Swift | IDs starting with `swift-` |
 
-Language hooks include the shared checks for that language because shared rule IDs carry the same language prefix. For example, `rust` includes `rust-no-code-barricade`. Pi and OpenCode use product prefixes so each plugin ecosystem can run only its own rules.
+Language hooks include the shared checks for that language because shared rule IDs carry the same language prefix. For example, `rust` includes `rust-no-code-barricade`. Django, Pi, and OpenCode use product prefixes so each framework or plugin ecosystem can run only its own rules. The `python` hook does not run the Django rules.
 
 With prek, install the Git hook and prepare its environment up front:
 
@@ -354,6 +355,40 @@ A few rules overlap with [SwiftLint](https://github.com/realm/SwiftLint) but mat
 | [`swift-no-print-changes`](rules/swift-no-print-changes.yml) | error | Leftover `Self._printChanges()` and `Self._logChanges()` debugging calls. |
 | [`swift-no-single-parameter-on-change`](rules/swift-no-single-parameter-on-change.yml) | error | The deprecated one-parameter `onChange(of:perform:)`. Use the zero- or two-parameter closure. |
 | [`swift-no-unstable-view-id`](rules/swift-no-unstable-view-id.yml) | error | `.id()` given `UUID()`, `Date()`, `.now`, or a random value, which recreates the view on every update. Pass a stable identifier. |
+
+### Django
+
+These rules keep query logic on the model, its custom Manager, or its custom QuerySet. Views, tasks, services, forms, admin classes, and management commands call named methods such as `for_user(user)`, `is_live()`, `with_totals()`, `set_processing()`, and `create_invoice(...)` instead of building ORM queries by hand. The rules are deliberately strict: they produce fat managers and querysets, because duplication on one class is visible and fixable, and duplication across many views is not. Split a large manager into several QuerySet classes or a `querysets/` package rather than moving queries back out.
+
+| Rule | Severity | Reports |
+| --- | --- | --- |
+| [`django-no-query-outside-models`](rules/django-no-query-outside-models.yml) | error | `.filter()`, `.exclude()`, `.annotate()`, `.aggregate()`, `.extra()`, and `.raw()` on any receiver, and `.update()` on a manager or a chain that starts from one. Each chain is reported once, at its outermost query call. Add or reuse a named QuerySet method. |
+| [`django-no-get-with-filter`](rules/django-no-get-with-filter.yml) | error | `.get()` on a manager or queryset chain with any lookup other than a lone `pk=` or `id=`, a positional `Q`, or a `**kwargs` splat. Scope first, as in `.for_client(client).get(pk=pk)`. |
+| [`django-no-create-outside-managers`](rules/django-no-create-outside-managers.yml) | error | `.create()`, `.bulk_create()`, `.get_or_create()`, and `.update_or_create()` on `objects`, `_default_manager`, or `_base_manager`. Add a `create_<model>()` Manager method. |
+| [`django-no-q-outside-models`](rules/django-no-q-outside-models.yml) | error | `Q(...)` and `models.Q(...)`, which otherwise let a hand-built filter reach `.filter(q)` from a helper. Put the condition in a named QuerySet method. |
+| [`django-no-select-for-update-outside-models`](rules/django-no-select-for-update-outside-models.yml) | error | `.select_for_update()`. Put the row lock in a transition method on the model or its QuerySet. |
+
+Calls that only shape or read a result stay allowed everywhere: `.all()`, `.none()`, `.count()`, `.exists()`, `.first()`, `.last()`, `.order_by()`, `.select_related()`, `.prefetch_related()`, `.values()`, `.only()`, `.defer()`, and `.get(pk=...)`.
+
+Every rule skips `models.py`, `models/`, `managers.py`, `managers/`, `querysets.py`, `querysets/`, `migrations/` (data migrations use historical models without custom managers), and test modules (`tests.py`, `tests/`, `test_*.py`, `*_tests.py`, `conftest.py`). The query, `get`, and `Q` rules also skip django-filter modules (`filters.py` and `filters/`), because a FilterSet is a declared query module. Creating and locking rows is still reported there.
+
+ast-grep has no type information, so the rules match by method name. Limits:
+
+- `django-no-query-outside-models` reports `.filter()` and the other query methods on any receiver, including non-ORM calls such as pandas `DataFrame.filter()` or `.aggregate()`, matplotlib `Axes.annotate()`, and SQLAlchemy `Query.filter()`. Suppress a deliberate non-ORM call with `# ast-grep-ignore: django-no-query-outside-models` and a comment naming the library, or exclude an analysis package from the `django` hook with `exclude`. The built-in `filter()` function is not reported.
+- `.update()`, `.get()`, and the create methods are reported only on a manager (`objects`, `_default_manager`, `_base_manager`), on a chain that contains one, or on `get_queryset()`, so `dict.update()`, `dict.get()`, and HTTP clients are not reported. A queryset held in a variable, as in `qs.update(...)`, or a related manager, as in `user.items.create(...)`, is not reported by those rules. Its `.filter()` or `.exclude()` calls are.
+- A nested query in an argument, as in `filter(pk__in=Other.objects.filter(...))`, is a second query and is reported separately.
+- Code that works on any model, such as `model.objects.get(**kwargs)` or `apps.get_model(label).objects.filter(...)`, has no single QuerySet to move to. Suppress it with a comment that says why.
+
+Management commands are reported like any other caller. One-off data-repair or import scripts that will never become reusable can be kept out of the hook with `exclude`:
+
+```yaml
+repos:
+  - repo: https://github.com/joshuadavidthomas/ast-grep-rules
+    rev: main
+    hooks:
+      - id: django
+        exclude: '^app/legacy/'
+```
 
 ### Pi
 

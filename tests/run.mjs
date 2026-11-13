@@ -22,6 +22,7 @@ run([
   "--test",
   resolve(testsDir, "integration", "cargo-workspace-manifests.test.mjs"),
   resolve(testsDir, "integration", "clippy-config.test.mjs"),
+  resolve(testsDir, "integration", "django-module-globs.test.mjs"),
   resolve(testsDir, "integration", "package-install.test.mjs"),
   resolve(testsDir, "integration", "rule-groups.test.mjs"),
   resolve(testsDir, "integration", "rust-test-globs.test.mjs"),

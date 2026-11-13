@@ -81,6 +81,14 @@
   types_or: [python, pyi]
   pass_filenames: true
 
+- id: django
+  name: ast-grep rules (Django)
+  description: Run the Django ORM placement rules from joshuadavidthomas/ast-grep-rules
+  entry: ast-grep-rules --filter=^django-
+  language: node
+  types: [python]
+  pass_filenames: true
+
 - id: go
   name: ast-grep rules (Go)
   description: Run the Go rules from joshuadavidthomas/ast-grep-rules

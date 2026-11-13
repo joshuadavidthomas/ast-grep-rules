@@ -1,0 +1,112 @@
+id: django-no-create-outside-managers
+snapshots:
+  "Thing.objects.bulk_create([Thing(name=name) for name in names])\n":
+    labels:
+    - source: Thing.objects.bulk_create([Thing(name=name) for name in names])
+      style: primary
+      start: 0
+      end: 63
+    - source: bulk_create
+      style: secondary
+      start: 14
+      end: 25
+    - source: objects
+      style: secondary
+      start: 6
+      end: 13
+    - source: Thing.objects
+      style: secondary
+      start: 0
+      end: 13
+    - source: Thing.objects.bulk_create
+      style: secondary
+      start: 0
+      end: 25
+  "thing = Thing.objects.create(name=name, created_by=request.user)\n":
+    labels:
+    - source: Thing.objects.create(name=name, created_by=request.user)
+      style: primary
+      start: 8
+      end: 64
+    - source: create
+      style: secondary
+      start: 22
+      end: 28
+    - source: objects
+      style: secondary
+      start: 14
+      end: 21
+    - source: Thing.objects
+      style: secondary
+      start: 8
+      end: 21
+    - source: Thing.objects.create
+      style: secondary
+      start: 8
+      end: 28
+  "thing, created = Thing.objects.get_or_create(name=name)\n":
+    labels:
+    - source: Thing.objects.get_or_create(name=name)
+      style: primary
+      start: 17
+      end: 55
+    - source: get_or_create
+      style: secondary
+      start: 31
+      end: 44
+    - source: objects
+      style: secondary
+      start: 23
+      end: 30
+    - source: Thing.objects
+      style: secondary
+      start: 17
+      end: 30
+    - source: Thing.objects.get_or_create
+      style: secondary
+      start: 17
+      end: 44
+  "thing, created = Thing.objects.update_or_create(name=name, defaults={\"count\": 1})\n":
+    labels:
+    - source: "Thing.objects.update_or_create(name=name, defaults={\"count\": 1})"
+      style: primary
+      start: 17
+      end: 81
+    - source: update_or_create
+      style: secondary
+      start: 31
+      end: 47
+    - source: objects
+      style: secondary
+      start: 23
+      end: 30
+    - source: Thing.objects
+      style: secondary
+      start: 17
+      end: 30
+    - source: Thing.objects.update_or_create
+      style: secondary
+      start: 17
+      end: 47
+  "user = User._default_manager.create(username=username)\n":
+    labels:
+    - source: User._default_manager.create(username=username)
+      style: primary
+      start: 7
+      end: 54
+    - source: create
+      style: secondary
+      start: 29
+      end: 35
+    - source: _default_manager
+      style: secondary
+      start: 12
+      end: 28
+    - source: User._default_manager
+      style: secondary
+      start: 7
+      end: 28
+    - source: User._default_manager.create
+      style: secondary
+      start: 7
+      end: 35

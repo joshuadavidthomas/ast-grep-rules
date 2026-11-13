@@ -1,0 +1,12 @@
+id: django-no-select-for-update-outside-models
+valid:
+  - |
+    Invoice.objects.filter(pk=pk).claim_for_processing()
+  - |
+    invoice.mark_paid()
+invalid:
+  - |
+    with transaction.atomic():
+        invoice = Invoice.objects.select_for_update().get(pk=pk)
+  - |
+    rows = Property.objects.filter(status=Status.PENDING).select_for_update(skip_locked=True)

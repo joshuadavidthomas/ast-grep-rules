@@ -1,0 +1,24 @@
+id: django-manager-receiver
+language: python
+rule:
+  any:
+    - kind: attribute
+      has:
+        field: attribute
+        regex: "^(objects|_default_manager|_base_manager)$"
+    - kind: call
+      has:
+        field: function
+        regex: "(^|\\.)get_queryset$"
+    - kind: call
+      has:
+        stopBy: end
+        any:
+          - kind: attribute
+            has:
+              field: attribute
+              regex: "^(objects|_default_manager|_base_manager)$"
+          - kind: call
+            has:
+              field: function
+              regex: "(^|\\.)get_queryset$"

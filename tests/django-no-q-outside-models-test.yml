@@ -1,0 +1,16 @@
+id: django-no-q-outside-models
+valid:
+  - |
+    templates = Template.objects.for_client(client)
+  - |
+    rows = Property.objects.search(term)
+  - |
+    point = geometry.Q(x, y)
+invalid:
+  - |
+    condition = Q(client=client) | Q(client__isnull=True)
+  - |
+    condition = models.Q(year__lt=as_of_date.year)
+  - |
+    def visible_to(user):
+        return Q(created_by=user)

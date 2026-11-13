@@ -1,0 +1,50 @@
+id: django-no-query-outside-models
+valid:
+  - |
+    sessions = SavedSession.objects.for_user(request.user)
+  - |
+    batches = Batch.objects.for_user(request.user).order_by("-created_at").select_related("client")
+  - |
+    Thing.objects.filter_by_pk(pk).set_manual_coordinates(lat, lon)
+  - |
+    total = Property.objects.is_assigned().count()
+  - |
+    payload.update({"a": 1})
+  - |
+    context = super().get_context_data(**kwargs)
+    context.update({"form": form})
+  - |
+    response.json().update({"a": 1})
+  - |
+    names = list(filter(None, names))
+  - |
+    value = data.get("key")
+  - |
+    prefetch = Prefetch("items", queryset=Item.objects.is_active())
+invalid:
+  - |
+    sessions = SavedSession.objects.filter(created_by=request.user)
+  - |
+    batches = Batch.objects.filter(created_by=request.user).order_by("-created_at")
+  - |
+    unassigned = Property.objects.exclude(owner="").filter(status=Property.Status.LIVE)
+  - |
+    Thing.objects.filter(pk=pk).update(lat=lat, lon=lon, manual=True)
+  - |
+    Thing.objects.update(processed=False)
+  - |
+    rows = Property.objects.filter(pk__in=Batch.objects.filter(client=client).values("property_id"))
+  - |
+    class PropertyViewSet(ModelViewSet):
+        def get_queryset(self):
+            return super().get_queryset().filter(batch__client=self.request.user.client)
+  - |
+    totals = batch.properties.aggregate(total=Count("id"))
+  - |
+    counts = batch.properties.values("status").annotate(count=Count("status"))
+  - |
+    rows = qs.filter(Q(status=Status.PROCESSING) | Q(processed_at__gte=floor))
+  - |
+    prefetch = Prefetch("items", queryset=Item.objects.filter(active=True))
+  - |
+    rows = Property.objects.raw("SELECT * FROM property")

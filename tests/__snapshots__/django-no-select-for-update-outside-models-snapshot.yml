@@ -1,0 +1,31 @@
+id: django-no-select-for-update-outside-models
+snapshots:
+  "rows = Property.objects.filter(status=Status.PENDING).select_for_update(skip_locked=True)\n":
+    labels:
+    - source: >-
+        Property.objects.filter(status=Status.PENDING).select_for_update(skip_locked=True)
+      style: primary
+      start: 7
+      end: 89
+    - source: select_for_update
+      style: secondary
+      start: 54
+      end: 71
+    - source: Property.objects.filter(status=Status.PENDING).select_for_update
+      style: secondary
+      start: 7
+      end: 71
+  "with transaction.atomic():\n    invoice = Invoice.objects.select_for_update().get(pk=pk)\n":
+    labels:
+    - source: Invoice.objects.select_for_update()
+      style: primary
+      start: 41
+      end: 76
+    - source: select_for_update
+      style: secondary
+      start: 57
+      end: 74
+    - source: Invoice.objects.select_for_update
+      style: secondary
+      start: 41
+      end: 74
